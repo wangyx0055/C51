@@ -1,0 +1,82 @@
+C51 COMPILER V6.12  TEST                                                                   09/27/2013 20:14:33 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          sbit  wei=P2^6;
+   5          sbit  duan=P2^7;
+   6          unsigned char temp;
+   7          int count,num,m,i;
+   8          unsigned char table[]={0x3f  , 0x06 , 0x5b , 0x4f , 0x66 , 0x6d ,
+   9          					   0x7d , 0x07 , 0x7f  , 0x6f , 0x77 , 0x7c ,
+  10          					   0x39 , 0x5e , 0x79 , 0x71};
+  11          
+  12          void main()
+  13          {
+  14   1      	EA=1;
+  15   1      	ET0=1;
+  16   1      	TMOD=0x01;
+  17   1      	TH0=(65535-50000)>>8;
+  18   1      	TL0=(65535-50000)%256;
+  19   1      	TR0=1;
+  20   1      
+  21   1      	count=0;
+  22   1      	m=0;
+  23   1      	duan=1;
+  24   1      	P0=temp=0xfe;//段选低电平有效
+  25   1      	duan=0;
+  26   1      	
+  27   1      	wei=1;
+  28   1      	P0=0x3f;//段选低电平有效
+  29   1      	wei=0;
+  30   1      
+  31   1      	while(1)
+  32   1      	{
+  33   2      		if(num==10)
+  34   2      		{
+  35   3      			num=0;
+  36   3      			duan=1;
+  37   3      			P0= _crol_(temp,m);;//段选低电平有效
+  38   3      			duan=0;
+  39   3      
+  40   3      			wei=1;
+  41   3      			P0=table[count++];
+  42   3      			wei=0;			
+  43   3      			//
+  44   3      			m++;
+  45   3      			m=m%6;
+  46   3      			count=count%16;		
+  47   3      			
+  48   3      		}
+  49   2      	}
+  50   1      }
+  51          
+  52          void show1()interrupt 1
+  53          {
+  54   1      	TH0=(65535-50000)>>8;
+  55   1      	TL0=(65535-50000)%256;
+C51 COMPILER V6.12  TEST                                                                   09/27/2013 20:14:33 PAGE 2   
+
+  56   1      	num++;
+  57   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    147    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     25    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

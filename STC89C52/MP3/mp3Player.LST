@@ -1,0 +1,59 @@
+C51 COMPILER V6.12  MP3PLAYER                                                              05/27/2014 21:02:40 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE MP3PLAYER
+OBJECT MODULE PLACED IN .\mp3Player.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\mp3Player.c LARGE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <string.h>
+   2          #include <stdio.h>
+   3          #include <math.h>
+   4          #include <Serial.h>
+*** WARNING C182 IN LINE 133 OF SERIAL.H: pointer to different objects
+   5          #include <fat32.h>
+*** WARNING C182 IN LINE 295 OF FAT32.H: pointer to different objects
+   6          
+   7          void main()
+   8          {
+   9   1       //delay(10000);
+  10   1       SerialInit();  //´®¿Ú³õÊ¼»¯£¬ÓÃÒÔÏòµ÷ÊÔÖÕ¶Ë·¢ËÍÊý¾Ý
+  11   1       while(1)
+  12   1       {
+  13   2       SerialPutString("yahoo!!!"); //·¢ËÍÒ»¸ö²âÊÔ×Ö·û´®
+  14   2       }
+  15   1      /*
+  16   1       MMC_Init(); //SD¿¨³õÊ¼»¯
+  17   1       delay(10000);
+  18   1       MMC_get_volume_info();	  //»ñµÃSD¿¨Ïà¹ØÐÅÏ¢£¬Êä³öµ½ÖÕ¶Ë
+  19   1       FAT32_Init(&Init_Arg);	  //FAT32ÎÄ¼þÏµÍ³³õÊ¼»¯£¬×°Èë²ÎÊý
+  20   1       Printf("BPB_Sector_No"  ,Init_Arg.BPB_Sector_No);
+  21   1       Printf("Total_Size"     ,Init_Arg.Total_Size   );
+  22   1       Printf("FirstDirClust"  ,Init_Arg.FirstDirClust); 
+  23   1       Printf("FirstDataSector",Init_Arg.FirstDataSector); 
+  24   1       Printf("BytesPerSector" ,Init_Arg.BytesPerSector); 
+  25   1       Printf("FATsectors"     ,Init_Arg.FATsectors); 
+  26   1       Printf("SectorsPerClust",Init_Arg.SectorsPerClust);
+  27   1       Printf("FirstFATSector" ,Init_Arg.FirstFATSector); 
+  28   1       Printf("FirstDirSector" ,Init_Arg.FirstDirSector);   //ÒÔÉÏ¼¸¸öÓï¾äÓÃÒÔÊä³ö²ÎÊýÖµµ½ÖÕ¶Ë
+  29   1       Printf("FAT32_OpenFile" ,(FAT32_OpenFile("\\TEST.TXT"))->FileSize); //´ò¿ª¸ùÄ¿Â¼ÏÂµÄTEST.TXTÎÄ¼þ£¬²¢Êä³öÎ
+             -Ä¼þ´óÐ¡ 
+  30   1       FAT32_ReadFile(&FileInfo);  //¶ÁÈ¡ÎÄ¼þÊý¾Ý£¬Êä³öµ½ÖÕ¶Ë
+  31   1      */
+  32   1      // while(1);
+  33   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   6449    ----
+   CONSTANT SIZE    =    539    ----
+   XDATA SIZE       =    763     303
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

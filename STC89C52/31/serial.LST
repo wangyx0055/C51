@@ -1,0 +1,112 @@
+C51 COMPILER V6.12  SERIAL                                                                 04/21/2014 15:27:35 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE SERIAL
+OBJECT MODULE PLACED IN .\serial.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\serial.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #include<string.h>
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          
+   6          uchar flag=0,a,i=0;
+   7          uchar inbuff[32];
+   8          
+   9          void putbyte(uchar c);
+  10          void putstring(uchar *puts,uchar n);
+  11          void main()
+  12          {
+  13   1      
+  14   1      	TMOD=0x20;//设置定时器1为工作方式2
+  15   1      	TH1=0xfd;
+  16   1      	TL1=0xfd;
+  17   1      	TR1=1;
+  18   1      	REN=1;
+  19   1      	SM0=0;
+  20   1      	SM1=1;
+  21   1      	EA=1;
+  22   1      	ES=1;
+  23   1      	memset(inbuff,0x00,32);
+  24   1      	while(1)
+  25   1      		{
+  26   2      		/*	if(RI==1)
+  27   2      			{
+  28   2      			RI=0;
+  29   2      			P1=SBUF;
+  30   2      			}*/
+  31   2      			//实现数据发送不使用中断，而数据接收使用中断
+  32   2      			if(flag==1)
+  33   2      				{
+  34   3      					ES=0;
+  35   3      					flag=0;
+  36   3      					SBUF='1';//28;	
+  37   3      					while(!TI);	
+  38   3      					TI=0;
+  39   3      					SBUF='2';//28;	
+  40   3      					while(!TI);	
+  41   3      					TI=0;
+  42   3      					SBUF='3';//28;	
+  43   3      					while(!TI);	
+  44   3      					TI=0;
+  45   3      					putstring(inbuff,strlen(inbuff));
+  46   3      					ES=1;
+  47   3      				}
+  48   2      		}
+  49   1      }
+  50          
+  51          void ser() interrupt 4
+  52          {
+  53   1      	if(RI)
+  54   1      	{
+  55   2      		RI=0;
+C51 COMPILER V6.12  SERIAL                                                                 04/21/2014 15:27:35 PAGE 2   
+
+  56   2      		a=SBUF;
+  57   2      		if(a!='\n')
+  58   2      		{
+  59   3      			inbuff[i]=a;
+  60   3      			i++;
+  61   3      		}
+  62   2      		else
+  63   2      		{
+  64   3      			i=0;
+  65   3      			flag=1;
+  66   3      		}
+  67   2      	}
+  68   1      	
+  69   1      //	P1=SBUF;
+  70   1      	
+  71   1      //	flag=1;
+  72   1      }
+  73          
+  74          void putbyte(uchar c)
+  75          {
+  76   1      	SBUF=c;
+  77   1      	while(!TI);
+  78   1      	TI=0;
+  79   1      }
+  80          
+  81          void putstring(uchar *puts,uchar n)
+  82          {	
+  83   1      	int j;
+  84   1      	for(j=0;j<n;j++)
+  85   1      		putbyte(puts[j]);
+  86   1      	memset(puts,0x00,32);
+  87   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    210    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     35       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

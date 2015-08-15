@@ -1,0 +1,97 @@
+C51 COMPILER V6.12  LESSON3_4                                                              09/27/2013 16:31:13 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE LESSON3_4
+OBJECT MODULE PLACED IN .\lesson3_4.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\lesson3_4.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #define uint unsigned int 
+   3          #define uchar unsigned char 
+   4          sbit dula=P2^6;
+   5          sbit wela=P2^7;
+   6          sbit d1=P1^0;
+   7          uchar num,num1;tt;
+   8          uchar code table[]={
+   9          0x3f,0x06,0x5b,0x4f,
+  10          0x66,0x6d,0x7d,0x07,
+  11          0x7f,0x6f,0x77,0x7c,
+  12          0x39,0x5e,0x79,0x71};
+  13          void delay(uint z);
+  14          void main()
+  15          {
+  16   1      	num=0;
+  17   1      	tt=0;
+  18   1      	TMOD=0x11;//设置定时器0为工作方式1
+  19   1      	TH0=(65536-10000)/256;
+  20   1      	TL0=(65536-10000)%256;
+  21   1      	TH1=(65536-20000)/256;
+  22   1      	TL1=(65536-20000)%256;
+  23   1      	EA=1;//开总中断
+  24   1      	ET0=1;//开定时器0中断
+  25   1      	ET1=1;
+  26   1      	TR0=1;//启动定时器0
+  27   1      	TR1=1;
+  28   1      	wela=1;//11101010
+  29   1      	P0=0xea;
+  30   1      	wela=0;
+  31   1      	dula=1;
+  32   1      	P0=0x3f;
+  33   1      	dula=0;
+  34   1      	while(1)
+  35   1      	{
+  36   2      		if(num1==25)
+  37   2      			{
+  38   3      				num1=0;
+  39   3      				P1=~P1;
+  40   3      			}
+  41   2      		if(tt==100)
+  42   2      		   {
+  43   3      				tt=0;
+  44   3      				num++;
+  45   3      				if(num==16)
+  46   3      				num=0;
+  47   3      				dula=1;
+  48   3      				P0=table[num];
+  49   3      				dula=0;	
+  50   3      			}
+  51   2      	}
+  52   1      }
+  53          
+  54          void delay(uint z)
+  55          {
+C51 COMPILER V6.12  LESSON3_4                                                              09/27/2013 16:31:13 PAGE 2   
+
+  56   1      	uint x,y;
+  57   1      	for(x=z;x>0;x--)
+  58   1      		for(y=110;y>0;y--);	
+  59   1      }
+  60          
+  61          void time0() interrupt 1
+  62          {
+  63   1      	TH0=(65536-10000)/256;
+  64   1      	TL0=(65536-10000)%256;
+  65   1      	tt++;
+  66   1      }
+  67          void time1() interrupt 3
+  68          {
+  69   1      	TH1=(65536-20000)/256;
+  70   1      	TL1=(65536-20000)%256;
+  71   1      	num1++;	
+  72   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    151    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

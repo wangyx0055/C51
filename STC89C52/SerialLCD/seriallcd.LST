@@ -1,0 +1,173 @@
+C51 COMPILER V6.12  SERIALLCD                                                              04/22/2014 21:03:47 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE SERIALLCD
+OBJECT MODULE PLACED IN .\seriallcd.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\seriallcd.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #include<string.h>
+   3          #include <intrins.h>
+   4          #define uchar unsigned char
+   5          #define uint unsigned int
+   6          
+   7          uchar flag=0,a,i=0,len;//,num,temp,m,count;
+   8          uchar inbuff[32],buff[32];
+   9          sbit  wei=P2^6;
+  10          sbit  duan=P2^7;
+  11          sbit lcden=P3^4;
+  12          sbit lcdrs=P3^5;
+  13          uchar count;
+  14          
+  15          void delay(int n);
+  16          void writeCom(uchar com);
+  17          void writeData(uchar value);
+  18          void init();
+  19          void putbyte(uchar c);
+  20          void putstring(uchar *puts,uchar n);
+  21          //int getIndex(uchar val);
+  22          void main()
+  23          {
+  24   1      	TMOD=0x20;//设置定时器1为工作方式2
+  25   1      	TH1=0xfd;
+  26   1      	TL1=0xfd;//
+  27   1      	TR1=1;
+  28   1      	//
+  29   1      	REN=1;
+  30   1      	SM0=0;
+  31   1      	SM1=1;
+  32   1      	EA=1;
+  33   1      	ES=1;
+  34   1      	//
+  35   1      	memset(inbuff,0x00,32);
+  36   1      	init();
+  37   1      	
+  38   1      	while(1)
+  39   1      		{
+  40   2      		
+  41   2      			//实现数据发送不使用中断，而数据接收使用中断
+  42   2      			if(flag==1)
+  43   2      			{
+  44   3      				flag=0;					
+  45   3      				ES=0;
+  46   3      				len=strlen(inbuff);
+  47   3      				memcpy(buff,inbuff,strlen(inbuff));
+  48   3      				buff[strlen(inbuff)]='\0';
+  49   3      				putstring(inbuff,strlen(inbuff));
+  50   3      				ES=1;
+  51   3      				//
+  52   3      				writeCom(0x01);//清屏
+  53   3      				writeCom(0x80);
+  54   3      				for(count=0;count<len;count++)
+  55   3      				{
+C51 COMPILER V6.12  SERIALLCD                                                              04/22/2014 21:03:47 PAGE 2   
+
+  56   4      					if(count==15)
+  57   4      						writeCom(0x80+0x40);
+  58   4      					writeData(buff[count]);	
+  59   4      					delay(20);
+  60   4      				}
+  61   3      			}
+  62   2      		}
+  63   1      }
+  64          
+  65          void serial() interrupt 4
+  66          {
+  67   1      	if(RI)
+  68   1      	{
+  69   2      		RI=0;
+  70   2      		a=SBUF;
+  71   2      		if(a!='\n')
+  72   2      		{
+  73   3      			inbuff[i]=a;
+  74   3      			i++;
+  75   3      		}
+  76   2      		else
+  77   2      		{
+  78   3      			i=0;
+  79   3      			flag=1;
+  80   3      		}
+  81   2      	}
+  82   1      	
+  83   1      }
+  84          
+  85          void putbyte(uchar c)
+  86          {
+  87   1      	SBUF=c;
+  88   1      	while(!TI);
+  89   1      	TI=0;
+  90   1      }
+  91          
+  92          void putstring(uchar *puts,uchar n)
+  93          {	
+  94   1      	int j;
+  95   1      	//short showdata=0;
+  96   1      	for(j=0;j<n;j++)
+  97   1      		putbyte(puts[j]);
+  98   1      	memset(puts,0x00,32);
+  99   1      }
+ 100          /*
+ 101          int getIndex(uchar val)
+ 102          {
+ 103          	if(val>='0'&&val<='9')
+ 104          		return val-'0';
+ 105          	if((val>='A'&&val<='F'))
+ 106          		return val-'A'+10;
+ 107          	if(val>='a'&&val<='f')
+ 108          		return val-'a'+10;
+ 109          		
+ 110          }*/
+ 111          void init()
+ 112          {
+ 113   1      	duan=0;
+ 114   1      	wei=0;
+ 115   1      	lcden=0;
+ 116   1      	count=0;
+ 117   1      	writeCom(0x38);
+C51 COMPILER V6.12  SERIALLCD                                                              04/22/2014 21:03:47 PAGE 3   
+
+ 118   1      	writeCom(0x0c);
+ 119   1      	writeCom(0x06);
+ 120   1      	writeCom(0x01);//清屏
+ 121   1      	writeCom(0x80);
+ 122   1      }
+ 123          void delay(int n)
+ 124          {
+ 125   1      	int x,y;
+ 126   1      	for(x=n;x>0;x--)
+ 127   1      		for(y=110;y>0;y--);
+ 128   1      }
+ 129          void writeCom(uchar com)
+ 130          {
+ 131   1      	lcdrs=0;
+ 132   1      	P0=com;
+ 133   1      	delay(1);
+ 134   1      	lcden=1;
+ 135   1      	delay(5);
+ 136   1      	lcden=0;
+ 137   1      }
+ 138          void writeData(uchar value)
+ 139          {
+ 140   1      	lcdrs=1;
+ 141   1      	P0=value;
+ 142   1      	delay(1);
+ 143   1      	lcden=1;
+ 144   1      	delay(5);
+ 145   1      	lcden=0;
+ 146   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    383    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     69       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

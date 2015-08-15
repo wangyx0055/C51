@@ -1,0 +1,139 @@
+C51 COMPILER V6.12  TEST                                                                   04/23/2014 20:07:33 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>           
+   2          #define uchar unsigned char 
+   3          #define uint unsigned int 
+   4          
+   5          sbit sound=P2^3; 
+   6          uint counter=0; 
+   7          
+   8          uchar code FREQH[3][8]=                    //音符定时器初值,三个8度音的高八位 
+   9          {//注意每行起始都为0xff，因为音调中没有 0 这个音 ，所以随便填了个数字，后面不不会
+  10          //引用它 
+  11               // 低音： 
+  12              //  1       2      3      4      5      6      7 
+  13            {0xff,0xf9,   0xfa,  0xfa,  0xfb,  0xfb,  0xfc,  0xfc}, 
+  14                 //中音： 
+  15                //1       2      3      4      5      6      7 
+  16            {0xff,0xfc,   0xfd,  0xfd,  0xfd,  0xfd,  0xfe,  0xfe}, 
+  17                 //高音: 
+  18                //1       2      3      4      5      6      7 
+  19            {0xff,0xfe,   0xfe,  0xfe,  0xfe,  0xfe,  0xff,  0x00}//0x00 
+  20          };  
+  21          
+  22          uchar code FREQL[3][8]=                    //音符定时器初值,三个8度音的低八位 
+  23          { 
+  24               // 低音： 
+  25              //  1       2      3      4      5      6      7 
+  26            {0xff,0x5b,   0x15,  0xb9,  0x04,  0x90,  0x0c,  0x79}, 
+  27                 //中音： 
+  28                // 1      2      3      4      5      6      7 
+  29            {0xff,0xac,   0x09,  0x5c,  0x82,  0xc8,  0x05,  0x3c}, 
+  30                 //高音: 
+  31                //1       2      3      4      5      6      7 
+  32            {0xff,0x55,   0x84,  0xad,  0xc0,  0xe3,  0x02,  0x00}//0x00 
+  33          }; 
+  34          
+  35          uchar code MUSIC[]= 
+  36          {//生日快乐 
+  37          //歌曲代码,每三个表示一个音符及节拍，第一个表示音符1234567，第二个表示音高，0表
+  38          //示低音，1表示中音，2表示高音，第三个表示节拍长度，1表示半拍，2表示一拍，以此
+  39          //类推。 
+  40           6,1,3,  5,1,1,  3,1,2,   5,1,2,   1,2,2,  6,1,1,  5,1,1,  6,1,4,   3,1,1,   5,1,1,  6,1,1,  
+  41           5,1,2,  3,1,2,  
+  42           1,1,1,  6,0,1,  5,1,1,   3,1,1,   2,1,4,  2,1,3,  3,1,1,  5,1,2,   5,1,1,   6,1,1,   
+  43           3,1,2,  2,1,2,  1,1,4,   5,1,4,   3,1,1,  2,1,1,  1,1,1,  6,0,1,   1,1,1,   5,0,8,  0 
+  44          }; 
+  45          
+  46          void init() 
+  47          {//定时器初始化 
+  48   1       TMOD=0x11; 
+  49   1       TH0=0xd8; 
+  50   1       TL0=0xef; 
+  51   1       EA=1; 
+  52   1       ET0=1; 
+  53   1      }  
+  54          
+  55          void timer0(void) interrupt 1 using 3  
+C51 COMPILER V6.12  TEST                                                                   04/23/2014 20:07:33 PAGE 2   
+
+  56          {//timer0中断服务程序，中断一次延时10ms 
+  57   1       counter++;//节拍次数计数  
+  58   1       TH0=0xd8; //定义单位节拍的延时大小  
+  59   1       TL0=0xef; 
+  60   1      } 
+  61          
+  62          void delay(uchar n) 
+  63          { //延时n毫秒
+  64   1       uchar i; 
+  65   1       while(n--) 
+  66   1        for(i=0;i<125;i++);  
+  67   1      } 
+  68          
+  69          void sound_delay(uchar sound_signalhigh,uchar sound_signallow)//产生一定频率的音调 
+  70          {  
+  71   1       TH1=sound_signalhigh; 
+  72   1       TL1=sound_signallow; 
+  73   1       TR1=1; 
+  74   1       while(TF1==0); 
+  75   1       TR1=0; 
+  76   1       TF1=0;   
+  77   1      } 
+  78          
+  79          void main() 
+  80          { 
+  81   1       uint i,j,k=0; 
+  82   1       uchar sound_signalhigh,sound_signallow;//定时器的高8位与低8位 
+  83   1       uchar sound_pace;//定义节拍计数器  
+  84   1       init(); 
+  85   1       while(1) 
+  86   1         { 
+  87   2            k=0; 
+  88   2         while(MUSIC[k]!=0)//因为歌曲的结尾处人为的加入了 结束标示符  0  
+  89   2         { 
+  90   3          j=MUSIC[k++]; //从表中取得 音符大小  
+  91   3          i=MUSIC[k++]; /*从表中取得 音符音高，也就是这个音符是低音，中音还是高
+  92   3      音,有了这两个参数我们就可以确定音符对应的定时器初值在表中的位置了。 */
+  93   3          sound_signalhigh=FREQH[i][j]; 
+  94   3          sound_signallow=FREQL[i][j]; 
+  95   3          //从表中取得 节拍大小  
+  96   3          sound_pace=60*MUSIC[k++];//600为一拍的时长 ,在此修改一拍的时长。 
+  97   3          TR0=1; 
+  98   3         //当节拍数未达到时候，继续循环，产生该音调的声音  
+  99   3         while(counter!=sound_pace) 
+ 100   3            {  
+ 101   4             sound=~sound; 
+ 102   4             sound_delay(sound_signalhigh,sound_signallow); 
+ 103   4            } 
+ 104   3           counter=0;//节拍计数器置0，进入下一个音调  
+ 105   3           TR0=0; 
+ 106   3          } 
+ 107   2         delay(100); //歌曲演唱完毕后,延时一段时间     }  
+ 108   2      } 
+ 109   1      }
+ 110          
+ 111          
+ 112           
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    248    ----
+   CONSTANT SIZE    =    148    ----
+C51 COMPILER V6.12  TEST                                                                   04/23/2014 20:07:33 PAGE 3   
+
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

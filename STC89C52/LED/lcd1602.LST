@@ -1,0 +1,40 @@
+C51 COMPILER V6.12  LCD1602                                                                05/28/2014 20:53:18 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE LCD1602
+OBJECT MODULE PLACED IN .\lcd1602.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\lcd1602.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #include <string.h>
+   3          #include "LCD.h"
+   4          
+   5          unsigned char code table[]="I love China!";
+   6          unsigned char i,len;
+   7          void main()
+   8          {	
+   9   1      
+  10   1      	LCDInit();
+  11   1      	P1=0x00;
+  12   1      	len=strlen(table);
+  13   1      	for(i=0;i<len;i++)
+  14   1      		LCDWriteData(table[i]);
+  15   1      	while(1);
+  16   1      }
+  17          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    137    ----
+   CONSTANT SIZE    =     14    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

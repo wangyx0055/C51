@@ -1,0 +1,186 @@
+C51 COMPILER V6.12  DUST                                                                   05/31/2014 20:08:50 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE DUST
+OBJECT MODULE PLACED IN .\Dust.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\Dust.c LARGE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          #include <math.h>
+   4          #include "LCD1602.h"
+   5          #include "Serial.h"
+   6          #include "DHT11.h"
+   7          
+   8          #define uchar unsigned char
+   9          #define uint unsigned int
+  10          
+  11          sbit pulse=P3^2;
+  12          
+  13          uchar code str1[]="Current Temperat"; //第一行显示内容
+  14          uchar code str2[]="Current Humidity"; //第二行显示内容
+  15          uchar code str3[]="Current Dust";      //
+  16          //
+  17          uchar code s1[]="AT+CMGF=0\r\n";                          //设定Text模式
+  18          uchar code s2[]="AT+CMGS=27\r\n";                         //注意一定要加上 （ ;\r\n ） ；和换行、回车。
+  19          uchar code s3[]="0011000D91685102801325F70008A00C62116B63572853D177ED4FE1";    //短信内容
+  20          uchar s4=0x1a;                                       //Ctrl+Z 
+  21          uchar code s5[]="\r\n";   
+  22          //
+  23          unsigned long idata  duration;
+  24          unsigned long idata starttime;
+  25          unsigned long idata sampletime_ms = 5000;
+  26          unsigned long idata lowpulseoccupancy = 0;
+  27          float idata ratio = 0;
+  28          float idata concentration = 0;
+  29          uchar idata value[40]="hello!";
+  30          char idata sensor[10];
+  31          uchar count,len,i;
+  32          //
+  33          //uchar THvalue[6];
+  34          void delay(int n);
+  35          void sendsms();
+  36          void DialVoiceCall();
+  37          void ConnectGPRS(float dust,float t,float h);
+  38          
+  39          void main()
+  40          {
+  41   1      	//uchar i;
+  42   1      	//EX1=1;
+  43   1      	//IT1=1;
+  44   1      	LCDInit();
+  45   1      	SerialInit();
+  46   1      	len=strlen(value);
+  47   1      	for(i=0;i<len;i++)
+  48   1        		LCDWriteData(value[i]);
+  49   1      	//sendsms();
+  50   1      	//DialVoiceCall();
+  51   1      	//
+  52   1      	while(1)
+  53   1      	{
+  54   2      		ConnectGPRS(0.3,0.4,0.8);
+  55   2      		//delay(3000);
+C51 COMPILER V6.12  DUST                                                                   05/31/2014 20:08:50 PAGE 2   
+
+  56   2      		//LCDWriteCom(0x01);//清屏
+  57   2      		/*
+  58   2      		LCDWriteCom(0x80);
+  59   2      		if(pulse==1)
+  60   2      		{
+  61   2      			TL0=0;
+  62   2      			while(pulse);
+  63   2      			TR0=1;
+  64   2      			while(!pulse);
+  65   2      			TR0=0;
+  66   2      			count=TL0;
+  67   2      			P1=count;
+  68   2      			duration=(unsigned long)count;
+  69   2      			lowpulseoccupancy = lowpulseoccupancy+duration;
+  70   2      			ratio = lowpulseoccupancy/(sampletime_ms*10.0);  // Integer percentage 0=>100
+  71   2                  concentration = 1.1*pow(ratio,3)-3.8*pow(ratio,2)+520*ratio+0.62; // using spec sheet curve
+  72   2                  //Serial.print("yeelink:");
+  73   2                  //Serial.println(concentration);
+  74   2                  //ConnectGPRS(concentration,(float)DHT11.temperature,(float)DHT11.humidity);
+  75   2      			memset(value,0x00,20);
+  76   2      			sprintf(value,"%s%f","yeelink:",concentration);
+  77   2      			len=strlen(value);
+  78   2      			for(i=0;i<len;i++)
+  79   2        				LCDWriteData(value[i]);
+  80   2                  lowpulseoccupancy = 0;
+  81   2      		//	delay(3000);
+  82   2      		}
+  83   2      		*/
+  84   2      	}
+  85   1      }
+  86          /***********************************************
+  87          *                       延迟1ms函数
+  88          ************************************************/
+  89          void delay(int n)
+  90          {
+  91   1      	int x,y;
+  92   1      	for(x=n;x>0;x--)
+  93   1      		for(y=110;y>0;y--);
+  94   1      }
+  95          /***********************************************
+  96          *                       发送短信
+  97          ************************************************/
+  98          void sendsms()
+  99          {
+ 100   1      SerialPutString(s1);
+ 101   1      delay(2000);
+ 102   1      SerialPutString(s2);
+ 103   1      delay(3000);
+ 104   1      SerialPutString(s3);
+ 105   1      delay(2000);
+ 106   1      SerialPutString(&s4);
+ 107   1      delay(2000);
+ 108   1      }
+ 109          /***********************************************
+ 110          *                       打电话
+ 111          ************************************************/
+ 112          void DialVoiceCall()
+ 113          {
+ 114   1        SerialPutString("AT+COLP=1\r\n");//dial the number
+ 115   1        delay(2000);
+ 116   1        SerialPutString("ATD15200831527;\r\n");//dial the number
+ 117   1        delay(2000);
+C51 COMPILER V6.12  DUST                                                                   05/31/2014 20:08:50 PAGE 3   
+
+ 118   1      }
+ 119          /***********************************************
+ 120          *                       GPRS采集数据
+ 121          ************************************************/
+ 122          void ConnectGPRS(float dust,float t,float h)
+ 123          {
+ 124   1       // char temp[40];
+ 125   1        /*
+ 126   1        SerialPutString("AT+CGCLASS=\"B\"\r\n");
+ 127   1        delay(2000);
+ 128   1        SerialPutString("AT+CGDCONT=1,\"IP\",\"CMNET\"\r\n");
+ 129   1        delay(2000);
+ 130   1        SerialPutString("AT+CGATT=1\r\n");
+ 131   1        delay(2000);
+ 132   1        SerialPutString("AT+CIPCSGP=1,\"CMNET\"\r\n");
+ 133   1        delay(2000);
+ 134   1        SerialPutString("AT+CIPCSGP=0\r\n");
+ 135   1        delay(2000);
+ 136   1        SerialPutString("AT+CDNSCFG=\"211.91.216.129\"\r\n");
+ 137   1        delay(2000);
+ 138   1        */
+ 139   1        SerialPutString("AT+CLPORT=\"UDP\",\"3033\"\r\n");//set a port
+ 140   1        delay(2000);
+ 141   1        SerialPutString("AT+CIPSTART=\"UDP\",\"125.221.182.95\",\"8080\"\r\n");//set destination IP
+ 142   1        delay(2000);
+ 143   1        SerialPutString("AT+CIPSEND\r\n");//dial the number
+ 144   1        delay(2000);
+ 145   1        //mySerial.print("PM2.5 value:");
+ 146   1        sprintf(sensor,"%.2f",dust);//
+ 147   1        SerialPutString(sensor);
+ 148   1        sprintf(sensor,",%.2f",t);//
+ 149   1        SerialPutString(sensor);
+ 150   1        sprintf(sensor,",%.2f",h);//
+ 151   1        SerialPutString(sensor);
+ 152   1        SerialPutByte(s4);
+ 153   1        delay(2000);
+ 154   1        SerialPutString("AT+CIPCLOSE\r\n");//dial the number
+ 155   1        delay(2000);
+ 156   1        SerialPutString("AT+CIPSHUT\r\n");
+ 157   1        delay(2000);
+ 158   1      }
+ 159          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1594    ----
+   CONSTANT SIZE    =    282    ----
+   XDATA SIZE       =     83      36
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =     74    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

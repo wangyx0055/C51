@@ -1,0 +1,160 @@
+Build target 'Target 1'
+compiling dht11.c...
+.\DHT11.C(18): warning C206: 'delay_10us': missing function-prototype
+.\DHT11.C(43): error C231: 'delay_10us': redefinition
+.\DHT11.C(51): error C231: 'delay_10us': redefinition
+Target not created
+Build target 'Target 1'
+compiling dht11.c...
+linking...
+"dht11" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling dht11.c...
+.\DHT11.C(37): warning C206: 'sprintf': missing function-prototype
+.\DHT11.C(37): error C267: 'sprintf': requires ANSI-style prototype
+Target not created
+Build target 'Target 1'
+compiling dht11.c...
+.\DHT11.C(85): warning C280: 'temp': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?DHT11
+
+*** ERROR L107: ADDRESS SPACE OVERFLOW
+    SPACE:   DATA    
+    SEGMENT: _DATA_GROUP_
+    LENGTH:  001CH
+
+Target not created
+Build target 'Target 1'
+compiling dht11.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?DHT11
+
+*** ERROR L107: ADDRESS SPACE OVERFLOW
+    SPACE:   DATA    
+    SEGMENT: _DATA_GROUP_
+    LENGTH:  001CH
+
+Target not created
+Build target 'Target 1'
+compiling dht11.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?DHT11
+
+creating hex file from "dht11"...
+"dht11" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+compiling dht11.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?DHT11
+
+creating hex file from "dht11"...
+"dht11" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+compiling dht11.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?DHT11
+
+creating hex file from "dht11"...
+"dht11" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+compiling dht11.c...
+.\DHT11.C(42): error C100: unprintable character 0xA3 skipped
+.\DHT11.C(42): error C100: unprintable character 0xBB skipped
+.\DHT11.C(43): error C141: syntax error near 'P1'
+Target not created
+Build target 'Target 1'
+compiling dht11.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?DHT11
+
+creating hex file from "dht11"...
+"dht11" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+compiling dht11.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?DHT11
+
+creating hex file from "dht11"...
+"dht11" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+compiling dht11.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?DHT11
+
+creating hex file from "dht11"...
+"dht11" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+"dht11" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+"dht11" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling dht11.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?DHT11
+
+creating hex file from "dht11"...
+"dht11" - 0 Error(s), 3 Warning(s).

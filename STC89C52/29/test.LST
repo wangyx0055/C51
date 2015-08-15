@@ -1,0 +1,333 @@
+C51 COMPILER V6.12  TEST                                                                   10/31/2013 19:34:16 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #include<define.h>
+   3          void delay(uint z)
+   4          {
+   5   1      	uint x,y;
+   6   1      	for(x=z;x>0;x--)
+   7   1      		for(y=110;y>0;y--);
+   8   1      }
+   9          
+  10          void didi() 
+  11          {
+  12   1      	beep=0;
+  13   1      	delay(50);
+  14   1      	beep=1;
+  15   1      	delay(100);
+  16   1      	beep=0;
+  17   1      	delay(50);
+  18   1      	beep=1;
+  19   1      }
+  20          void write_com(uchar com)
+  21          {
+  22   1      	rs=0;
+  23   1      	lcden=0;
+  24   1      	P0=com;
+  25   1      	delay(5);
+  26   1      	lcden=1;
+  27   1      	delay(5);
+  28   1      	lcden=0;	
+  29   1      }
+  30          
+  31          void write_date(uchar date)
+  32          {
+  33   1      	rs=1;
+  34   1      	lcden=0;
+  35   1      	P0=date;
+  36   1      	delay(5);
+  37   1      	lcden=1;
+  38   1      	delay(5);
+  39   1      	lcden=0;	
+  40   1      }
+  41          
+  42          void init()
+  43          {
+  44   1      	uchar num;
+  45   1      	EA=1;
+  46   1      	EX0=1;
+  47   1      	IT0=1;
+  48   1      
+  49   1      	dula=0;
+  50   1      	wela=0;
+  51   1      	lcden=0;
+  52   1      //	set_time();
+  53   1      	set_alarm(14,13,10);
+  54   1      	write_ds(0x0B,0x26);
+  55   1      	read_ds(0x0c);
+C51 COMPILER V6.12  TEST                                                                   10/31/2013 19:34:16 PAGE 2   
+
+  56   1      //	fen=59;
+  57   1      //	miao=53;
+  58   1      //	shi=23;
+  59   1      	write_com(0x38);
+  60   1      	write_com(0x0c);
+  61   1      	write_com(0x06);
+  62   1      	write_com(0x01);
+  63   1      	write_com(0x80);
+  64   1      	for(num=0;num<15;num++)
+  65   1      		{
+  66   2      			write_date(table[num]);
+  67   2      			delay(5);
+  68   2      		}
+  69   1      	write_com(0x80+0x40);
+  70   1      	for(num=0;num<12;num++)
+  71   1      		{
+  72   2      			write_date(table1[num]);
+  73   2      			delay(5);
+  74   2      		}
+  75   1      
+  76   1      }
+  77          
+  78          void write_sfm(uchar add,uchar date)
+  79          {
+  80   1      	uchar shi,ge;
+  81   1      	shi=date/10;
+  82   1      	ge=date%10;
+  83   1      	write_com(0x80+0x40+add);
+  84   1      	write_date(0x30+shi);
+  85   1      	write_date(0x30+ge);
+  86   1      }
+  87          
+  88          void keyscan()
+  89          {
+  90   1      	rd=0;
+  91   1      	if(flag1==1)
+  92   1      	{
+  93   2      		if(s2==0)
+  94   2      		{	
+  95   3      			delay(5);
+  96   3      			if(s2==0)
+  97   3      			{
+  98   4      				while(!s2);
+  99   4      				flag1=0;
+ 100   4      			}
+ 101   3      			 	
+ 102   3      		}
+ 103   2      		if(s3==0)
+ 104   2      		{	
+ 105   3      			delay(5);
+ 106   3      			if(s3==0)
+ 107   3      			{
+ 108   4      				while(!s3);
+ 109   4      				flag1=0;
+ 110   4      			}
+ 111   3      			 	
+ 112   3      		}
+ 113   2      	}
+ 114   1      		
+ 115   1      	if(s1==0)	
+ 116   1      	{
+ 117   2      		delay(5);
+C51 COMPILER V6.12  TEST                                                                   10/31/2013 19:34:16 PAGE 3   
+
+ 118   2      		if(s1==0)
+ 119   2      		{	s1num++;
+ 120   3      			flag=1;
+ 121   3      			flag1=0;
+ 122   3      			while(!s1);
+ 123   3      			if(s1num==1)
+ 124   3      			{
+ 125   4      				TR0=0;
+ 126   4      				write_com(0x80+0x40+10);
+ 127   4      				write_com(0x0f);
+ 128   4      			}
+ 129   3      	}
+ 130   2      			if(s1num==2)
+ 131   2      			{
+ 132   3      				write_com(0x80+0x40+7);
+ 133   3      			}
+ 134   2      			if(s1num==3)
+ 135   2      			{
+ 136   3      				write_com(0x80+0x40+4);
+ 137   3      			}
+ 138   2      			if(s1num==4)
+ 139   2      			{
+ 140   3      				s1num=0;
+ 141   3      				write_com(0x0c);
+ 142   3      				flag=0;
+ 143   3      				write_ds(0,miao);
+ 144   3      				write_ds(2,fen);
+ 145   3      				write_ds(4,shi);
+ 146   3      			}
+ 147   2      
+ 148   2      				
+ 149   2      		}
+ 150   1      		if(s1num!=0)
+ 151   1      		{
+ 152   2      			if(s2==0)
+ 153   2      			{
+ 154   3      				delay(1);
+ 155   3      				if(s2==0)
+ 156   3      				{
+ 157   4      					while(!s2);
+ 158   4      					if(s1num==1)
+ 159   4      					{
+ 160   5      						miao++;
+ 161   5      						if(miao==60)
+ 162   5      							miao=0;
+ 163   5      						write_sfm(10,miao);
+ 164   5      						write_com(0x80+0x40+10);
+ 165   5      						
+ 166   5      						
+ 167   5      					}
+ 168   4      					if(s1num==2)
+ 169   4      					{
+ 170   5      						fen++;
+ 171   5      						if(fen==60)
+ 172   5      							fen=0;
+ 173   5      						write_sfm(7,fen);
+ 174   5      						write_com(0x80+0x40+7);
+ 175   5      					}
+ 176   4      					if(s1num==3)
+ 177   4      					{
+ 178   5      						shi++;
+ 179   5      						if(shi==24)
+C51 COMPILER V6.12  TEST                                                                   10/31/2013 19:34:16 PAGE 4   
+
+ 180   5      							shi=0;
+ 181   5      						write_sfm(4,shi);
+ 182   5      						write_com(0x80+0x40+4);
+ 183   5      					}
+ 184   4      				}
+ 185   3      			}
+ 186   2      			if(s3==0)
+ 187   2      			{
+ 188   3      				delay(1);
+ 189   3      				if(s3==0)
+ 190   3      				{
+ 191   4      					while(!s3);
+ 192   4      					if(s1num==1)
+ 193   4      					{
+ 194   5      					/*	if(miao==0)
+ 195   5      						{
+ 196   5      							miao=59;
+ 197   5      							write_sfm(10,miao);
+ 198   5      							write_com(0x80+0x40+10);
+ 199   5      						}*/
+ 200   5      						miao--;
+ 201   5      						if(miao==-1)
+ 202   5      							miao=59;
+ 203   5      						write_sfm(10,miao);
+ 204   5      						write_com(0x80+0x40+10);
+ 205   5      					}
+ 206   4      					if(s1num==2)
+ 207   4      					{
+ 208   5      						fen--;
+ 209   5      						if(fen==-1)
+ 210   5      							fen=59;
+ 211   5      						write_sfm(7,fen);
+ 212   5      						write_com(0x80+0x40+7);
+ 213   5      					}
+ 214   4      					if(s1num==3)
+ 215   4      					{
+ 216   5      						shi--;
+ 217   5      						if(shi==-1)
+ 218   5      							shi=23;
+ 219   5      						write_sfm(4,shi);
+ 220   5      						write_com(0x80+0x40+4);
+ 221   5      					}
+ 222   4      				}
+ 223   3      			}
+ 224   2      		}
+ 225   1      }
+ 226          
+ 227          void write_ds(uchar add,uchar date)
+ 228          {
+ 229   1      	dscs=0;
+ 230   1      	dsas=1;
+ 231   1      	dsds=1;
+ 232   1      	dsrw=1;
+ 233   1      	P0=add;
+ 234   1      	dsas=0;
+ 235   1      	dsrw=0;
+ 236   1      	P0=date;
+ 237   1      	dsrw=1;
+ 238   1      	dsas=1;
+ 239   1      	dscs=1;				
+ 240   1      }
+ 241          
+C51 COMPILER V6.12  TEST                                                                   10/31/2013 19:34:16 PAGE 5   
+
+ 242          uchar read_ds(uchar add)
+ 243          {
+ 244   1       	uchar ds_date;
+ 245   1      	dsas=1;
+ 246   1      	dsds=1;
+ 247   1      	dsrw=1;
+ 248   1      	dscs=0;
+ 249   1      	P0=add;
+ 250   1      	dsas=0;
+ 251   1      	dsds=0;
+ 252   1      	P0=0xff;
+ 253   1      	ds_date=P0;
+ 254   1      	dsds=1;
+ 255   1      	dsas=1;
+ 256   1      	dscs=1;
+ 257   1      	return ds_date;	
+ 258   1      }
+ 259          
+ 260          void set_time()
+ 261          {
+ 262   1      	write_ds(4,10);
+ 263   1      	write_ds(2,32);
+ 264   1      	
+ 265   1      }
+ 266          
+ 267          void set_alarm(uchar ashi,uchar afen,uchar amiao)
+ 268          {
+ 269   1      	write_ds(1,amiao);
+ 270   1      	write_ds(3,afen);
+ 271   1      	write_ds(5,ashi);
+ 272   1      }
+ 273          void main()
+ 274          {
+ 275   1      	init();
+ 276   1      	while(1)
+ 277   1      	{
+ 278   2      		keyscan();
+ 279   2      		if(flag1==1)
+ 280   2      			didi();
+ 281   2      		if(flag==0)
+ 282   2      		{
+ 283   3      			miao=read_ds(0);	
+ 284   3      			fen=read_ds(2);
+ 285   3      			shi=read_ds(4);
+ 286   3      			write_sfm(10,miao);
+ 287   3      			write_sfm(7,fen);
+ 288   3      			write_sfm(4,shi);
+ 289   3      		}
+ 290   2      	}
+ 291   1      }
+ 292          
+ 293          void exter() interrupt 0
+ 294          {	uchar c;
+ 295   1      	flag1=1;
+ 296   1      	c=read_ds(0x0c);
+ 297   1      }
+ 298          
+ 299          
+ 300          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V6.12  TEST                                                                   10/31/2013 19:34:16 PAGE 6   
+
+   CODE SIZE        =    717    ----
+   CONSTANT SIZE    =     29    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      7       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

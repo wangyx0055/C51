@@ -1,0 +1,1520 @@
+BL51 BANKED LINKER/LOCATER V4.13                                                        05/27/2014  21:02:41  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V4.13, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE mp3Player.obj TO mp3Player RAMSIZE (256)
+
+
+MEMORY MODEL: LARGE WITH FLOATING POINT ARITHMETIC
+
+
+INPUT MODULES INCLUDED:
+  mp3Player.obj (MP3PLAYER)
+  C:\KEIL\C51\LIB\C51FPL.LIB (?C?FPADD)
+  C:\KEIL\C51\LIB\C51FPL.LIB (?C?FPMUL)
+  C:\KEIL\C51\LIB\C51FPL.LIB (?C?FPCMP)
+  C:\KEIL\C51\LIB\C51FPL.LIB (?C?FPNEG)
+  C:\KEIL\C51\LIB\C51FPL.LIB (?C?FCAST)
+  C:\KEIL\C51\LIB\C51FPL.LIB (?C?CASTF)
+  C:\KEIL\C51\LIB\C51FPL.LIB (POW)
+  C:\KEIL\C51\LIB\C51FPL.LIB (?C?FPGETOPN)
+  C:\KEIL\C51\LIB\C51FPL.LIB (EXP)
+  C:\KEIL\C51\LIB\C51FPL.LIB (LOG)
+  C:\KEIL\C51\LIB\C51FPL.LIB (?C?FPDIV)
+  C:\KEIL\C51\LIB\C51FPL.LIB (?C?FPSERIES)
+  C:\KEIL\C51\LIB\C51L.LIB (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?COPY)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?CLDPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?CLDOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?CILDOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?CSTPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?CSTOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?IMUL)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?SIDIV)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?ILDIX)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?ILDPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?ILDOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?IILDOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?ISTPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?ISTOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LMUL)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?ULDIV)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LNEG)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?ULCMP)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?ULSHR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LSHL)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LLDOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LSTOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LLDCODE)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LLDXDATA0)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LLDCODE0)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LLDOPTR0)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LLDIXDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LSTXDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LSTKXDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?STRCPY)
+  C:\KEIL\C51\LIB\C51L.LIB (STRLEN)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?MEMSET)
+  C:\KEIL\C51\LIB\C51L.LIB (?C_INIT)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?UIDIV)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?IILDX)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LLDIDATA)
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 2
+
+
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LLDXDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LLDPDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LLDIDATA0)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LLDPDATA0)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LSTIDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LSTPDATA)
+
+
+LINK MAP OF MODULE:  mp3Player (MP3PLAYER)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+                    0008H     0018H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         ?BI?LOG?LOG
+                    0020H.1   0000H.7                *** GAP ***
+            IDATA   0021H     0001H     UNIT         ?STACK
+
+            * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
+            XDATA   0000H     02FBH     UNIT         ?XD?MP3PLAYER
+            XDATA   02FBH     002EH     UNIT         ?XD?_FTOA?MP3PLAYER
+            XDATA   0329H     0014H     UNIT         ?XD?MMC_GET_VOLUME_INFO?MP3PLAYER
+            XDATA   033DH     0014H     UNIT         ?XD?_FAT32_OPENFILE?MP3PLAYER
+            XDATA   0351H     0012H     UNIT         ?XD?_FAT32_COMPARENAME?MP3PLAYER
+            XDATA   0363H     0011H     UNIT         ?XD?_MMC_WRITE_SECTOR?MP3PLAYER
+            XDATA   0374H     000FH     UNIT         ?XD?_FAT32_ENTERDIR?MP3PLAYER
+            XDATA   0383H     000FH     UNIT         ?XD?_FAT32_READFILE?MP3PLAYER
+            XDATA   0392H     000DH     UNIT         ?XD?_LB2BB?MP3PLAYER
+            XDATA   039FH     000CH     UNIT         ?XD?_MMC_READ_BLOCK?MP3PLAYER
+            XDATA   03ABH     000BH     UNIT         ?XD?_MMC_START_READ_SECTOR?MP3PLAYER
+            XDATA   03B6H     000AH     UNIT         ?XD?_PUTHEX?MP3PLAYER
+            XDATA   03C0H     000AH     UNIT         ?XD?_POW?POW
+            XDATA   03CAH     0009H     UNIT         ?XD?_READ_CSD_MMC?MP3PLAYER
+            XDATA   03D3H     0009H     UNIT         ?XD?_READ_CID_MMC?MP3PLAYER
+            XDATA   03DCH     0009H     UNIT         ?XD?_MMC_GET_DATA_LBA?MP3PLAYER
+            XDATA   03E5H     0008H     UNIT         ?XD?_PUTLONG?MP3PLAYER
+            XDATA   03EDH     0008H     UNIT         ?XD?MMC_INIT?MP3PLAYER
+            XDATA   03F5H     0008H     UNIT         ?XD?FAT32_ENTERROOTDIR?MP3PLAYER
+            XDATA   03FDH     0007H     UNIT         ?XD?_MMC_GET_DATA?MP3PLAYER
+            XDATA   0404H     0007H     UNIT         ?XD?_MMC_GOTOSECTOROFFSET?MP3PLAYER
+            XDATA   040BH     0007H     UNIT         ?XD?_FAT32_GETNEXTCLUSTER?MP3PLAYER
+            XDATA   0412H     0006H     UNIT         ?XD?_FAT32_INIT?MP3PLAYER
+            XDATA   0418H     0006H     UNIT         ?XD?_FAT32_COPYNAME?MP3PLAYER
+            XDATA   041EH     0005H     UNIT         ?XD?_WRITE_COMMAND_MMC?MP3PLAYER
+            XDATA   0423H     0005H     UNIT         _XDATA_GROUP_
+            XDATA   0428H     0004H     UNIT         ?XD?_PRINTF?MP3PLAYER
+            XDATA   042CH     0004H     UNIT         ?XD?LOG?LOG
+            XDATA   0430H     0003H     UNIT         ?XD?_SERIALREVDATA?MP3PLAYER
+            XDATA   0433H     0003H     UNIT         ?XD?_FAT32_READSECTOR?MP3PLAYER
+            XDATA   0436H     0001H     UNIT         ?XD?_SEND?MP3PLAYER
+            XDATA   0437H     0001H     UNIT         ?XD?MMC_LBA_CLOSE?MP3PLAYER
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 3
+
+
+            CODE    0003H     0020H     UNIT         ?PR?_SEND?MP3PLAYER
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     0B7FH     UNIT         ?C?LIB_CODE
+            CODE    0BA5H     033BH     UNIT         ?PR?_FAT32_READFILE?MP3PLAYER
+            CODE    0EE0H     028DH     UNIT         ?PR?_FTOA?MP3PLAYER
+            CODE    116DH     0249H     UNIT         ?PR?_FAT32_OPENFILE?MP3PLAYER
+            CODE    13B6H     021BH     UNIT         ?CO?MP3PLAYER
+            CODE    15D1H     01E4H     UNIT         ?PR?_FAT32_INIT?MP3PLAYER
+            CODE    17B5H     01ACH     UNIT         ?PR?MMC_GET_VOLUME_INFO?MP3PLAYER
+            CODE    1961H     017CH     UNIT         ?PR?_MMC_WRITE_SECTOR?MP3PLAYER
+            CODE    1ADDH     0140H     UNIT         ?PR?_FAT32_ENTERDIR?MP3PLAYER
+            CODE    1C1DH     012BH     UNIT         ?PR?_POW?POW
+            CODE    1D48H     0129H     UNIT         ?PR?LOG?LOG
+            CODE    1E71H     00EEH     UNIT         ?PR?FAT32_ENTERROOTDIR?MP3PLAYER
+            CODE    1F5FH     00CEH     UNIT         ?PR?_LB2BB?MP3PLAYER
+            CODE    202DH     00B3H     UNIT         ?PR?_MMC_START_READ_SECTOR?MP3PLAYER
+            CODE    20E0H     00A9H     UNIT         ?PR?MMC_INIT?MP3PLAYER
+            CODE    2189H     009FH     UNIT         ?PR?_FAT32_COMPARENAME?MP3PLAYER
+            CODE    2228H     009AH     UNIT         ?PR?EXP?EXP
+            CODE    22C2H     0099H     UNIT         ?PR?_MMC_READ_BLOCK?MP3PLAYER
+            CODE    235BH     0092H     UNIT         ?PR?_MMC_GET_DATA?MP3PLAYER
+            CODE    23EDH     0091H     UNIT         ?PR?_FAT32_READSECTOR?MP3PLAYER
+            CODE    247EH     008CH     UNIT         ?C_C51STARTUP
+            CODE    250AH     006AH     UNIT         ?PR?_SERIALREVDATA?MP3PLAYER
+            CODE    2574H     0067H     UNIT         ?PR?_SERIALPUTSTRING?MP3PLAYER
+            CODE    25DBH     0062H     UNIT         ?PR?_FAT32_GETNEXTCLUSTER?MP3PLAYER
+            CODE    263DH     005FH     UNIT         ?PR?_PUTLONG?MP3PLAYER
+            CODE    269CH     004EH     UNIT         ?PR?_FAT32_COPYNAME?MP3PLAYER
+            CODE    26EAH     004BH     UNIT         ?PR?_WRITE_BYTE_MMC?MP3PLAYER
+            CODE    2735H     004BH     UNIT         ?PR?_WRITE_COMMAND_MMC?MP3PLAYER
+            CODE    2780H     0048H     UNIT         ?PR?SERIALINT?MP3PLAYER
+            CODE    27C8H     0044H     UNIT         ?PR?_READ_CSD_MMC?MP3PLAYER
+            CODE    280CH     0044H     UNIT         ?PR?_READ_CID_MMC?MP3PLAYER
+            CODE    2850H     0044H     UNIT         ?PR?_MMC_GOTOSECTOROFFSET?MP3PLAYER
+            CODE    2894H     0040H     UNIT         ?PR?_SZZH16?MP3PLAYER
+            CODE    28D4H     0035H     UNIT         ?PR?_MMC_GET_DATA_LBA?MP3PLAYER
+            CODE    2909H     0031H     UNIT         ?PR?READ_BYTE_MMC?MP3PLAYER
+            CODE    293AH     0031H     UNIT         ?PR?MMC_LBA_CLOSE?MP3PLAYER
+            CODE    296BH     002AH     UNIT         ?PR?FAT32_GET_TOTAL_SIZE?MP3PLAYER
+            CODE    2995H     0025H     UNIT         ?PR?_PRINTF?MP3PLAYER
+            CODE    29BAH     0024H     UNIT         ?PR?SERIALINIT?MP3PLAYER
+            CODE    29DEH     001DH     UNIT         ?PR?FAT32_FINDBPB?MP3PLAYER
+            CODE    29FBH     0016H     UNIT         ?C_INITSEG
+            CODE    2A11H     0015H     UNIT         ?PR?_STRLEN?STRLEN
+            CODE    2A26H     000FH     UNIT         ?PR?_DELAY?MP3PLAYER
+            CODE    2A35H     000FH     UNIT         ?PR?MMC_PORT_INIT?MP3PLAYER
+            CODE    2A44H     000EH     UNIT         ?PR?MAIN?MP3PLAYER
+            CODE    2A52H     000CH     UNIT         ?PR?_PUTHEX?MP3PLAYER
+            CODE    2A5EH     0008H     UNIT         ?PR?_SERIALPUTBYTE?MP3PLAYER
+            CODE    2A66H     0006H     UNIT         ?PR?SERAILREVCHECK?MP3PLAYER
+            CODE    2A6CH     0006H     UNIT         ?PR?SERIALGETDATALEN?MP3PLAYER
+            CODE    2A72H     0004H     UNIT         ?PR?_FAT32_WRITESECTOR?MP3PLAYER
+
+
+
+OVERLAY MAP OF MODULE:   mp3Player (MP3PLAYER)
+
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 4
+
+
+
+SEGMENT                                        XDATA_GROUP
+  +--> CALLED SEGMENT                        START    LENGTH
+------------------------------------------------------------
+?C_C51STARTUP                                -----    -----
+  +--> ?PR?MAIN?MP3PLAYER
+  +--> ?C_INITSEG
+
+?PR?MAIN?MP3PLAYER                           -----    -----
+  +--> ?PR?SERIALINIT?MP3PLAYER
+  +--> ?CO?MP3PLAYER
+  +--> ?PR?_SERIALPUTSTRING?MP3PLAYER
+
+?PR?_SERIALPUTSTRING?MP3PLAYER               0423H    0005H
+  +--> ?PR?_STRLEN?STRLEN
+  +--> ?PR?_SERIALPUTBYTE?MP3PLAYER
+
+
+
+SYMBOL TABLE OF MODULE:  mp3Player (MP3PLAYER)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MP3PLAYER
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  X:0000H         PUBLIC        FAT32_Buffer
+  D:0090H         PUBLIC        P1
+  C:0BA5H         PUBLIC        _FAT32_ReadFile
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        T0
+  B:00D0H.6       PUBLIC        AC
+  C:2A72H         PUBLIC        _FAT32_WriteSector
+  B:00B0H.5       PUBLIC        T1
+  B:0090H.0       PUBLIC        T2
+  B:00A8H.7       PUBLIC        EA
+  C:17B5H         PUBLIC        MMC_get_volume_info
+  C:0015H         PUBLIC        _send
+  C:0EE0H         PUBLIC        _ftoa
+  C:28D4H         PUBLIC        _MMC_get_data_LBA
+  D:00A8H         PUBLIC        IE
+  X:0200H         PUBLIC        LBA_Opened
+  X:0201H         PUBLIC        FileInfo
+  X:022CH         PUBLIC        Init_Arg
+  C:2A5EH         PUBLIC        _SerialPutByte
+  B:00C8H.6       PUBLIC        EXF2
+  B:00B0H.7       PUBLIC        RD
+  C:15D1H         PUBLIC        _FAT32_Init
+  B:00A8H.4       PUBLIC        ES
+  C:116DH         PUBLIC        _FAT32_OpenFile
+  C:2894H         PUBLIC        _szzh16
+  D:00B8H         PUBLIC        IP
+  C:2850H         PUBLIC        _MMC_GotoSectorOffset
+  B:0098H.0       PUBLIC        RI
+  X:024FH         PUBLIC        flag
+  B:00B0H.2       PUBLIC        INT0
+  B:00D0H.7       PUBLIC        CY
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 5
+
+
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.3       PUBLIC        INT1
+  C:269CH         PUBLIC        _FAT32_CopyName
+  C:26FBH         PUBLIC        _Write_Byte_MMC
+  B:00B8H.4       PUBLIC        PS
+  C:1ADDH         PUBLIC        _FAT32_EnterDir
+  C:2A6CH         PUBLIC        SerialGetDataLen
+  B:0090H.1       PUBLIC        T2EX
+  B:00D0H.2       PUBLIC        OV
+  C:1F65H         PUBLIC        _lb2bb
+  C:2A44H         PUBLIC        main
+  C:296BH         PUBLIC        FAT32_Get_Total_Size
+  B:00C8H.1       PUBLIC        C_T2
+  B:00B0H.6       PUBLIC        WR
+  C:25DBH         PUBLIC        _FAT32_GetNextCluster
+  C:263DH         PUBLIC        _PutLong
+  B:00C8H.5       PUBLIC        RCLK
+  B:00C8H.4       PUBLIC        TCLK
+  B:0090H.0       PUBLIC        SPI_SCL
+  C:2780H         PUBLIC        serialInt
+  D:0099H         PUBLIC        SBUF
+  C:2909H         PUBLIC        Read_Byte_MMC
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  B:0088H.1       PUBLIC        IE0
+  B:0088H.3       PUBLIC        IE1
+  X:0250H         PUBLIC        len
+  C:1961H         PUBLIC        _MMC_write_sector
+  C:2A52H         PUBLIC        _PutHex
+  C:15B3H         SYMBOL        _?ix1000
+  C:15B9H         SYMBOL        _?ix1001
+  B:00C8H.0       PUBLIC        CP_RL2
+  C:15BFH         SYMBOL        _?ix1002
+  C:15C5H         SYMBOL        _?ix1003
+  C:15CBH         SYMBOL        _?ix1004
+  X:0251H         PUBLIC        sectorPos
+  B:00A8H.1       PUBLIC        ET0
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.5       PUBLIC        TF0
+  B:00A8H.5       PUBLIC        ET2
+  B:0088H.7       PUBLIC        TF1
+  B:00C8H.7       PUBLIC        TF2
+  B:0098H.2       PUBLIC        RB8
+  C:280CH         PUBLIC        _Read_CID_MMC
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  D:008DH         PUBLIC        TH1
+  B:0098H.3       PUBLIC        TB8
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  B:00D0H.0       PUBLIC        P
+  C:273BH         PUBLIC        _Write_Command_MMC
+  B:0098H.7       PUBLIC        SM0
+  C:2189H         PUBLIC        _FAT32_CompareName
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 6
+
+
+  X:0252H         PUBLIC        readPos
+  B:0098H.5       PUBLIC        SM2
+  C:20E0H         PUBLIC        MMC_Init
+  B:00B8H.1       PUBLIC        PT0
+  B:00B8H.3       PUBLIC        PT1
+  B:00D0H.3       PUBLIC        RS0
+  C:29A0H         PUBLIC        _Printf
+  B:00B8H.5       PUBLIC        PT2
+  B:0088H.4       PUBLIC        TR0
+  B:00D0H.4       PUBLIC        RS1
+  C:27C8H         PUBLIC        _Read_CSD_MMC
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  B:00B8H.0       PUBLIC        PX0
+  B:00B8H.2       PUBLIC        PX1
+  B:0090H.1       PUBLIC        SPI_DI
+  C:235BH         PUBLIC        _MMC_get_data
+  C:2A35H         PUBLIC        MMC_Port_Init
+  B:0090H.3       PUBLIC        SPI_DO
+  X:0254H         PUBLIC        a
+  C:202DH         PUBLIC        _MMC_Start_Read_Sector
+  B:0090H.2       PUBLIC        SPI_CS
+  B:00C8H.3       PUBLIC        EXEN2
+  B:0098H.4       PUBLIC        REN
+  C:293AH         PUBLIC        MMC_LBA_Close
+  D:00C8H         PUBLIC        T2CON
+  B:0090H.4       PUBLIC        SPI_BY
+  X:0255H         PUBLIC        i
+  C:22C2H         PUBLIC        _MMC_Read_Block
+  C:1E71H         PUBLIC        FAT32_EnterRootDir
+  B:00B0H.0       PUBLIC        RXD
+  C:250AH         PUBLIC        _SerialRevData
+  B:00B0H.1       PUBLIC        TXD
+  C:2A2AH         PUBLIC        _delay
+  X:0256H         PUBLIC        Init_Flag
+  X:0257H         PUBLIC        sectorBuffer
+  C:2452H         PUBLIC        _FAT32_ReadSector
+  C:2A66H         PUBLIC        SerailRevCheck
+  B:00D0H.5       PUBLIC        F0
+  C:29DEH         PUBLIC        FAT32_FindBPB
+  C:2574H         PUBLIC        _SerialPutString
+  C:29BAH         PUBLIC        SerialInit
+  D:00D0H         PUBLIC        PSW
+  X:02BBH         PUBLIC        inbuff
+  -------         PROC          SERIALINIT
+  C:29BAH         LINE#         9
+  C:29BAH         LINE#         10
+  C:29BAH         LINE#         11
+  C:29BDH         LINE#         12
+  C:29C0H         LINE#         13
+  C:29C3H         LINE#         14
+  C:29C5H         LINE#         16
+  C:29C7H         LINE#         17
+  C:29C9H         LINE#         18
+  C:29CBH         LINE#         19
+  C:29CDH         LINE#         20
+  C:29CFH         LINE#         22
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 7
+
+
+  -------         ENDPROC       SERIALINIT
+  -------         PROC          _SERIALPUTBYTE
+  D:0007H         SYMBOL        c
+  C:2A5EH         LINE#         25
+  C:2A5EH         LINE#         26
+  C:2A5EH         LINE#         27
+  C:2A60H         LINE#         28
+  C:2A63H         LINE#         29
+  C:2A65H         LINE#         30
+  -------         ENDPROC       _SERIALPUTBYTE
+  -------         PROC          _SERIALPUTSTRING
+  X:0423H         SYMBOL        puts
+  -------         DO            puts
+  D:0004H         SYMBOL        j
+  X:0426H         SYMBOL        n
+  -------         ENDDO         n
+  C:2574H         LINE#         32
+  C:257FH         LINE#         33
+  C:257FH         LINE#         36
+  C:2581H         LINE#         37
+  C:258CH         LINE#         39
+  C:25A2H         LINE#         40
+  C:25BFH         LINE#         41
+  C:25C4H         LINE#         43
+  C:25D8H         LINE#         44
+  C:25DAH         LINE#         45
+  -------         ENDPROC       _SERIALPUTSTRING
+  -------         PROC          SERIALINT
+  C:2780H         LINE#         47
+  C:278DH         LINE#         49
+  C:2790H         LINE#         50
+  C:2790H         LINE#         51
+  C:2792H         LINE#         52
+  C:2798H         LINE#         53
+  C:279EH         LINE#         54
+  C:279EH         LINE#         55
+  C:27ABH         LINE#         56
+  C:27B1H         LINE#         57
+  C:27B3H         LINE#         59
+  C:27B3H         LINE#         60
+  C:27B8H         LINE#         61
+  C:27BDH         LINE#         62
+  C:27BDH         LINE#         63
+  C:27BDH         LINE#         65
+  -------         ENDPROC       SERIALINT
+  -------         PROC          SERAILREVCHECK
+  C:2A66H         LINE#         67
+  C:2A66H         LINE#         68
+  C:2A66H         LINE#         69
+  C:2A6BH         LINE#         70
+  -------         ENDPROC       SERAILREVCHECK
+  -------         PROC          _SERIALREVDATA
+  X:0430H         SYMBOL        buff
+  C:250AH         LINE#         72
+  C:2515H         LINE#         73
+  C:2515H         LINE#         74
+  C:251AH         LINE#         75
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 8
+
+
+  C:2528H         LINE#         76
+  C:2549H         LINE#         77
+  C:2565H         LINE#         78
+  -------         ENDPROC       _SERIALREVDATA
+  -------         PROC          SERIALGETDATALEN
+  C:2A6CH         LINE#         83
+  C:2A6CH         LINE#         84
+  C:2A6CH         LINE#         85
+  C:2A71H         LINE#         86
+  -------         ENDPROC       SERIALGETDATALEN
+  -------         PROC          _FTOA
+  X:02FBH         SYMBOL        dat
+  X:02FFH         SYMBOL        s
+  X:0302H         SYMBOL        jd
+  -------         DO            jd
+  X:0303H         SYMBOL        len
+  X:0305H         SYMBOL        temp
+  X:0307H         SYMBOL        flag
+  X:0309H         SYMBOL        i
+  X:030BH         SYMBOL        t
+  -------         ENDDO         t
+  C:0EE0H         LINE#         92
+  C:0EF1H         LINE#         93
+  C:0EF1H         LINE#         94
+  C:0F32H         LINE#         96
+  C:0F4BH         LINE#         97
+  C:0F63H         LINE#         98
+  C:0FA8H         LINE#         99
+  C:0FCBH         LINE#         100
+  C:100AH         LINE#         101
+  C:1029H         LINE#         102
+  C:10ABH         LINE#         103
+  C:10F0H         LINE#         104
+  C:1111H         LINE#         105
+  C:1152H         LINE#         108
+  C:116CH         LINE#         109
+  C:116CH         LINE#         110
+  -------         ENDPROC       _FTOA
+  -------         PROC          _SZZH16
+  D:0007H         SYMBOL        datax
+  D:0001H         SYMBOL        p
+  -------         DO            p
+  D:0007H         SYMBOL        temp
+  -------         ENDDO         temp
+  C:2894H         LINE#         117
+  C:2894H         LINE#         118
+  C:2894H         LINE#         120
+  C:2894H         LINE#         121
+  C:28ADH         LINE#         122
+  C:28C8H         LINE#         123
+  C:28CFH         LINE#         124
+  C:28D3H         LINE#         125
+  -------         ENDPROC       _SZZH16
+  -------         PROC          _PUTLONG
+  X:03E5H         SYMBOL        dat
+  -------         DO            dat
+  X:03E9H         SYMBOL        temp
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 9
+
+
+  -------         ENDDO         temp
+  C:263DH         LINE#         127
+  C:2643H         LINE#         128
+  C:2643H         LINE#         130
+  C:2657H         LINE#         131
+  C:2657H         LINE#         132
+  C:2673H         LINE#         133
+  C:267CH         LINE#         134
+  C:2699H         LINE#         135
+  C:269BH         LINE#         136
+  -------         ENDPROC       _PUTLONG
+  -------         PROC          _PUTHEX
+  D:0007H         SYMBOL        x
+  -------         DO            x
+  X:03B6H         SYMBOL        temp
+  -------         ENDDO         temp
+  C:2A52H         LINE#         138
+  C:2A52H         LINE#         139
+  C:2A52H         LINE#         141
+  C:2A5BH         LINE#         142
+  -------         ENDPROC       _PUTHEX
+  -------         PROC          L?0242
+  -------         ENDPROC       L?0242
+  -------         PROC          _PRINTF
+  D:0001H         SYMBOL        s
+  X:0428H         SYMBOL        d
+  C:29A0H         LINE#         145
+  C:29A6H         LINE#         146
+  C:29A6H         LINE#         148
+  C:29A9H         LINE#         149
+  -------         ENDPROC       _PRINTF
+  C:0003H         SYMBOL        L?0236
+  -------         PROC          L?0235
+  -------         ENDPROC       L?0235
+  C:0003H         SYMBOL        L?0236
+  -------         PROC          _SEND
+  X:0436H         SYMBOL        mydata
+  C:0015H         LINE#         152
+  C:001AH         LINE#         153
+  C:001AH         LINE#         154
+  -------         ENDPROC       _SEND
+  C:2A26H         SYMBOL        L?0241
+  -------         PROC          L?0240
+  -------         ENDPROC       L?0240
+  C:2A26H         SYMBOL        L?0241
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        time
+  C:2A2AH         LINE#         55
+  C:2A2AH         LINE#         56
+  C:2A2AH         LINE#         57
+  C:2A34H         LINE#         58
+  -------         ENDPROC       _DELAY
+  -------         PROC          MMC_PORT_INIT
+  C:2A35H         LINE#         62
+  C:2A35H         LINE#         64
+  C:2A35H         LINE#         65
+  C:2A37H         LINE#         66
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 10
+
+
+  C:2A39H         LINE#         67
+  C:2A3BH         LINE#         68
+  -------         ENDPROC       MMC_PORT_INIT
+  -------         PROC          L?0239
+  -------         ENDPROC       L?0239
+  -------         PROC          _WRITE_BYTE_MMC
+  D:0005H         SYMBOL        value
+  -------         DO            value
+  D:0003H         SYMBOL        i
+  -------         ENDDO         i
+  C:26FBH         LINE#         83
+  C:26FDH         LINE#         85
+  C:26FDH         LINE#         88
+  C:26FFH         LINE#         90
+  C:2701H         LINE#         91
+  C:2701H         LINE#         92
+  C:2713H         LINE#         93
+  C:2717H         LINE#         94
+  C:2719H         LINE#         95
+  C:271BH         LINE#         96
+  C:2721H         LINE#         97
+  C:2724H         LINE#         98
+  C:2726H         LINE#         99
+  C:272CH         LINE#         100
+  C:272FH         LINE#         101
+  C:2734H         LINE#         103
+  -------         ENDPROC       _WRITE_BYTE_MMC
+  -------         PROC          READ_BYTE_MMC
+  -------         DO            READ_BYTE_MMC
+  D:0005H         SYMBOL        temp
+  D:0003H         SYMBOL        i
+  -------         ENDDO         i
+  C:2909H         LINE#         107
+  C:2909H         LINE#         109
+  C:2909H         LINE#         110
+  C:290BH         LINE#         113
+  C:290DH         LINE#         115
+  C:290EH         LINE#         116
+  C:290EH         LINE#         117
+  C:2910H         LINE#         118
+  C:2912H         LINE#         119
+  C:2918H         LINE#         120
+  C:291BH         LINE#         121
+  C:2925H         LINE#         122
+  C:2927H         LINE#         123
+  C:292DH         LINE#         124
+  C:2930H         LINE#         125
+  C:2935H         LINE#         126
+  C:2937H         LINE#         127
+  C:2939H         LINE#         128
+  -------         ENDPROC       READ_BYTE_MMC
+  -------         PROC          L?0243
+  -------         ENDPROC       L?0243
+  -------         PROC          _WRITE_COMMAND_MMC
+  X:041EH         SYMBOL        CMD
+  -------         DO            CMD
+  D:0007H         SYMBOL        tmp
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 11
+
+
+  X:0421H         SYMBOL        retry
+  X:0422H         SYMBOL        i
+  -------         ENDDO         i
+  C:273BH         LINE#         133
+  C:2746H         LINE#         135
+  C:2746H         LINE#         137
+  C:2749H         LINE#         141
+  C:274BH         LINE#         143
+  C:2750H         LINE#         145
+  C:2752H         LINE#         148
+  C:2757H         LINE#         149
+  C:2757H         LINE#         150
+  C:275DH         LINE#         151
+  C:2769H         LINE#         154
+  C:276CH         LINE#         156
+  C:276CH         LINE#         157
+  C:276FH         LINE#         158
+  C:2775H         LINE#         159
+  C:2775H         LINE#         160
+  C:277FH         LINE#         161
+  C:277FH         LINE#         162
+  -------         ENDPROC       _WRITE_COMMAND_MMC
+  -------         PROC          MMC_INIT
+  -------         DO            MMC_INIT
+  X:03EDH         SYMBOL        retry
+  X:03EEH         SYMBOL        temp
+  D:0002H         SYMBOL        i
+  X:03EFH         SYMBOL        CMD
+  -------         ENDDO         CMD
+  C:20E0H         LINE#         166
+  C:20E0H         LINE#         168
+  C:20E0H         LINE#         171
+  C:20F3H         LINE#         172
+  C:20FCH         LINE#         173
+  C:20FFH         LINE#         175
+  C:2106H         LINE#         177
+  C:210CH         LINE#         179
+  C:210EH         LINE#         180
+  C:210EH         LINE#         181
+  C:2113H         LINE#         182
+  C:2118H         LINE#         185
+  C:2121H         LINE#         186
+  C:2126H         LINE#         188
+  C:2126H         LINE#         189
+  C:212EH         LINE#         190
+  C:2134H         LINE#         191
+  C:2138H         LINE#         192
+  C:2138H         LINE#         193
+  C:213BH         LINE#         194
+  C:213BH         LINE#         195
+  C:213BH         LINE#         196
+  C:2142H         LINE#         199
+  C:214BH         LINE#         200
+  C:2151H         LINE#         201
+  C:2157H         LINE#         202
+  C:215CH         LINE#         204
+  C:215CH         LINE#         205
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 12
+
+
+  C:2164H         LINE#         206
+  C:216AH         LINE#         207
+  C:216EH         LINE#         208
+  C:216EH         LINE#         209
+  C:2171H         LINE#         210
+  C:2171H         LINE#         211
+  C:2171H         LINE#         212
+  C:2177H         LINE#         214
+  C:217BH         LINE#         216
+  C:217DH         LINE#         217
+  C:2186H         LINE#         218
+  C:2188H         LINE#         219
+  -------         ENDPROC       MMC_INIT
+  -------         PROC          _MMC_READ_BLOCK
+  X:039FH         SYMBOL        CMD
+  X:03A2H         SYMBOL        Buffer
+  X:03A5H         SYMBOL        Bytes
+  -------         DO            Bytes
+  X:03A7H         SYMBOL        i
+  X:03A9H         SYMBOL        retry
+  D:0004H         SYMBOL        temp
+  -------         ENDDO         temp
+  C:22C2H         LINE#         224
+  C:22CDH         LINE#         226
+  C:22CDH         LINE#         231
+  C:22D4H         LINE#         233
+  C:22D4H         LINE#         234
+  C:22E6H         LINE#         235
+  C:22F4H         LINE#         236
+  C:2300H         LINE#         237
+  C:2300H         LINE#         238
+  C:2303H         LINE#         239
+  C:2303H         LINE#         240
+  C:2303H         LINE#         241
+  C:2307H         LINE#         244
+  C:230DH         LINE#         247
+  C:2329H         LINE#         248
+  C:2329H         LINE#         249
+  C:2340H         LINE#         250
+  C:2350H         LINE#         253
+  C:2353H         LINE#         254
+  C:2356H         LINE#         257
+  C:2358H         LINE#         258
+  C:235AH         LINE#         259
+  -------         ENDPROC       _MMC_READ_BLOCK
+  -------         PROC          _READ_CSD_MMC
+  X:03CAH         SYMBOL        Buffer
+  -------         DO            Buffer
+  X:03CDH         SYMBOL        CMD
+  D:0007H         SYMBOL        temp
+  -------         ENDDO         temp
+  C:27C8H         LINE#         264
+  C:27D3H         LINE#         266
+  C:27D3H         LINE#         268
+  C:27E6H         LINE#         270
+  C:280BH         LINE#         272
+  C:280BH         LINE#         273
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 13
+
+
+  -------         ENDPROC       _READ_CSD_MMC
+  -------         PROC          _READ_CID_MMC
+  X:03D3H         SYMBOL        Buffer
+  -------         DO            Buffer
+  X:03D6H         SYMBOL        CMD
+  D:0007H         SYMBOL        temp
+  -------         ENDDO         temp
+  C:280CH         LINE#         278
+  C:2817H         LINE#         280
+  C:2817H         LINE#         282
+  C:282AH         LINE#         284
+  C:284FH         LINE#         286
+  C:284FH         LINE#         287
+  -------         ENDPROC       _READ_CID_MMC
+  -------         PROC          MMC_GET_VOLUME_INFO
+  -------         DO            MMC_GET_VOLUME_INFO
+  X:0329H         SYMBOL        i
+  X:032AH         SYMBOL        c_temp
+  X:032FH         SYMBOL        MMC_volume_Info
+  X:033AH         SYMBOL        vinf
+  -------         ENDDO         vinf
+  C:17B5H         LINE#         294
+  C:17B5H         LINE#         296
+  C:17B5H         LINE#         299
+  C:17BEH         LINE#         300
+  C:17CCH         LINE#         302
+  C:17D5H         LINE#         307
+  C:17F0H         LINE#         308
+  C:1800H         LINE#         309
+  C:1819H         LINE#         310
+  C:1835H         LINE#         311
+  C:1856H         LINE#         316
+  C:1862H         LINE#         317
+  C:1872H         LINE#         318
+  C:1892H         LINE#         322
+  C:18B9H         LINE#         324
+  C:18C2H         LINE#         325
+  C:18D9H         LINE#         326
+  C:18E3H         LINE#         327
+  C:18EDH         LINE#         328
+  C:18F7H         LINE#         329
+  C:1901H         LINE#         330
+  C:1908H         LINE#         350
+  C:190DH         LINE#         351
+  C:1916H         LINE#         353
+  C:1929H         LINE#         356
+  C:1932H         LINE#         357
+  C:1958H         LINE#         358
+  -------         ENDPROC       MMC_GET_VOLUME_INFO
+  -------         PROC          _MMC_WRITE_SECTOR
+  X:0363H         SYMBOL        addr
+  X:0367H         SYMBOL        Buffer
+  -------         DO            Buffer
+  X:036AH         SYMBOL        tmp
+  X:036BH         SYMBOL        retry
+  X:036CH         SYMBOL        i
+  X:036EH         SYMBOL        CMD
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 14
+
+
+  -------         ENDDO         CMD
+  C:1961H         LINE#         369
+  C:1972H         LINE#         371
+  C:1972H         LINE#         375
+  C:1985H         LINE#         376
+  C:198EH         LINE#         377
+  C:1990H         LINE#         378
+  C:19A9H         LINE#         380
+  C:19C5H         LINE#         381
+  C:19E2H         LINE#         382
+  C:19FFH         LINE#         385
+  C:1A08H         LINE#         386
+  C:1A0DH         LINE#         388
+  C:1A0DH         LINE#         389
+  C:1A1BH         LINE#         390
+  C:1A1FH         LINE#         391
+  C:1A23H         LINE#         392
+  C:1A23H         LINE#         393
+  C:1A29H         LINE#         394
+  C:1A29H         LINE#         395
+  C:1A29H         LINE#         396
+  C:1A2FH         LINE#         399
+  C:1A38H         LINE#         400
+  C:1A3FH         LINE#         401
+  C:1A3FH         LINE#         402
+  C:1A42H         LINE#         403
+  C:1A5FH         LINE#         406
+  C:1A68H         LINE#         407
+  C:1A6DH         LINE#         410
+  C:1A76H         LINE#         411
+  C:1A7DH         LINE#         412
+  C:1A7DH         LINE#         413
+  C:1A83H         LINE#         414
+  C:1A9AH         LINE#         417
+  C:1A9FH         LINE#         418
+  C:1AA4H         LINE#         421
+  C:1AACH         LINE#         422
+  C:1AB2H         LINE#         423
+  C:1AB2H         LINE#         424
+  C:1AB4H         LINE#         425
+  C:1AB7H         LINE#         426
+  C:1AB7H         LINE#         428
+  C:1AC0H         LINE#         429
+  C:1AC6H         LINE#         432
+  C:1ACFH         LINE#         433
+  C:1AD1H         LINE#         434
+  C:1ADAH         LINE#         435
+  C:1ADCH         LINE#         436
+  -------         ENDPROC       _MMC_WRITE_SECTOR
+  -------         PROC          _MMC_START_READ_SECTOR
+  X:03ABH         SYMBOL        sector
+  -------         DO            sector
+  X:03AFH         SYMBOL        retry
+  X:03B0H         SYMBOL        CMD
+  D:0006H         SYMBOL        temp
+  -------         ENDDO         temp
+  C:202DH         LINE#         440
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 15
+
+
+  C:2033H         LINE#         442
+  C:2033H         LINE#         445
+  C:2046H         LINE#         448
+  C:2048H         LINE#         450
+  C:2061H         LINE#         452
+  C:207DH         LINE#         453
+  C:209AH         LINE#         454
+  C:20B7H         LINE#         456
+  C:20BCH         LINE#         458
+  C:20BCH         LINE#         459
+  C:20C7H         LINE#         460
+  C:20CDH         LINE#         461
+  C:20D1H         LINE#         462
+  C:20D1H         LINE#         463
+  C:20D4H         LINE#         464
+  C:20D4H         LINE#         465
+  C:20D4H         LINE#         466
+  C:20D7H         LINE#         470
+  C:20DDH         LINE#         471
+  C:20DFH         LINE#         472
+  -------         ENDPROC       _MMC_START_READ_SECTOR
+  -------         PROC          _MMC_GET_DATA
+  X:03FDH         SYMBOL        Bytes
+  X:03FFH         SYMBOL        buffer
+  -------         DO            buffer
+  X:0402H         SYMBOL        j
+  -------         ENDDO         j
+  C:235BH         LINE#         475
+  C:236CH         LINE#         477
+  C:236CH         LINE#         479
+  C:236EH         LINE#         480
+  C:2391H         LINE#         481
+  C:2391H         LINE#         482
+  C:23A8H         LINE#         483
+  C:23B6H         LINE#         484
+  C:23C6H         LINE#         485
+  C:23D2H         LINE#         486
+  C:23D2H         LINE#         487
+  C:23D5H         LINE#         488
+  C:23D8H         LINE#         489
+  C:23DFH         LINE#         490
+  C:23E5H         LINE#         491
+  C:23EAH         LINE#         493
+  C:23ECH         LINE#         494
+  C:23ECH         LINE#         495
+  -------         ENDPROC       _MMC_GET_DATA
+  -------         PROC          _MMC_GET_DATA_LBA
+  X:03DCH         SYMBOL        lba
+  X:03E0H         SYMBOL        Bytes
+  X:03E2H         SYMBOL        buffer
+  C:28D4H         LINE#         498
+  C:28DAH         LINE#         500
+  C:28DAH         LINE#         502
+  C:28F5H         LINE#         503
+  -------         ENDPROC       _MMC_GET_DATA_LBA
+  -------         PROC          MMC_LBA_CLOSE
+  -------         DO            MMC_LBA_CLOSE
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 16
+
+
+  X:0437H         SYMBOL        temp
+  -------         ENDDO         temp
+  C:293AH         LINE#         507
+  C:293AH         LINE#         509
+  C:293AH         LINE#         511
+  C:295BH         LINE#         512
+  C:295BH         LINE#         513
+  C:2968H         LINE#         514
+  C:296AH         LINE#         515
+  -------         ENDPROC       MMC_LBA_CLOSE
+  -------         PROC          _MMC_GOTOSECTOROFFSET
+  X:0404H         SYMBOL        LBA
+  X:0408H         SYMBOL        offset
+  -------         DO            offset
+  X:040AH         SYMBOL        temp
+  -------         ENDDO         temp
+  C:2850H         LINE#         518
+  C:2856H         LINE#         520
+  C:2856H         LINE#         523
+  C:2859H         LINE#         524
+  C:2893H         LINE#         525
+  -------         ENDPROC       _MMC_GOTOSECTOROFFSET
+  C:2437H         SYMBOL        L?0232
+  C:2441H         SYMBOL        L?0233
+  C:244CH         SYMBOL        L?0234
+  -------         PROC          L?0231
+  -------         ENDPROC       L?0231
+  C:2437H         SYMBOL        L?0232
+  C:2441H         SYMBOL        L?0233
+  C:244CH         SYMBOL        L?0234
+  -------         PROC          _FAT32_READSECTOR
+  D:0004H         SYMBOL        LBA
+  X:0433H         SYMBOL        buf
+  C:2452H         LINE#         134
+  C:245DH         LINE#         135
+  C:245DH         LINE#         136
+  C:2472H         LINE#         137
+  C:247DH         LINE#         138
+  -------         ENDPROC       _FAT32_READSECTOR
+  -------         PROC          _FAT32_WRITESECTOR
+  D:0004H         SYMBOL        LBA
+  D:0001H         SYMBOL        buf
+  C:2A72H         LINE#         140
+  C:2A72H         LINE#         141
+  C:2A72H         LINE#         142
+  C:2A75H         LINE#         143
+  -------         ENDPROC       _FAT32_WRITESECTOR
+  C:1F5FH         SYMBOL        L?0238
+  -------         PROC          L?0237
+  -------         ENDPROC       L?0237
+  C:1F5FH         SYMBOL        L?0238
+  -------         PROC          _LB2BB
+  X:0392H         SYMBOL        dat
+  X:0395H         SYMBOL        len
+  -------         DO            len
+  X:0396H         SYMBOL        temp
+  X:039AH         SYMBOL        fact
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 17
+
+
+  X:039EH         SYMBOL        i
+  -------         ENDDO         i
+  C:1F65H         LINE#         145
+  C:1F73H         LINE#         146
+  C:1F73H         LINE#         147
+  C:1F7BH         LINE#         148
+  C:1F85H         LINE#         149
+  C:1F8AH         LINE#         150
+  C:1F9BH         LINE#         151
+  C:1F9BH         LINE#         152
+  C:1FF8H         LINE#         153
+  C:2015H         LINE#         154
+  C:201EH         LINE#         155
+  C:202CH         LINE#         156
+  -------         ENDPROC       _LB2BB
+  -------         PROC          FAT32_FINDBPB
+  C:29DEH         LINE#         158
+  C:29DEH         LINE#         159
+  C:29DEH         LINE#         170
+  C:29EFH         LINE#         171
+  C:29FAH         LINE#         172
+  -------         ENDPROC       FAT32_FINDBPB
+  -------         PROC          FAT32_GET_TOTAL_SIZE
+  C:296BH         LINE#         174
+  C:296BH         LINE#         175
+  C:296BH         LINE#         176
+  C:2977H         LINE#         177
+  C:2994H         LINE#         178
+  -------         ENDPROC       FAT32_GET_TOTAL_SIZE
+  -------         PROC          _FAT32_INIT
+  X:0412H         SYMBOL        arg
+  -------         DO            arg
+  X:0415H         SYMBOL        bpb
+  -------         ENDDO         bpb
+  C:15D1H         LINE#         180
+  C:15DCH         LINE#         181
+  C:15DCH         LINE#         182
+  C:15E8H         LINE#         183
+  C:15FAH         LINE#         184
+  C:160EH         LINE#         185
+  C:1637H         LINE#         186
+  C:165DH         LINE#         187
+  C:1680H         LINE#         188
+  C:16A9H         LINE#         189
+  C:16F6H         LINE#         190
+  C:1716H         LINE#         191
+  C:173BH         LINE#         192
+  C:178CH         LINE#         193
+  -------         ENDPROC       _FAT32_INIT
+  -------         PROC          FAT32_ENTERROOTDIR
+  -------         DO            FAT32_ENTERROOTDIR
+  X:03F5H         SYMBOL        iRootDirSector
+  X:03F9H         SYMBOL        iDir
+  D:0001H         SYMBOL        pDir
+  -------         ENDDO         pDir
+  C:1E71H         LINE#         196
+  C:1E71H         LINE#         197
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 18
+
+
+  C:1E71H         LINE#         201
+  C:1EBFH         LINE#         202
+  C:1EBFH         LINE#         203
+  C:1ED0H         LINE#         204
+  C:1EF9H         LINE#         205
+  C:1EF9H         LINE#         206
+  C:1F09H         LINE#         207
+  C:1F18H         LINE#         208
+  C:1F18H         LINE#         209
+  C:1F1BH         LINE#         210
+  C:1F1BH         LINE#         211
+  C:1F3CH         LINE#         212
+  C:1F5EH         LINE#         213
+  -------         ENDPROC       FAT32_ENTERROOTDIR
+  -------         PROC          _FAT32_COPYNAME
+  X:0418H         SYMBOL        Dname
+  X:041BH         SYMBOL        filename
+  -------         DO            filename
+  D:0007H         SYMBOL        i
+  -------         ENDDO         i
+  C:269CH         LINE#         215
+  C:26A7H         LINE#         216
+  C:26A7H         LINE#         217
+  C:26A9H         LINE#         218
+  C:26A9H         LINE#         219
+  C:26A9H         LINE#         220
+  C:26D1H         LINE#         221
+  C:26D6H         LINE#         222
+  -------         ENDPROC       _FAT32_COPYNAME
+  -------         PROC          _FAT32_ENTERDIR
+  X:0374H         SYMBOL        path
+  -------         DO            path
+  X:0377H         SYMBOL        iDirSector
+  X:037BH         SYMBOL        iCurSector
+  X:037FH         SYMBOL        iDir
+  D:0001H         SYMBOL        pDir
+  D:0007H         SYMBOL        depth
+  D:0006H         SYMBOL        i
+  -------         ENDDO         i
+  C:1ADDH         LINE#         225
+  C:1AE8H         LINE#         226
+  C:1AE8H         LINE#         228
+  C:1AFCH         LINE#         232
+  C:1AFFH         LINE#         233
+  C:1B15H         LINE#         234
+  C:1B15H         LINE#         235
+  C:1B18H         LINE#         236
+  C:1B18H         LINE#         237
+  C:1B19H         LINE#         238
+  C:1B19H         LINE#         239
+  C:1B1AH         LINE#         240
+  C:1B1CH         LINE#         241
+  C:1B20H         LINE#         242
+  C:1B20H         LINE#         243
+  C:1B2FH         LINE#         244
+  C:1B2FH         LINE#         245
+  C:1B7DH         LINE#         246
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 19
+
+
+  C:1B7DH         LINE#         247
+  C:1B8EH         LINE#         248
+  C:1BB7H         LINE#         249
+  C:1BB7H         LINE#         250
+  C:1BC7H         LINE#         251
+  C:1BD6H         LINE#         252
+  C:1BD6H         LINE#         253
+  C:1BD9H         LINE#         254
+  C:1BD9H         LINE#         255
+  C:1BFAH         LINE#         256
+  C:1C1CH         LINE#         257
+  -------         ENDPROC       _FAT32_ENTERDIR
+  -------         PROC          _FAT32_COMPARENAME
+  X:0351H         SYMBOL        sname
+  X:0354H         SYMBOL        dname
+  -------         DO            dname
+  D:0006H         SYMBOL        i
+  D:0007H         SYMBOL        j
+  X:0357H         SYMBOL        name_temp
+  -------         ENDDO         name_temp
+  C:2189H         LINE#         259
+  C:2194H         LINE#         260
+  C:2194H         LINE#         261
+  C:2196H         LINE#         263
+  C:21A3H         LINE#         264
+  C:21A8H         LINE#         265
+  C:21A9H         LINE#         266
+  C:21C1H         LINE#         267
+  C:21C1H         LINE#         268
+  C:21CDH         LINE#         269
+  C:21CEH         LINE#         270
+  C:21D0H         LINE#         271
+  C:21D1H         LINE#         272
+  C:21E7H         LINE#         273
+  C:21E7H         LINE#         274
+  C:21F6H         LINE#         275
+  C:21F7H         LINE#         276
+  C:21F9H         LINE#         278
+  C:21FBH         LINE#         279
+  C:21FBH         LINE#         280
+  C:2220H         LINE#         281
+  C:2225H         LINE#         283
+  C:2227H         LINE#         284
+  -------         ENDPROC       _FAT32_COMPARENAME
+  -------         PROC          _FAT32_GETNEXTCLUSTER
+  X:040BH         SYMBOL        LastCluster
+  -------         DO            LastCluster
+  D:0004H         SYMBOL        temp
+  X:040FH         SYMBOL        pFAT
+  D:0001H         SYMBOL        pFAT_Item
+  -------         ENDDO         pFAT_Item
+  C:25DBH         LINE#         286
+  C:25E1H         LINE#         287
+  C:25E1H         LINE#         291
+  C:25FBH         LINE#         292
+  C:25FEH         LINE#         293
+  C:260CH         LINE#         294
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 20
+
+
+  C:2637H         LINE#         295
+  C:263CH         LINE#         296
+  -------         ENDPROC       _FAT32_GETNEXTCLUSTER
+  -------         PROC          _FAT32_OPENFILE
+  X:033DH         SYMBOL        filepath
+  -------         DO            filepath
+  X:0340H         SYMBOL        depth
+  D:0006H         SYMBOL        i
+  X:0341H         SYMBOL        index
+  X:0342H         SYMBOL        iFileSec
+  X:0346H         SYMBOL        iCurFileSec
+  X:034AH         SYMBOL        iFile
+  X:034EH         SYMBOL        pFile
+  D:0007H         SYMBOL        len
+  -------         ENDDO         len
+  C:116DH         LINE#         298
+  C:1178H         LINE#         299
+  C:1178H         LINE#         300
+  C:117BH         LINE#         304
+  C:117EH         LINE#         305
+  C:1185H         LINE#         306
+  C:1185H         LINE#         307
+  C:119BH         LINE#         308
+  C:119BH         LINE#         309
+  C:11A1H         LINE#         310
+  C:11A5H         LINE#         311
+  C:11A5H         LINE#         312
+  C:11A8H         LINE#         313
+  C:11BCH         LINE#         314
+  C:11C8H         LINE#         315
+  C:1216H         LINE#         316
+  C:1216H         LINE#         317
+  C:1227H         LINE#         318
+  C:1253H         LINE#         319
+  C:1253H         LINE#         320
+  C:126BH         LINE#         321
+  C:12A9H         LINE#         322
+  C:12A9H         LINE#         327
+  C:12C4H         LINE#         328
+  C:12E5H         LINE#         329
+  C:132EH         LINE#         330
+  C:1340H         LINE#         331
+  C:1357H         LINE#         332
+  C:135EH         LINE#         333
+  C:136AH         LINE#         334
+  C:1371H         LINE#         335
+  C:1371H         LINE#         336
+  C:1393H         LINE#         337
+  C:13B5H         LINE#         338
+  -------         ENDPROC       _FAT32_OPENFILE
+  -------         PROC          _FAT32_READFILE
+  X:0383H         SYMBOL        pstru
+  -------         DO            pstru
+  X:0386H         SYMBOL        Sub
+  X:038AH         SYMBOL        iSectorInCluster
+  X:038EH         SYMBOL        i
+  -------         ENDDO         i
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 21
+
+
+  C:0BA5H         LINE#         342
+  C:0BB0H         LINE#         343
+  C:0BB0H         LINE#         344
+  C:0BF0H         LINE#         345
+  C:0BFAH         LINE#         346
+  C:0C04H         LINE#         347
+  C:0C25H         LINE#         348
+  C:0C25H         LINE#         349
+  C:0C51H         LINE#         350
+  C:0C51H         LINE#         351
+  C:0C54H         LINE#         352
+  C:0C70H         LINE#         353
+  C:0CB0H         LINE#         354
+  C:0CD9H         LINE#         355
+  C:0CD9H         LINE#         356
+  C:0CDCH         LINE#         357
+  C:0CFDH         LINE#         358
+  C:0D1FH         LINE#         359
+  C:0D36H         LINE#         360
+  C:0D50H         LINE#         361
+  C:0D53H         LINE#         362
+  C:0D5DH         LINE#         363
+  C:0D7FH         LINE#         364
+  C:0D7FH         LINE#         365
+  C:0DE0H         LINE#         366
+  C:0DFCH         LINE#         367
+  C:0E3CH         LINE#         368
+  C:0E68H         LINE#         369
+  C:0E68H         LINE#         370
+  C:0E6BH         LINE#         371
+  C:0E8CH         LINE#         372
+  C:0E8CH         LINE#         373
+  C:0E8FH         LINE#         374
+  C:0EBBH         LINE#         375
+  C:0EBBH         LINE#         376
+  C:0EBEH         LINE#         377
+  C:0EDFH         LINE#         378
+  -------         ENDPROC       _FAT32_READFILE
+  -------         PROC          MAIN
+  C:2A44H         LINE#         7
+  C:2A44H         LINE#         8
+  C:2A44H         LINE#         10
+  C:2A47H         LINE#         11
+  C:2A47H         LINE#         12
+  C:2A47H         LINE#         13
+  C:2A50H         LINE#         14
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MP3PLAYER
+
+  -------         MODULE        ?C?FPADD
+  C:002DH         PUBLIC        ?C?FPADD
+  C:0029H         PUBLIC        ?C?FPSUB
+  -------         ENDMOD        ?C?FPADD
+
+  -------         MODULE        ?C?FPMUL
+  C:011EH         PUBLIC        ?C?FPMUL
+  -------         ENDMOD        ?C?FPMUL
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 22
+
+
+
+  -------         MODULE        ?C?FPCMP
+  C:0226H         PUBLIC        ?C?FPCMP
+  C:0224H         PUBLIC        ?C?FPCMP3
+  -------         ENDMOD        ?C?FPCMP
+
+  -------         MODULE        ?C?FPNEG
+  C:0291H         PUBLIC        ?C?FPNEG
+  -------         ENDMOD        ?C?FPNEG
+
+  -------         MODULE        ?C?FCAST
+  C:02ACH         PUBLIC        ?C?FCASTC
+  C:02A7H         PUBLIC        ?C?FCASTI
+  C:02A2H         PUBLIC        ?C?FCASTL
+  -------         ENDMOD        ?C?FCAST
+
+  -------         MODULE        ?C?CASTF
+  C:02E0H         PUBLIC        ?C?CASTF
+  -------         ENDMOD        ?C?CASTF
+
+  -------         MODULE        POW
+  X:03C0H         PUBLIC        ?_POW?BYTE
+  C:1C1DH         PUBLIC        _POW
+  -------         ENDMOD        POW
+
+  -------         MODULE        EXP
+  C:2260H         PUBLIC        _EXP
+  -------         ENDMOD        EXP
+
+  -------         MODULE        LOG
+  C:1D7CH         PUBLIC        _LOG
+  C:1D78H         PUBLIC        _LOG10
+  -------         ENDMOD        LOG
+
+  -------         MODULE        ?C?FPDIV
+  C:0364H         PUBLIC        ?C?FPDIV
+  -------         ENDMOD        ?C?FPDIV
+
+  -------         MODULE        ?C?COPY
+  C:051EH         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+
+  -------         MODULE        ?C?CLDPTR
+  C:0544H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:055DH         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CILDOPTR
+  C:058AH         PUBLIC        ?C?CILDOPTR
+  -------         ENDMOD        ?C?CILDOPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:05BDH         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 23
+
+
+
+  -------         MODULE        ?C?CSTOPTR
+  C:05CFH         PUBLIC        ?C?CSTOPTR
+  -------         ENDMOD        ?C?CSTOPTR
+
+  -------         MODULE        ?C?IMUL
+  C:05F1H         PUBLIC        ?C?IMUL
+  -------         ENDMOD        ?C?IMUL
+
+  -------         MODULE        ?C?SIDIV
+  C:0603H         PUBLIC        ?C?SIDIV
+  -------         ENDMOD        ?C?SIDIV
+
+  -------         MODULE        ?C?ILDIX
+  C:0639H         PUBLIC        ?C?ILDIX
+  -------         ENDMOD        ?C?ILDIX
+
+  -------         MODULE        ?C?ILDPTR
+  C:064FH         PUBLIC        ?C?ILDPTR
+  -------         ENDMOD        ?C?ILDPTR
+
+  -------         MODULE        ?C?ILDOPTR
+  C:067AH         PUBLIC        ?C?ILDOPTR
+  -------         ENDMOD        ?C?ILDOPTR
+
+  -------         MODULE        ?C?IILDOPTR
+  C:06B2H         PUBLIC        ?C?IILDOPTR
+  -------         ENDMOD        ?C?IILDOPTR
+
+  -------         MODULE        ?C?ISTPTR
+  C:06FFH         PUBLIC        ?C?ISTPTR
+  -------         ENDMOD        ?C?ISTPTR
+
+  -------         MODULE        ?C?ISTOPTR
+  C:071EH         PUBLIC        ?C?ISTOPTR
+  -------         ENDMOD        ?C?ISTOPTR
+
+  -------         MODULE        ?C?LMUL
+  C:074BH         PUBLIC        ?C?LMUL
+  -------         ENDMOD        ?C?LMUL
+
+  -------         MODULE        ?C?ULDIV
+  C:07D6H         PUBLIC        ?C?ULDIV
+  -------         ENDMOD        ?C?ULDIV
+
+  -------         MODULE        ?C?LNEG
+  C:0868H         PUBLIC        ?C?LNEG
+  -------         ENDMOD        ?C?LNEG
+
+  -------         MODULE        ?C?ULCMP
+  C:0876H         PUBLIC        ?C?ULCMP
+  -------         ENDMOD        ?C?ULCMP
+
+  -------         MODULE        ?C?ULSHR
+  C:0887H         PUBLIC        ?C?ULSHR
+  -------         ENDMOD        ?C?ULSHR
+
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 24
+
+
+  -------         MODULE        ?C?LSHL
+  C:089AH         PUBLIC        ?C?LSHL
+  -------         ENDMOD        ?C?LSHL
+
+  -------         MODULE        ?C?LLDOPTR
+  C:08ADH         PUBLIC        ?C?LLDOPTR
+  -------         ENDMOD        ?C?LLDOPTR
+
+  -------         MODULE        ?C?LSTOPTR
+  C:08DDH         PUBLIC        ?C?LSTOPTR
+  -------         ENDMOD        ?C?LSTOPTR
+
+  -------         MODULE        ?C?LLDCODE
+  C:0901H         PUBLIC        ?C?LLDCODE
+  -------         ENDMOD        ?C?LLDCODE
+
+  -------         MODULE        ?C?LLDXDATA0
+  C:0911H         PUBLIC        ?C?LLDXDATA0
+  -------         ENDMOD        ?C?LLDXDATA0
+
+  -------         MODULE        ?C?LLDCODE0
+  C:091DH         PUBLIC        ?C?LLDCODE0
+  -------         ENDMOD        ?C?LLDCODE0
+
+  -------         MODULE        ?C?LLDOPTR0
+  C:092DH         PUBLIC        ?C?LLDOPTR0
+  -------         ENDMOD        ?C?LLDOPTR0
+
+  -------         MODULE        ?C?LLDIXDATA
+  C:0966H         PUBLIC        ?C?LLDIXDATA
+  C:095DH         PUBLIC        ?C?LLDIXDATA1
+  C:095FH         PUBLIC        ?C?LLDIXDATA8
+  -------         ENDMOD        ?C?LLDIXDATA
+
+  -------         MODULE        ?C?LSTXDATA
+  C:0992H         PUBLIC        ?C?LSTXDATA
+  -------         ENDMOD        ?C?LSTXDATA
+
+  -------         MODULE        ?C?LSTKXDATA
+  C:099EH         PUBLIC        ?C?LSTKXDATA
+  -------         ENDMOD        ?C?LSTKXDATA
+
+  -------         MODULE        ?C?STRCPY
+  C:0A9BH         PUBLIC        ?C?STRCPY
+  -------         ENDMOD        ?C?STRCPY
+
+  -------         MODULE        STRLEN
+  C:2A11H         PUBLIC        _STRLEN
+  -------         ENDMOD        STRLEN
+
+  -------         MODULE        ?C?MEMSET
+  C:0AB8H         PUBLIC        ?C?MEMSET
+  -------         ENDMOD        ?C?MEMSET
+
+  -------         MODULE        ?C?UIDIV
+  C:0AE4H         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 25
+
+
+
+  -------         MODULE        ?C?IILDX
+  C:0B39H         PUBLIC        ?C?IILDX
+  -------         ENDMOD        ?C?IILDX
+
+  -------         MODULE        ?C?LLDIDATA
+  C:0B4FH         PUBLIC        ?C?LLDIDATA
+  -------         ENDMOD        ?C?LLDIDATA
+
+  -------         MODULE        ?C?LLDXDATA
+  C:0B5BH         PUBLIC        ?C?LLDXDATA
+  -------         ENDMOD        ?C?LLDXDATA
+
+  -------         MODULE        ?C?LLDPDATA
+  C:0B67H         PUBLIC        ?C?LLDPDATA
+  -------         ENDMOD        ?C?LLDPDATA
+
+  -------         MODULE        ?C?LLDIDATA0
+  C:0B73H         PUBLIC        ?C?LLDIDATA0
+  -------         ENDMOD        ?C?LLDIDATA0
+
+  -------         MODULE        ?C?LLDPDATA0
+  C:0B80H         PUBLIC        ?C?LLDPDATA0
+  -------         ENDMOD        ?C?LLDPDATA0
+
+  -------         MODULE        ?C?LSTIDATA
+  C:0B8DH         PUBLIC        ?C?LSTIDATA
+  -------         ENDMOD        ?C?LSTIDATA
+
+  -------         MODULE        ?C?LSTPDATA
+  C:0B99H         PUBLIC        ?C?LSTPDATA
+  -------         ENDMOD        ?C?LSTPDATA
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?MP3PLAYER
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?MP3PLAYER
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?MP3PLAYER
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_PUTHEX?MP3PLAYER
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MMC_INIT?MP3PLAYER
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MMC_GET_VOLUME_INFO?MP3PLAYER
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_MMC_GOTOSECTOROFFSET?MP3PLAYER
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_FAT32_WRITESECTOR?MP3PLAYER
+
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/27/2014  21:02:41  PAGE 26
+
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_FAT32_INIT?MP3PLAYER
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAT32_ENTERROOTDIR?MP3PLAYER
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_FAT32_COPYNAME?MP3PLAYER
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_FAT32_OPENFILE?MP3PLAYER
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_FAT32_READFILE?MP3PLAYER
+
+LINK/LOCATE RUN COMPLETE.  13 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,178 @@
+C51 COMPILER V6.12  DHT11                                                                  05/31/2014 19:36:57 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE DHT11
+OBJECT MODULE PLACED IN .\DHT11.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\DHT11.C DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h> 
+   3          #include <stdio.h>
+   4          #include <math.h>
+   5          #include "Serial.h"
+   6          
+   7          typedef unsigned char U8;
+   8          typedef unsigned int   U16;
+   9          U8 code table[]={0xc0,0xf9,0xa4,0xb0,
+  10                 0x99,0x92,0x82,0xf8,
+  11                 0x80,0x90,0x88,0x83,
+  12                 0xc6,0xa1};
+  13          sbit P2_0 = P2^2 ;
+  14          U8 U8FLAG,U8temp;
+  15          U8 shidu_shi,shidu_ge,wendu_shi,wendu_ge;
+  16          U8 U8T_data_H,U8T_data_L,U8RH_data_H,U8RH_data_L,U8checkdata;
+  17          U8 U8T_data_H_temp,U8T_data_L_temp,U8RH_data_H_temp,U8RH_data_L_temp,U8checkdata_temp;
+  18          U8 U8comdata;
+  19          U8 xdata buff[20];
+  20          float temperature,humidity;
+  21          void Delay(U16 z)
+  22          {
+  23   1      U8 x,y;
+  24   1      for(x=z;x>0;x--)
+  25   1         for(y=110;y>0;y--);
+  26   1      }
+  27          
+  28          void Delay_10us(void)
+  29             {
+  30   1           U8 i;
+  31   1           i--;
+  32   1           i--;
+  33   1           i--;
+  34   1           i--;
+  35   1           i--;
+  36   1           i--;
+  37   1          }
+  38          
+  39          void COM(void)
+  40          {     
+  41   1          U8 i;         
+  42   1          for(i=0;i<8;i++)    
+  43   1          {
+  44   2      
+  45   2           U8FLAG=2; 
+  46   2           while((!P2_0)&&U8FLAG++);
+  47   2          Delay_10us();
+  48   2           Delay_10us();
+  49   2           Delay_10us();
+  50   2         U8temp=0;
+  51   2           if(P2_0)U8temp=1;
+  52   2           U8FLAG=2;
+  53   2          while((P2_0)&&U8FLAG++);   
+  54   2           if(U8FLAG==1)break;    
+  55   2           U8comdata<<=1;
+C51 COMPILER V6.12  DHT11                                                                  05/31/2014 19:36:57 PAGE 2   
+
+  56   2           U8comdata|=U8temp; 
+  57   2           }    
+  58   1      }
+  59          //
+  60          //
+  61          float ToDem(uchar x)
+  62          {
+  63   1      	int i=0;
+  64   1      	float y=0;
+  65   1      	unsigned char m=0x01;
+  66   1      	if((x&m)==m)
+  67   1      		y=1;
+  68   1      	for(i=1;i<8;i++)
+  69   1      	{
+  70   2      		m=m<<1;
+  71   2      		if((x&m)==m)
+  72   2      			y=y+pow(2.0,i);
+  73   2      	//	printf("%f,%d\n",y,m);
+  74   2      	}
+  75   1      	return y;
+  76   1      }
+  77          
+  78          //
+  79          float binToDem(uchar x)
+  80          {
+  81   1      	float y=0;
+  82   1      	uchar i,m;
+  83   1      	m=0x80;	
+  84   1      	for(i=0;i<4;i++)
+  85   1      	{
+  86   2      		if((x&(m>>i))>0)
+  87   2      			y=y+1/pow(2.0,i+1);
+  88   2      	}
+  89   1      	return y;
+  90   1      }
+  91          //-----------------------
+  92          void RH(void)
+  93          {
+  94   1            P2_0=0;
+  95   1          Delay(34);
+  96   1          P2_0=1;
+  97   1          Delay_10us();
+  98   1          Delay_10us();
+  99   1          Delay_10us();
+ 100   1          Delay_10us();
+ 101   1          P2_0=1;   
+ 102   1           if(!P2_0) 
+ 103   1           {
+ 104   2            U8FLAG=2; 
+ 105   2            while((!P2_0)&&U8FLAG++);
+ 106   2            U8FLAG=2;
+ 107   2            while((P2_0)&&U8FLAG++); 
+ 108   2            COM();
+ 109   2            U8RH_data_H_temp=U8comdata;
+ 110   2      	  //P1=U8RH_data_H_temp;//
+ 111   2            COM();
+ 112   2            U8RH_data_L_temp=U8comdata;
+ 113   2            COM();
+ 114   2            U8T_data_H_temp=U8comdata;
+ 115   2      	  //
+ 116   2      	  //P1=U8T_data_H_temp;
+ 117   2            COM();
+C51 COMPILER V6.12  DHT11                                                                  05/31/2014 19:36:57 PAGE 3   
+
+ 118   2            U8T_data_L_temp=U8comdata;
+ 119   2      	  P1=U8T_data_L_temp;
+ 120   2            COM();
+ 121   2            U8checkdata_temp=U8comdata;
+ 122   2            P2_0=1; 
+ 123   2            U8temp=(U8T_data_H_temp+U8T_data_L_temp+U8RH_data_H_temp+U8RH_data_L_temp);
+ 124   2             if(U8temp==U8checkdata_temp)
+ 125   2             {
+ 126   3                U8RH_data_H=U8RH_data_H_temp;
+ 127   3                U8RH_data_L=U8RH_data_L_temp;
+ 128   3                U8T_data_H=U8T_data_H_temp;
+ 129   3                U8T_data_L=U8T_data_L_temp;
+ 130   3                U8checkdata=U8checkdata_temp;
+ 131   3      		  humidity=ToDem(U8RH_data_H_temp)+binToDem(U8RH_data_L_temp);
+ 132   3      		  temperature=ToDem(U8T_data_H_temp)+binToDem(U8T_data_L_temp);
+ 133   3      		 // temperature=(int)U8RH_data_H_temp;
+ 134   3      		 // humidity=(int)U8T_data_H_temp;
+ 135   3      		  sprintf(buff,"%2.2f,%2.2f;",temperature,humidity);
+ 136   3             }    
+ 137   2          }
+ 138   1          //display(shidu_shi,shidu_ge,wendu_shi,wendu_ge);
+ 139   1      }
+ 140          
+ 141          
+ 142          void main()
+ 143          {
+ 144   1      	SerialInit();
+ 145   1      	while(1)
+ 146   1      	{ 
+ 147   2      	    RH();
+ 148   2      		SerialPutString(buff);
+ 149   2      	}
+ 150   1      
+ 151   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    887    ----
+   CONSTANT SIZE    =     27    ----
+   XDATA SIZE       =     20    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     61      24
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

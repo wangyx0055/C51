@@ -1,0 +1,48 @@
+C51 COMPILER V6.12  ______                                                                 09/23/2013 11:32:37 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE ______
+OBJECT MODULE PLACED IN .\闪烁灯.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\闪烁灯.C DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2            /*************************************************************************************
+   3            　  第一行是一个"文件包含"处理。
+   4          　　所谓"文件包含"是指一个文件将另外一个文件的内容全部包含进来
+   5           这里的程序虽然只有4行，但C编译器在处理的时候却要处理几十或几百行
+   6          *****************************************************************************/
+   7          sbit P1_0=P1^0;                   //定义IO口
+   8          void delay02s(void)               //延时0.2秒子程序
+   9                   {
+  10   1                 unsigned char i,j,k;  //定义3个无符号字符型数据。
+  11   1                 for(i=20;i>0;i--)     //作循环延时
+  12   1                 for(j=20;j>0;j--)
+  13   1                 for(k=248;k>0;k--);
+  14   1                }
+  15            void main(void)   //每一个C语言程序有且只有一个主函数，
+  16            {
+  17   1      	  while(1)   //循环条件永远为真，以下程序一直执行下去。
+  18   1          {
+  19   2           P1_0=0;     // I/O口P1.0输出低电平，小灯被点亮。
+  20   2           delay02s();  //延时经过0.2秒。
+  21   2           P1_0=1;     // I/O口P1.0输出高电平，小灯熄灭。
+  22   2           delay02s();  //延时经过0.2秒。
+  23   2           }
+  24   1        }
+  25          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     25    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,50 @@
+C51 COMPILER V6.12  TEST                                                                   05/27/2014 12:56:21 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <string.h>
+   2          #include "Serial.h"
+   3          
+   4          unsigned char buff1[32];
+   5          unsigned char val;
+   6          void main()
+   7          {
+   8   1      	SerialInit();
+   9   1      	memset(buff1,0x00,32);
+  10   1      	SerialPutString("hello world!");
+  11   1      	while(1)
+  12   1      	{
+  13   2      		if(SerailRevCheck()>0)
+  14   2      		{
+  15   3      			//val=SerialGetDataLen();
+  16   3      			SerialRevData(buff1);
+  17   3      			SerialPutString(buff1);
+  18   3      			val=SerialGetDataLen();
+  19   3      			val+=48;
+  20   3      			SerialPutString(&val);
+  21   3      		//	buff1[0]=41+val;
+  22   3      		//	buff1[1]='\0';
+  23   3      		//	SerialPutString(buff1);
+  24   3      			P1=0x00;
+  25   3      		}
+  26   2      	}		
+  27   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    337    ----
+   CONSTANT SIZE    =     13    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     69       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

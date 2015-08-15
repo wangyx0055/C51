@@ -1,0 +1,3 @@
+"sdtest.obj" 
+TO "sdtest" 
+RAMSIZE(256) 

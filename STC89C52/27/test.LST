@@ -1,0 +1,268 @@
+C51 COMPILER V6.12  TEST                                                                   10/23/2013 21:18:13 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #define uint unsigned int
+   3          #define uchar unsigned char
+   4          uchar temp,aa,bai,shi,ge;
+   5          sbit dula=P2^6;
+   6          sbit wela=P2^7;
+   7          sbit sda=P2^0;
+   8          sbit scl=P2^1;
+   9          uchar a;
+  10          uchar code table[]={
+  11          0x3f,0x06,0x5b,0x4f,
+  12          0x66,0x6d,0x7d,0x07,
+  13          0x7f,0x6f,0x77,0x7c,
+  14          0x39,0x5e,0x79,0x71};
+  15          void display(uchar bai,uchar shi,uchar ge);
+  16          void delay2(uint z);
+  17          void init();
+  18          void delay();
+  19          void start();
+  20          void stop();
+  21          void respons();
+  22          uchar read_byte();
+  23          void write_byte(uchar date);
+  24          void delay1(uchar x);
+  25          void write_add(uchar address,uchar date);
+  26          uchar read_add(uchar address);
+  27          void main()
+  28          {	
+  29   1      	init();//初始化子程序
+  30   1      	while(1)
+  31   1      	{
+  32   2      		if(aa==10)
+  33   2      		  {
+  34   3      			aa=0;
+  35   3      			temp++;
+  36   3      			if(temp==1000)
+  37   3      			   {
+  38   4      					temp=0;
+  39   4      			   }
+  40   3      			bai=temp/100;
+  41   3      			shi=temp%100/10;
+  42   3      			ge=temp%10;
+  43   3      			write_add(23,bai);
+  44   3      			delay1(10);
+  45   3      			write_add(24,shi);
+  46   3      			delay1(10);
+  47   3      			write_add(25,ge);
+  48   3      			delay1(10);
+  49   3      		  }
+  50   2      		  bai=read_add(23);
+  51   2      		  delay1(10);
+  52   2      		  shi=read_add(24);
+  53   2      		  delay1(10);
+  54   2      		  ge=read_add(25);
+  55   2      		  delay1(10);
+C51 COMPILER V6.12  TEST                                                                   10/23/2013 21:18:13 PAGE 2   
+
+  56   2      		  display(bai,shi,ge);
+  57   2      	}
+  58   1      }
+  59          
+  60          void delay2(uint z)
+  61          {
+  62   1      	uint x,y;
+  63   1      	for(x=z;x>0;x--)
+  64   1      		for(y=110;y>0;y--);
+  65   1      }
+  66          
+  67          void display(uchar bai,uchar shi,uchar ge)
+  68          {
+  69   1              dula=1;
+  70   1      		P0=table[bai];
+  71   1      		dula=0;
+  72   1      		P0=0xff;
+  73   1      		wela=1;
+  74   1      		P0=0xfe;
+  75   1      		wela=0;
+  76   1      		delay2(1);
+  77   1      
+  78   1      		dula=1;
+  79   1      		P0=table[shi];
+  80   1      		dula=0;
+  81   1      		P0=0xff;
+  82   1      		wela=1;
+  83   1      		P0=0xfd;
+  84   1      		wela=0;
+  85   1      		delay2(1);
+  86   1      
+  87   1      		dula=1;
+  88   1      		P0=table[ge];
+  89   1      		dula=0;
+  90   1      		P0=0xff;
+  91   1      		wela=1;
+  92   1      		P0=0xfb;
+  93   1      		wela=0;
+  94   1      		delay2(1);
+  95   1      }
+  96          
+  97          void init()
+  98          {	
+  99   1      	wela=0;
+ 100   1      	dula=0;
+ 101   1      	//temp=0;
+ 102   1      	TMOD=0x01;
+ 103   1      	TH0=(65536-50000)/256;
+ 104   1      	TL0=(65536-50000)%256;
+ 105   1      	EA=1;
+ 106   1      	ET0=1;
+ 107   1      	TR0=1;	
+ 108   1      
+ 109   1      	sda=1;
+ 110   1      	delay();
+ 111   1      	scl=1;
+ 112   1      	delay();
+ 113   1      
+ 114   1      	bai=read_add(23);
+ 115   1      	delay1(10);
+ 116   1      	shi=read_add(24);
+ 117   1      	delay1(10);
+C51 COMPILER V6.12  TEST                                                                   10/23/2013 21:18:13 PAGE 3   
+
+ 118   1      	ge=read_add(25);
+ 119   1      	delay1(10);
+ 120   1      	temp=bai*100+shi*10+ge;
+ 121   1      }
+ 122          
+ 123          void timer0() interrupt 1
+ 124          {
+ 125   1      	TH0=(65536-50000)/256;
+ 126   1      	TL0=(65536-50000)%256;
+ 127   1      	aa++;	
+ 128   1      }
+ 129          void delay()
+ 130          { ;; }
+ 131          void start()  //开始信号
+ 132          {	
+ 133   1      	sda=1;
+ 134   1      	delay();
+ 135   1      	scl=1;
+ 136   1      	delay();
+ 137   1      	sda=0;
+ 138   1      	delay();
+ 139   1      }
+ 140          
+ 141          void stop()   //停止
+ 142          {
+ 143   1      	sda=0;
+ 144   1      	delay();
+ 145   1      	scl=1;
+ 146   1      	delay();
+ 147   1      	sda=1;
+ 148   1      	delay();
+ 149   1      }
+ 150          
+ 151          void respons()  //应答
+ 152          {
+ 153   1      	uchar i;
+ 154   1      	scl=1;
+ 155   1      	delay();
+ 156   1      	while((sda==1)&&(i<250))i++;
+ 157   1      	scl=0;
+ 158   1      	delay();
+ 159   1      }
+ 160          
+ 161          void write_byte(uchar date)
+ 162          {
+ 163   1      	uchar i,temp;
+ 164   1      	temp=date;
+ 165   1      
+ 166   1      
+ 167   1      	for(i=0;i<8;i++)
+ 168   1      	{
+ 169   2      		temp=temp<<1;
+ 170   2      		scl=0;
+ 171   2      	    delay();
+ 172   2      		sda=CY;
+ 173   2      		delay();
+ 174   2      		scl=1;
+ 175   2      		delay();
+ 176   2      	//	scl=0;
+ 177   2           //   delay();
+ 178   2      	}
+ 179   1      	scl=0;
+C51 COMPILER V6.12  TEST                                                                   10/23/2013 21:18:13 PAGE 4   
+
+ 180   1      	delay();
+ 181   1      	sda=1;
+ 182   1      	delay();
+ 183   1      }
+ 184          
+ 185          uchar read_byte()
+ 186          {
+ 187   1      	uchar i,k;
+ 188   1      	scl=0;
+ 189   1      	delay();
+ 190   1      	sda=1;
+ 191   1      	delay();
+ 192   1      	for(i=0;i<8;i++)
+ 193   1      	{
+ 194   2      		scl=1;
+ 195   2      		delay();	
+ 196   2      		k=(k<<1)|sda;
+ 197   2      		scl=0;
+ 198   2      		delay();	
+ 199   2      	}
+ 200   1      	return k;
+ 201   1      }
+ 202          
+ 203          void delay1(uchar x)
+ 204          {
+ 205   1      	uchar a,b;
+ 206   1      	for(a=x;a>0;a--)
+ 207   1      	 for(b=100;b>0;b--);
+ 208   1      }
+ 209          
+ 210          void write_add(uchar address,uchar date)
+ 211          {
+ 212   1      	start();
+ 213   1      	write_byte(0xa0);
+ 214   1      	respons();
+ 215   1      	write_byte(address);
+ 216   1      	respons();
+ 217   1      	write_byte(date);
+ 218   1      	respons();
+ 219   1      	stop();
+ 220   1      }
+ 221          
+ 222          uchar read_add(uchar address)
+ 223          {
+ 224   1      	uchar date;
+ 225   1      	start();
+ 226   1      	write_byte(0xa0);
+ 227   1      	respons();
+ 228   1      	write_byte(address);
+ 229   1      	respons();
+ 230   1      	start();
+ 231   1      	write_byte(0xa1);
+ 232   1      	respons();
+ 233   1      	date=read_byte();
+ 234   1      	stop();
+ 235   1      	return date;
+ 236   1      }
+ 237          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    522    ----
+C51 COMPILER V6.12  TEST                                                                   10/23/2013 21:18:13 PAGE 5   
+
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

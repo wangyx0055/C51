@@ -1,0 +1,197 @@
+C51 COMPILER V6.12  TEST                                                                   09/29/2013 20:15:02 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #define uint unsigned int
+   3          #define uchar unsigned char
+   4          sbit dula=P2^6;
+   5          sbit wela=P2^7;
+   6          sbit key1=P3^4;
+   7          uchar code table[]={
+   8          0x3f,0x06,0x5b,0x4f,
+   9          0x66,0x6d,0x7d,0x07,
+  10          0x7f,0x6f,0x77,0x7c,
+  11          0x39,0x5e,0x79,0x71,0};
+  12          uchar num,temp,num1;
+  13          void delay(uint z)
+  14          {
+  15   1      	uint x,y;
+  16   1      	for(x=z;x>0;x--)
+  17   1      		for(y=110;y>0;y--);
+  18   1      }
+  19          uchar keyscan();
+  20          void display(uchar aa);
+  21          void main()
+  22          {
+  23   1      	num=17;
+  24   1      	dula=1;
+  25   1      	P0=0;
+  26   1      	dula=0;
+  27   1      	wela=1;
+  28   1      	P0=0xc0;
+  29   1      	wela=0;
+  30   1      	
+  31   1      	while(1)
+  32   1      		{
+  33   2      			display(keyscan());
+  34   2      		}
+  35   1      }
+  36          void display(uchar aa)
+  37          {
+  38   1      			dula=1;
+  39   1      			P0=table[aa-1];
+  40   1      			dula=0;		
+  41   1      }
+  42          uchar keyscan()
+  43          {
+  44   1      			P3=0xfe;
+  45   1      			temp=P3;
+  46   1      			temp=temp&0xf0;
+  47   1      			while(temp!=0xf0)
+  48   1      				{
+  49   2      					delay(5);
+  50   2      					temp=P3;
+  51   2      					temp=temp&0xf0;
+  52   2      					while(temp!=0xf0)
+  53   2      					{
+  54   3      						temp=P3;
+  55   3      					switch(temp)
+C51 COMPILER V6.12  TEST                                                                   09/29/2013 20:15:02 PAGE 2   
+
+  56   3      						{
+  57   4      							case 0xee:num=1;
+  58   4      								break;
+  59   4      							case 0xde:num=2;
+  60   4      								break;
+  61   4      							case 0xbe:num=3;
+  62   4      								break;
+  63   4      							case 0x7e:num=4;
+  64   4      								break;
+  65   4      						}
+  66   3      					while(temp!=0xf0)
+  67   3      						{
+  68   4      							temp=P3;
+  69   4      							temp=temp&0xf0;
+  70   4      						}
+  71   3      					}
+  72   2      				}
+  73   1      
+  74   1      			P3=0xfd;
+  75   1      			temp=P3;
+  76   1      			temp=temp&0xf0;
+  77   1      			while(temp!=0xf0)
+  78   1      				{
+  79   2      					delay(5);
+  80   2      					temp=P3;
+  81   2      					temp=temp&0xf0;
+  82   2      					while(temp!=0xf0)
+  83   2      					{
+  84   3      						temp=P3;
+  85   3      					switch(temp)
+  86   3      						{
+  87   4      							case 0xed:num=5;
+  88   4      								break;
+  89   4      							case 0xdd:num=6;
+  90   4      								break;
+  91   4      							case 0xbd:num=7;
+  92   4      								break;
+  93   4      							case 0x7d:num=8;
+  94   4      								break;
+  95   4      						}
+  96   3      					while(temp!=0xf0)
+  97   3      						{
+  98   4      							temp=P3;
+  99   4      							temp=temp&0xf0;
+ 100   4      						}
+ 101   3      					}
+ 102   2      				}
+ 103   1      
+ 104   1      
+ 105   1      			P3=0xfb;
+ 106   1      			temp=P3;
+ 107   1      			temp=temp&0xf0;
+ 108   1      			while(temp!=0xf0)
+ 109   1      				{
+ 110   2      					delay(5);
+ 111   2      					temp=P3;
+ 112   2      					temp=temp&0xf0;
+ 113   2      					while(temp!=0xf0)
+ 114   2      					{
+ 115   3      						temp=P3;
+ 116   3      					switch(temp)
+ 117   3      						{
+C51 COMPILER V6.12  TEST                                                                   09/29/2013 20:15:02 PAGE 3   
+
+ 118   4      							case 0xeb:num=9;
+ 119   4      								break;
+ 120   4      							case 0xdb:num=10;
+ 121   4      								break;
+ 122   4      							case 0xbb:num=11;
+ 123   4      								break;
+ 124   4      							case 0x7b:num=12;
+ 125   4      								break;
+ 126   4      						}
+ 127   3      					while(temp!=0xf0)
+ 128   3      						{
+ 129   4      							temp=P3;
+ 130   4      							temp=temp&0xf0;
+ 131   4      						}
+ 132   3      					}
+ 133   2      				}
+ 134   1      
+ 135   1      
+ 136   1      			P3=0xf7;
+ 137   1      			temp=P3;
+ 138   1      			temp=temp&0xf0;
+ 139   1      			while(temp!=0xf0)
+ 140   1      				{
+ 141   2      					delay(5);
+ 142   2      					temp=P3;
+ 143   2      					temp=temp&0xf0;
+ 144   2      					while(temp!=0xf0)
+ 145   2      					{
+ 146   3      						temp=P3;
+ 147   3      					switch(temp)
+ 148   3      						{
+ 149   4      							case 0xe7:num=13;
+ 150   4      								break;
+ 151   4      							case 0xd7:num=14;
+ 152   4      								break;
+ 153   4      							case 0xb7:num=15;
+ 154   4      								break;
+ 155   4      							case 0x77:num=16;
+ 156   4      								break;
+ 157   4      						}
+ 158   3      					while(temp!=0xf0)
+ 159   3      						{
+ 160   4      							temp=P3;
+ 161   4      							temp=temp&0xf0;
+ 162   4      						}
+ 163   3      					}
+ 164   2      				}
+ 165   1      return num;
+ 166   1      
+ 167   1      }
+ 168          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    406    ----
+   CONSTANT SIZE    =     17    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V6.12  TEST                                                                   09/29/2013 20:15:02 PAGE 4   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

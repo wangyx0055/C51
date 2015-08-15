@@ -1,0 +1,337 @@
+C51 COMPILER V6.12  TEMPERATURE                                                            04/26/2014 13:18:00 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEMPERATURE
+OBJECT MODULE PLACED IN .\temperature.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\temperature.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          #include <string.h>
+   4          #include <stdlib.h>
+   5          
+   6          #define uchar unsigned char
+   7          #define uint unsigned int
+   8          sbit DS=P2^2;           //define interface
+   9          sbit beep=P2^3;
+  10          uint temp;             // variable of temperature
+  11          float alarm=50.0;
+  12          uchar flag1,inbuff[10],buff[10],counter,start;            // sign of the result positive or negative
+  13          sbit dula=P2^6;
+  14          sbit wela=P2^7;
+  15          unsigned char code table[]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,
+  16                                  0x07,0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};
+  17          unsigned char code table1[]={0xbf,0x86,0xdb,0xcf,0xe6,0xed,0xfd,
+  18                                  0x87,0xff,0xef};
+  19          
+  20          void delay(uint count)      //delay
+  21          {
+  22   1        uint i;
+  23   1        while(count)
+  24   1        {
+  25   2          i=200;
+  26   2          while(i>0)
+  27   2          i--;
+  28   2          count--;
+  29   2        }
+  30   1      }
+  31          //功能:串口初始化,波特率9600，方式1
+  32          void Init_Com(void)
+  33          {
+  34   1           TMOD = 0x20;
+  35   1           PCON = 0x00;
+  36   1           SCON = 0x50;
+  37   1           TH1 = 0xFd;
+  38   1           TL1 = 0xFd;
+  39   1           TR1 = 1;
+  40   1      	 ES=1;
+  41   1      }
+  42          
+  43          void dsreset(void)       //send reset and initialization command
+  44          {
+  45   1        uint i;
+  46   1        DS=0;
+  47   1        i=103;
+  48   1        while(i>0)i--;
+  49   1        DS=1;
+  50   1        i=4;
+  51   1        while(i>0)i--;
+  52   1      }
+  53          
+  54          bit tmpreadbit(void)       //read a bit
+  55          {
+C51 COMPILER V6.12  TEMPERATURE                                                            04/26/2014 13:18:00 PAGE 2   
+
+  56   1         uint i;
+  57   1         bit dat;
+  58   1         DS=0;i++;          //i++ for delay
+  59   1         DS=1;i++;i++;
+  60   1         dat=DS;
+  61   1         i=8;while(i>0)i--;
+  62   1         return (dat);
+  63   1      }
+  64          
+  65          uchar tmpread(void)   //read a byte date
+  66          {
+  67   1        uchar i,j,dat;
+  68   1        dat=0;
+  69   1        for(i=1;i<=8;i++)
+  70   1        {
+  71   2          j=tmpreadbit();
+  72   2          dat=(j<<7)|(dat>>1);   //读出的数据最低位在最前面，这样刚好一个字节在DAT里
+  73   2        }
+  74   1        return(dat);
+  75   1      }
+  76          
+  77          void tmpwritebyte(uchar dat)   //write a byte to ds18b20
+  78          {
+  79   1        uint i;
+  80   1        uchar j;
+  81   1        bit testb;
+  82   1        for(j=1;j<=8;j++)
+  83   1        {
+  84   2          testb=dat&0x01;
+  85   2          dat=dat>>1;
+  86   2          if(testb)     //write 1
+  87   2          {
+  88   3            DS=0;
+  89   3            i++;i++;
+  90   3            DS=1;
+  91   3            i=8;while(i>0)i--;
+  92   3          }
+  93   2          else
+  94   2          {
+  95   3            DS=0;       //write 0
+  96   3            i=8;while(i>0)i--;
+  97   3            DS=1;
+  98   3            i++;i++;
+  99   3          }
+ 100   2      
+ 101   2        }
+ 102   1      }
+ 103          
+ 104          void tmpchange(void)  //DS18B20 begin change
+ 105          {
+ 106   1        dsreset();
+ 107   1        delay(1);
+ 108   1        tmpwritebyte(0xcc);  // address all drivers on bus
+ 109   1        tmpwritebyte(0x44);  //  initiates a single temperature conversion
+ 110   1      }
+ 111          
+ 112          uint tmp()               //get the temperature
+ 113          {
+ 114   1        float tt;
+ 115   1        uchar a,b;
+ 116   1        dsreset();
+ 117   1        delay(1);
+C51 COMPILER V6.12  TEMPERATURE                                                            04/26/2014 13:18:00 PAGE 3   
+
+ 118   1        tmpwritebyte(0xcc);
+ 119   1        tmpwritebyte(0xbe);
+ 120   1        a=tmpread();
+ 121   1        b=tmpread();
+ 122   1        temp=b;
+ 123   1        temp<<=8;             //two byte  compose a int variable
+ 124   1        temp=temp|a;
+ 125   1        tt=temp*0.0625;
+ 126   1        temp=tt*10+0.5;
+ 127   1        return temp;
+ 128   1      }
+ 129          
+ 130          void readrom()          //read the serial
+ 131          {
+ 132   1        uchar sn1,sn2;
+ 133   1        dsreset();
+ 134   1        delay(1);
+ 135   1        tmpwritebyte(0x33);
+ 136   1        sn1=tmpread();
+ 137   1        sn2=tmpread();
+ 138   1      }
+ 139          
+ 140          
+ 141          void delay10ms()            //delay
+ 142            {
+ 143   1          uchar a,b;
+ 144   1          for(a=10;a>0;a--)
+ 145   1            for(b=60;b>0;b--);
+ 146   1         }
+ 147          //
+ 148          void putbyte(uchar c)
+ 149          {
+ 150   1      	SBUF=c;
+ 151   1      	while(!TI);
+ 152   1      	TI=0;
+ 153   1      }
+ 154          
+ 155          void putstring(uchar *puts,uchar n)
+ 156          {	
+ 157   1      	int j;
+ 158   1      	ES=0;
+ 159   1      	for(j=0;j<n;j++)
+ 160   1      		putbyte(puts[j]);
+ 161   1          ES=1;
+ 162   1      	memset(puts,0x00,10);
+ 163   1      }
+ 164          //
+ 165          void sendData(uint temp)
+ 166          {
+ 167   1      	 float ser;
+ 168   1      	 //float ser1[]={23.0,25.1,65.6,13.7,42.3};
+ 169   1         //int i;
+ 170   1         ser=(float)temp/10;
+ 171   1         sprintf(buff,"%f\n",ser);
+ 172   1         putstring(buff,strlen(buff));
+ 173   1        // SBUF=ser;
+ 174   1      /*	
+ 175   1        for(i=0;i<5;i++){
+ 176   1         sprintf(buff,"%f\n",ser1[i]);
+ 177   1         SBUF=',';
+ 178   1         	while(!TI);
+ 179   1      	TI=0;
+C51 COMPILER V6.12  TEMPERATURE                                                            04/26/2014 13:18:00 PAGE 4   
+
+ 180   1         delay(1000);
+ 181   1         putstring(buff,strlen(buff));
+ 182   1         }
+ 183   1         */
+ 184   1         //
+ 185   1         SBUF=',';
+ 186   1         	while(!TI);
+ 187   1      	TI=0;
+ 188   1      }
+ 189          
+ 190          void display(uint temp)			//显示程序
+ 191          {
+ 192   1         uchar A1,A2,A2t,A3;
+ 193   1         float ser;
+ 194   1         ser=(float)temp/10;
+ 195   1         if(ser>alarm)
+ 196   1         	beep=0;
+ 197   1         else
+ 198   1          beep=1;
+ 199   1         //
+ 200   1         A1=temp/100;
+ 201   1         A2t=temp%100;
+ 202   1         A2=A2t/10;
+ 203   1         A3=A2t%10;
+ 204   1         dula=0;
+ 205   1         P0=table[A1];		//显示百位
+ 206   1         dula=1;
+ 207   1         dula=0;
+ 208   1      
+ 209   1         wela=0;
+ 210   1         P0=0x7e;
+ 211   1         wela=1;
+ 212   1         wela=0;
+ 213   1         delay(1);
+ 214   1      
+ 215   1         dula=0;
+ 216   1         P0=table1[A2];		//显示十位
+ 217   1         dula=1;
+ 218   1         dula=0;
+ 219   1      
+ 220   1         wela=0;
+ 221   1         P0=0x7d;
+ 222   1         wela=1;
+ 223   1         wela=0;
+ 224   1         delay(1);
+ 225   1      
+ 226   1         P0=table[A3];		//显示个位
+ 227   1         dula=1;
+ 228   1         dula=0;
+ 229   1      
+ 230   1         P0=0x7b;
+ 231   1         wela=1;
+ 232   1         wela=0;
+ 233   1         delay(1);
+ 234   1      }
+ 235          
+ 236          void init() 
+ 237          {//定时器初始化 
+ 238   1       TMOD=0x01; 
+ 239   1       TH0=0xd8; 
+ 240   1       TL0=0xef;
+ 241   1       TR0=1;
+C51 COMPILER V6.12  TEMPERATURE                                                            04/26/2014 13:18:00 PAGE 5   
+
+ 242   1       EA=1; 
+ 243   1       ET0=1;
+ 244   1       //
+ 245   1       start=0;
+ 246   1      }  
+ 247          
+ 248          void timer0() interrupt 1 using 3
+ 249          {//timer0中断服务程序，中断一次延时10ms 
+ 250   1       counter++;//节拍次数计数  
+ 251   1       TH0=0xd8; //定义单位节拍的延时大小  
+ 252   1       TL0=0xef; 
+ 253   1      } 
+ 254          //
+ 255          void serial() interrupt 4
+ 256          {
+ 257   1      	int i=0;
+ 258   1      	uchar a;
+ 259   1      	if(RI)
+ 260   1      	{
+ 261   2      		RI=0;
+ 262   2      		a=SBUF;
+ 263   2      		if(a!='\n')
+ 264   2      		{
+ 265   3      			inbuff[i]=a;
+ 266   3      			i++;
+ 267   3      		}
+ 268   2      		else
+ 269   2      		{
+ 270   3      			i=0;
+ 271   3      			alarm=atof(inbuff);
+ 272   3      			memset(inbuff,0x00,10);
+ 273   3      		//	flag=1;
+ 274   3      		}
+ 275   2      	}
+ 276   1      	
+ 277   1      }
+ 278          
+ 279          void main()
+ 280          {
+ 281   1      	 uchar a;
+ 282   1      	 init();
+ 283   1      	 Init_Com();
+ 284   1      	  do
+ 285   1      	  {
+ 286   2      	   if(counter>200)
+ 287   2      	   {
+ 288   3      		counter=0;
+ 289   3      	   	start=1;
+ 290   3      	   }
+ 291   2      	   if(start)
+ 292   2      	   {
+ 293   3      	    start=0;
+ 294   3      	    tmpchange();
+ 295   3      		sendData(tmp());
+ 296   3      		}
+ 297   2      	    //delay(3000);
+ 298   2      	  for(a=10;a>0;a--)
+ 299   2      	  {   
+ 300   3      	    display(tmp());
+ 301   3      	  }
+ 302   2      	  }
+ 303   1      	  while(1);
+C51 COMPILER V6.12  TEMPERATURE                                                            04/26/2014 13:18:00 PAGE 6   
+
+ 304   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    888    ----
+   CONSTANT SIZE    =     30    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     29      18
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       2
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,358 @@
+C51 COMPILER V6.12  DHT11                                                                  06/01/2014 20:26:48 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE DHT11
+OBJECT MODULE PLACED IN .\DHT11.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\DHT11.C DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h> 
+   3          #include <stdio.h>
+   4          #include <string.h>
+   5          #include <math.h>
+   6          #include "Serial.h"
+   7          #include "LCD.h"
+   8          #include "GPRS.h"
+   9          
+  10          #define uchar unsigned char
+  11          #define uint unsigned int
+  12          
+  13          sbit P2_2 = P2^2 ;
+  14          //
+  15          uchar DHTFLAG,DHTtemp;
+  16          //uchar shidu_shi,shidu_ge,wendu_shi,wendu_ge;
+  17          uchar idata DHT_data_H,DHT_data_L,DHRH_data_H,DHRH_data_L,ucharcheckdata;
+  18          uchar idata DHT_data_H_temp,DHT_data_L_temp,DHRH_data_H_temp,DHRH_data_L_temp,ucharcheckdata_temp;
+  19          uchar DHTcomdata;
+  20          uchar xdata buff[10];
+  21          uchar code info1[]="Temp:";
+  22          uchar code info2[]="Humid:";
+  23          uchar code info3[]="Dust:";
+  24          float idata temperature,humidity;
+  25          //
+  26          sfr  T2MOD=0xC9;
+  27          sbit pulse=P3^2;
+  28          uint  counter=0;
+  29          float volatile lowpulseoccupancy;
+  30          uint code sampletime_ms = 6000;
+  31          float ratio,concentration;
+  32          /*********************************
+  33          *
+  34          *********************************/
+  35          void Delay(uint z)
+  36          {
+  37   1      uchar x,y;
+  38   1      for(x=z;x>0;x--)
+  39   1         for(y=110;y>0;y--);
+  40   1      }
+  41          /*********************************
+  42          *
+  43          *********************************/
+  44          void Delay_10us(void)
+  45             {
+  46   1           uchar i;
+  47   1           i--;
+  48   1           i--;
+  49   1           i--;
+  50   1           i--;
+  51   1           i--;
+  52   1           i--;
+  53   1          }
+  54          /*********************************
+  55          *
+C51 COMPILER V6.12  DHT11                                                                  06/01/2014 20:26:48 PAGE 2   
+
+  56          *********************************/
+  57          void DHTCOM(void)
+  58          {     
+  59   1          uchar i;         
+  60   1          for(i=0;i<8;i++)    
+  61   1          {
+  62   2      
+  63   2           DHTFLAG=2; 
+  64   2           while((!P2_2)&&DHTFLAG++);
+  65   2          Delay_10us();
+  66   2           Delay_10us();
+  67   2           Delay_10us();
+  68   2         DHTtemp=0;
+  69   2           if(P2_2)DHTtemp=1;
+  70   2           DHTFLAG=2;
+  71   2          while((P2_2)&&DHTFLAG++);   
+  72   2           if(DHTFLAG==1)break;    
+  73   2           DHTcomdata<<=1;
+  74   2           DHTcomdata|=DHTtemp; 
+  75   2           }    
+  76   1      }
+  77          /*********************************
+  78          *
+  79          *********************************/
+  80          float ToDem(uchar x)
+  81          {
+  82   1      	int i=0;
+  83   1      	float y=0;
+  84   1      	unsigned char m=0x01;
+  85   1      	if((x&m)==m)
+  86   1      		y=1;
+  87   1      	for(i=1;i<8;i++)
+  88   1      	{
+  89   2      		m=m<<1;
+  90   2      		if((x&m)==m)
+  91   2      			y=y+pow(2.0,i);
+  92   2      	//	printf("%f,%d\n",y,m);
+  93   2      	}
+  94   1      	return y;
+  95   1      }
+  96          /*********************************
+  97          *
+  98          *********************************/
+  99          float binToDem(uchar x)
+ 100          {
+ 101   1      	float y=0;
+ 102   1      	uchar i,m;
+ 103   1      	m=0x80;	
+ 104   1      	for(i=0;i<4;i++)
+ 105   1      	{
+ 106   2      		if((x&(m>>i))>0)
+ 107   2      			y=y+1/pow(2.0,i+1);
+ 108   2      	}
+ 109   1      	return y;
+ 110   1      }
+ 111          /*********************************
+ 112          *
+ 113          *********************************/
+ 114          void RH(void)
+ 115          {
+ 116   1          P2_2=0;
+ 117   1          Delay(34);
+C51 COMPILER V6.12  DHT11                                                                  06/01/2014 20:26:48 PAGE 3   
+
+ 118   1          P2_2=1;
+ 119   1          Delay_10us();
+ 120   1          Delay_10us();
+ 121   1          Delay_10us();
+ 122   1          Delay_10us();
+ 123   1          P2_2=1;   
+ 124   1           if(!P2_2) 
+ 125   1           {
+ 126   2            DHTFLAG=2; 
+ 127   2            while((!P2_2)&&DHTFLAG++);
+ 128   2            DHTFLAG=2;
+ 129   2            while((P2_2)&&DHTFLAG++); 
+ 130   2            DHTCOM();
+ 131   2            DHRH_data_H_temp=DHTcomdata;
+ 132   2      	  //P1=DHRH_data_H_temp;//
+ 133   2            DHTCOM();
+ 134   2            DHRH_data_L_temp=DHTcomdata;
+ 135   2            DHTCOM();
+ 136   2            DHT_data_H_temp=DHTcomdata;
+ 137   2      	  //
+ 138   2      	  //P1=DHT_data_H_temp;
+ 139   2            DHTCOM();
+ 140   2            DHT_data_L_temp=DHTcomdata;
+ 141   2      	 // P1=DHT_data_L_temp;
+ 142   2            DHTCOM();
+ 143   2            ucharcheckdata_temp=DHTcomdata;
+ 144   2            P2_2=1; 
+ 145   2            DHTtemp=(DHT_data_H_temp+DHT_data_L_temp+DHRH_data_H_temp+DHRH_data_L_temp);
+ 146   2             if(DHTtemp==ucharcheckdata_temp)
+ 147   2             {
+ 148   3                DHRH_data_H=DHRH_data_H_temp;
+ 149   3                DHRH_data_L=DHRH_data_L_temp;
+ 150   3                DHT_data_H=DHT_data_H_temp;
+ 151   3                DHT_data_L=DHT_data_L_temp;
+ 152   3                ucharcheckdata=ucharcheckdata_temp;
+ 153   3      		  humidity=ToDem(DHRH_data_H_temp)+binToDem(DHRH_data_L_temp);
+ 154   3      		  temperature=ToDem(DHT_data_H_temp)+binToDem(DHT_data_L_temp);
+ 155   3      		 // temperature=(int)DHRH_data_H_temp;
+ 156   3      		 // humidity=(int)DHT_data_H_temp;
+ 157   3      		  sprintf(buff,"%2.2f,%2.2f;",temperature,humidity);
+ 158   3             }    
+ 159   2          }
+ 160   1      //	return buff;
+ 161   1      }
+ 162          /*********************************
+ 163          *
+ 164          *********************************/
+ 165          void DustInit()
+ 166          {
+ 167   1      	lowpulseoccupancy = 0;
+ 168   1      	//
+ 169   1      	TL0=0;
+ 170   1      	TH0=0;
+ 171   1      //	TR0=1;
+ 172   1      	EX0=1;
+ 173   1      	IT0=1;//负跳变沿
+ 174   1      	//定时器2
+ 175   1      	RCAP2H=(65536-1000)/256;
+ 176   1      	RCAP2L=(65536-1000)%256;
+ 177   1      	T2CON=0;
+ 178   1      	T2MOD=0;
+ 179   1      
+C51 COMPILER V6.12  DHT11                                                                  06/01/2014 20:26:48 PAGE 4   
+
+ 180   1      	ET2=1;
+ 181   1      	TR2=1;
+ 182   1      	EA=1; 	
+ 183   1      }
+ 184          /*********************************
+ 185          *
+ 186          *********************************/
+ 187          void int1() interrupt 0 using 3
+ 188          {
+ 189   1      	TR0=1;
+ 190   1      	while(pulse==0);
+ 191   1      //	P1=TL0;
+ 192   1      	lowpulseoccupancy = lowpulseoccupancy+ToDem(TL0);
+ 193   1      	TR0=0;
+ 194   1      	TL0=0;
+ 195   1      }
+ 196          /*********************************
+ 197          *
+ 198          *********************************/
+ 199          void timer2() interrupt 5
+ 200          {
+ 201   1      	TF2=0;
+ 202   1      	counter++;	
+ 203   1      }
+ 204          /***********************************************
+ 205          *                       GPRS采集数据
+ 206          ************************************************/
+ 207          void SendGPRS()
+ 208          {
+ 209   1      	uchar idata sensor[10];
+ 210   1        //char temp=',';
+ 211   1        SerialPutString("AT+CGCLASS=\"B\"\r\n");
+ 212   1        GPRSdelay(2000);
+ 213   1        SerialPutString("AT+CGDCONT=1,\"IP\",\"CMNET\"\r\n");
+ 214   1        GPRSdelay(2000);
+ 215   1        SerialPutString("AT+CGATT=1\r\n");
+ 216   1        GPRSdelay(2000);
+ 217   1        SerialPutString("AT+CIPCSGP=1,\"CMNET\"\r\n");
+ 218   1        GPRSdelay(2000);
+ 219   1        SerialPutString("AT+CIPCSGP=0\r\n");
+ 220   1        GPRSdelay(2000);
+ 221   1        SerialPutString("AT+CDNSCFG=\"211.91.216.129\"\r\n");
+ 222   1        GPRSdelay(2000);
+ 223   1      
+ 224   1        memset(sensor,0x00,10);
+ 225   1        SerialPutString("AT+CLPORT=\"UDP\",\"3033\"\r\n");//set a port
+ 226   1        GPRSdelay(2000);
+ 227   1        SerialPutString("AT+CIPSTART=\"UDP\",\"125.221.182.95\",\"8080\"\r\n");//set destination IP
+ 228   1        GPRSdelay(2000);
+ 229   1        SerialPutString("AT+CIPSEND\r\n");//dial the number
+ 230   1        GPRSdelay(2000);
+ 231   1        //mySerial.print("PM2.5 value:");
+ 232   1        sprintf(sensor,"%.2f",concentration);//
+ 233   1        SerialPutString(sensor);
+ 234   1        memset(sensor,0x00,10);
+ 235   1        sprintf(sensor,",%.2f",temperature);//
+ 236   1        //GPRSdelay(200);
+ 237   1        //SerialPutByte(',');
+ 238   1        SerialPutString(sensor);
+ 239   1        memset(sensor,0x00,10);
+ 240   1        sprintf(sensor,",%.2f",humidity);//
+ 241   1        //GPRSdelay(200);
+C51 COMPILER V6.12  DHT11                                                                  06/01/2014 20:26:48 PAGE 5   
+
+ 242   1        //SerialPutByte(',');
+ 243   1        SerialPutString(sensor);
+ 244   1        SerialPutByte(s4);
+ 245   1        SerialPutByte(s4);
+ 246   1        GPRSdelay(2000);
+ 247   1        SerialPutString("AT+CIPCLOSE\r\n");//dial the number
+ 248   1        GPRSdelay(2000);
+ 249   1        SerialPutString("AT+CIPSHUT\r\n");
+ 250   1        GPRSdelay(2000);
+ 251   1      }
+ 252          
+ 253          void main()
+ 254          {
+ 255   1      	uchar len,i;
+ 256   1      	uchar xdata Tvalue[10],Hvalue[10],Dvalue[10];
+ 257   1      	SerialInit();
+ 258   1      	LCDInit();
+ 259   1      	DustInit();
+ 260   1      	sendsms();
+ 261   1      	while(1)
+ 262   1      	{ 
+ 263   2      	    
+ 264   2      		if(counter>sampletime_ms)
+ 265   2      		{
+ 266   3      			RH();
+ 267   3      			TR2=0;
+ 268   3      			EX0=0;
+ 269   3      			//SerialPutStr(buff);
+ 270   3      			memset(Tvalue,0x00,10);
+ 271   3      			memset(Hvalue,0x00,10);
+ 272   3      			memset(Dvalue,0x00,10);
+ 273   3      			
+ 274   3      			sprintf(Tvalue,"%2.2f",temperature);
+ 275   3      			sprintf(Hvalue,"%2.2f%%",humidity);
+ 276   3      			//
+ 277   3      	    	counter=0;
+ 278   3      		//	P1=0XAF;
+ 279   3      			ratio = lowpulseoccupancy*100/sampletime_ms;  // Integer percentage 0=>100
+ 280   3      	        concentration = 1.1*pow(ratio,3)-3.8*pow(ratio,2)+520*ratio+0.62; // using spec sheet curve
+ 281   3      			sprintf(Dvalue,"%.2f",concentration);
+ 282   3      			//
+ 283   3      			//ConnectGPRS(Tvalue,Hvalue,Dvalue);
+ 284   3      			SendGPRS();
+ 285   3      		    //SerialPutStr(buff);
+ 286   3      			lowpulseoccupancy = 0;
+ 287   3      		    //TR2=1;
+ 288   3      
+ 289   3      			LCDWriteCom(0x01);//清屏
+ 290   3      			LCDWriteCom(0x80);
+ 291   3      			len=strlen(info1);
+ 292   3      			//写数据到LCD1602
+ 293   3      			for(i=0;i<len;i++)
+ 294   3      				LCDWriteData(info1[i]);
+ 295   3      			len=strlen(Tvalue);
+ 296   3      			for(i=0;i<len;i++)
+ 297   3      				LCDWriteData(Tvalue[i]);
+ 298   3      			LCDWriteData((uchar)223);
+ 299   3      			LCDWriteData('C');
+ 300   3      			LCDWriteCom(0x80+0x43);
+ 301   3      			len=strlen(info2);
+ 302   3      			for(i=0;i<len;i++)
+ 303   3      				LCDWriteData(info2[i]);
+C51 COMPILER V6.12  DHT11                                                                  06/01/2014 20:26:48 PAGE 6   
+
+ 304   3      			len=strlen(Hvalue);
+ 305   3      			for(i=0;i<len;i++)
+ 306   3      				LCDWriteData(Hvalue[i]);
+ 307   3      		   //
+ 308   3      		    //Delay(3000);
+ 309   3      			GPRSdelay(2000);
+ 310   3      			LCDWriteCom(0x01);//清屏
+ 311   3      			LCDWriteCom(0x80);
+ 312   3      			len=strlen(info3);
+ 313   3      			//写数据到LCD1602
+ 314   3      			for(i=0;i<len;i++)
+ 315   3      				LCDWriteData(info3[i]);
+ 316   3      			len=strlen(Dvalue);
+ 317   3      			for(i=0;i<len;i++)
+ 318   3      				LCDWriteData(Dvalue[i]);
+ 319   3      		   //
+ 320   3      		    TR2=1;
+ 321   3      		   	EX0=1;
+ 322   3      		}	
+ 323   2      	}
+ 324   1      
+ 325   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   2349    ----
+   CONSTANT SIZE    =    425    ----
+   XDATA SIZE       =     72      30
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     21      43
+   IDATA SIZE       =     18      10
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,39 @@
+C51 COMPILER V6.12  OSCILLOSCOPE                                                           04/22/2014 21:18:51 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE OSCILLOSCOPE
+OBJECT MODULE PLACED IN .\Oscilloscope.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\Oscilloscope.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #include"ad.h"
+   3          #define uchar unsigned char
+   4          
+   5          void delay(unsigned char i)
+   6          {
+   7   1        for(j=i;j>0;j--)
+   8   1          for(k=125;k>0;k--);
+   9   1      }
+  10          void main()
+  11          {
+  12   1      	while(1)
+  13   1      	{
+  14   2      		ad();
+  15   2      	}
+  16   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     81    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,53 @@
+C51 COMPILER V6.12  TEST                                                                   09/25/2013 12:22:15 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          void delay1();
+   4          //sbit d1=P1^0;
+   5          sbit beep=P2^3;
+   6          unsigned char temp;
+   7          int count;
+   8          
+   9          void main()
+  10          {
+  11   1      	temp=0xfe;
+  12   1      	count=0;
+  13   1      	while(1)
+  14   1      	{
+  15   2      		P1=temp;
+  16   2      		temp= _crol_(temp,1);
+  17   2      		if(count==0)
+  18   2      			delay1();
+  19   2      		beep=0;
+  20   2      		count++;
+  21   2      		count=count%7;
+  22   2      	}
+  23   1      }
+  24          
+  25          void delay1()
+  26          {
+  27   1      	int i,j;
+  28   1      	for(i=50;i>0;i--)
+  29   1      		for(j=230;j>0;j--);
+  30   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     86    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

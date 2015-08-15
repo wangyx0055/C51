@@ -1,0 +1,171 @@
+C51 COMPILER V6.12  TEST                                                                   04/24/2014 15:56:31 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>           
+   2          #define uchar unsigned char 
+   3          #define uint unsigned int 
+   4          
+   5          sbit sound=P2^3; 
+   6          uint counter=0,sound_pace,temp; 
+   7          uchar k=0,flag=0; 
+   8          uchar sound_signalhigh,sound_signallow;//定时器的高8位与低8位 
+   9          //定义节拍计数器 
+  10          //
+  11          #define NOTE_E0 0xffff
+  12          #define NOTE_E1 0xfa8c
+  13          #define NOTE_E2 0xfadc
+  14          #define NOTE_E3 0xfa6c
+  15          #define NOTE_E4 0xfaec
+  16          #define NOTE_E5 0xfc5e
+  17          #define NOTE_E6 0xfcc4
+  18          #define NOTE_E7 0xfd1e
+  19          
+  20          #define NOTE_EL1 0xf518
+  21          #define NOTE_EL2 0xf5b7
+  22          #define NOTE_EL3 0xf6d1
+  23          #define NOTE_EL4 0xf7db
+  24          #define NOTE_EL5 0xf8be
+  25          #define NOTE_EL6 0xf987
+  26          #define NOTE_EL7 0xfa3c
+  27          
+  28          #define NOTE_EH1 0xfd47
+  29          #define NOTE_EH2 0xfd6e
+  30          #define NOTE_EH3 0xfdb6
+  31          #define NOTE_EH4 0xfdf6
+  32          #define NOTE_EH5 0xfe2f
+  33          #define NOTE_EH6 0xfe62
+  34          #define NOTE_EH7 0xfe8f
+  35          //
+  36          uint code tune[]= 
+  37          {
+  38           //茉莉花
+  39            NOTE_E3,NOTE_E3,NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_EH1,NOTE_E6,NOTE_E5,NOTE_E5,NOTE_E6,
+  40            NOTE_E5,NOTE_E3,NOTE_E3,NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_EH1,NOTE_E6,
+  41            
+  42            NOTE_E5,NOTE_E5,NOTE_E6,NOTE_E5,NOTE_E5,NOTE_E5,NOTE_E5,NOTE_E3,NOTE_E5,NOTE_E6,
+  43            NOTE_E6,NOTE_E5,
+  44            
+  45            NOTE_E3,NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E3,NOTE_E2,NOTE_E1,NOTE_E1,NOTE_E2,NOTE_E1,
+  46            NOTE_E3,NOTE_E2,NOTE_E1,NOTE_E3,NOTE_E2,NOTE_E3,
+  47            
+  48            NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_E5,NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E2,NOTE_E3,NOTE_E1,
+  49            NOTE_EL6,NOTE_EL5,NOTE_EL6,NOTE_E1,
+  50            
+  51            NOTE_E2,NOTE_E3,NOTE_E1,NOTE_E2,NOTE_E1,NOTE_EL6,NOTE_EL5,NOTE_E0
+  52            };
+  53            //
+  54          float code duration[]=
+  55          {
+C51 COMPILER V6.12  TEST                                                                   04/24/2014 15:56:31 PAGE 2   
+
+  56          	//茉莉花
+  57            1,0.5,0.5,0.5,0.5,0.5,0.5,1,0.5,0.5,2,1,0.5,0.5,0.5,0.5,0.5,0.5,
+  58            1,0.5,0.5,2,1,1,1,0.5,0.5,1,1,2,
+  59            1,0.5,0.5,1,0.5,0.5,1,0.5,0.5,2,0.5,0.5,0.5,0.5,1.5,0.5,
+  60            1,0.5,0.5,2,1,0.5,0.5,0.5,0.5,0.5,0.5,2,1,1,
+  61            1.5,0.5,0.5,0.5,0.5,0.5,3,1
+  62            };
+  63            //
+  64          void init() 
+  65          {//定时器初始化 
+  66   1       TMOD=0x11; 
+  67   1       TH0=0xd8; 
+  68   1       TL0=0xef; 
+  69   1       EA=1; 
+  70   1       ET0=1;
+  71   1       ET1=1;
+  72   1      }  
+  73          
+  74          void timer0() interrupt 1 using 3
+  75          {//timer0中断服务程序，中断一次延时10ms 
+  76   1       counter++;//节拍次数计数  
+  77   1       TH0=0xd8; //定义单位节拍的延时大小  
+  78   1       TL0=0xef; 
+  79   1      } 
+  80          
+  81          void timer1() interrupt 3
+  82          {//timer1中断服务程序
+  83   1       flag=1;
+  84   1      } 
+  85          
+  86          void delay(uchar n) 
+  87          { //延时n毫秒
+  88   1       uchar i; 
+  89   1       while(n--) 
+  90   1        for(i=0;i<125;i++);  
+  91   1      } 
+  92          
+  93          void sound_delay(uchar sound_signalhigh,uchar sound_signallow)//产生一定频率的音调 
+  94          {  
+  95   1       TH1=sound_signalhigh; 
+  96   1       TL1=sound_signallow; 
+  97   1       TR1=1; 
+  98   1       while(!flag);
+  99   1       	flag=0;
+ 100   1      	TR1=0; 
+ 101   1      } 
+ 102          /*
+ 103          void pwm_delay(uint x)
+ 104          {
+ 105          	uint time,i;
+ 106          	time=0xffff-x+1;
+ 107          	for(i=time;i>0;i--);
+ 108          }
+ 109          */
+ 110          void main() 
+ 111          {  
+ 112   1       init(); 
+ 113   1       while(1) 
+ 114   1         { 
+ 115   2            k=0; 
+ 116   2         while(tune[k]!=0xffff)//因为歌曲的结尾处人为的加入了 结束标示符  0  
+ 117   2         { 
+C51 COMPILER V6.12  TEST                                                                   04/24/2014 15:56:31 PAGE 3   
+
+ 118   3      	/*从表中取得 音符音高，也就是这个音符是低音，中音还是高
+ 119   3      音,有了这两个参数我们就可以确定音符对应的定时器初值在表中的位置了。 */
+ 120   3          sound_signalhigh=0xff&(tune[k]>>8); 
+ 121   3      	//P1=sound_signalhigh;
+ 122   3          sound_signallow=0xff&tune[k]; 
+ 123   3      //	temp=tune[k];
+ 124   3      	//P1=sound_signallow;
+ 125   3          //从表中取得 节拍大小  
+ 126   3          sound_pace=40*duration[k];//600为一拍的时长 ,在此修改一拍的时长。 
+ 127   3      	k++;
+ 128   3          TR0=1; 
+ 129   3         //当节拍数未达到时候，继续循环，产生该音调的声音  
+ 130   3         while(counter!=sound_pace) 
+ 131   3            {  
+ 132   4             sound=~sound; 
+ 133   4             sound_delay(sound_signalhigh,sound_signallow); 
+ 134   4      	  // pwm_delay(temp);
+ 135   4            } 
+ 136   3           counter=0;//节拍计数器置0，进入下一个音调  
+ 137   3           TR0=0; 
+ 138   3          } 
+ 139   2         delay(100); //歌曲演唱完毕后,延时一段时间     }  
+ 140   2      } 
+ 141   1      }
+ 142          
+ 143          
+ 144           
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    209    ----
+   CONSTANT SIZE    =    408    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

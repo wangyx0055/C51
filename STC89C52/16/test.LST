@@ -1,0 +1,127 @@
+C51 COMPILER V6.12  TEST                                                                   09/28/2013 14:37:42 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          unsigned char code table1[]={0xbf  , 0x86 , 0xdb , 0xcf , 0xe6 , 0xed ,
+   5          					   0xfd , 0x87 , 0xff  , 0xef , 0xf7 , 0xfc ,
+   6          					   0xb9 , 0xde , 0xf9 , 0xf1};
+   7          
+   8          unsigned char code table[]={
+   9          0x3f,0x06,0x5b,0x4f,
+  10          0x66,0x6d,0x7d,0x07,
+  11          0x7f,0x6f,0x77,0x7c,
+  12          0x39,0x5e,0x79,0x71};
+  13          
+  14          sbit wei=P2^7;
+  15          sbit duan=P2^6;
+  16          unsigned char sec,shi,ge;
+  17          void delay1();
+  18          void display(unsigned char sec,unsigned char shi,unsigned char ge);
+  19          int count,m,num;
+  20          
+  21          void main()
+  22          {
+  23   1      	TMOD=0x10;
+  24   1      	TH1=(65535-1000)>>8;
+  25   1      	TL1=(65535-1000)%256;
+  26   1      	EA=1;
+  27   1      	ET1=1;
+  28   1      	TR1=1;
+  29   1      
+  30   1      	m=count=0;
+  31   1      	duan=1;
+  32   1      	P0=0x3f;
+  33   1      	duan=0;
+  34   1      	wei=1;
+  35   1      	P0=0xfe;
+  36   1      	wei=0;
+  37   1      
+  38   1      	shi=ge=0;
+  39   1      	while(1)
+  40   1      	{
+  41   2      		if(num==10)
+  42   2      		{
+  43   3      			num=0;
+  44   3      			if(m==100)
+  45   3      			{
+  46   4      				m=0;
+  47   4      				count++;
+  48   4      			}
+  49   3      			shi=m/10;
+  50   3      			ge=m%10;		
+  51   3      			m++;
+  52   3      			count=count%16;
+  53   3      			display(count,shi,ge);
+  54   3      		}
+  55   2      		//display(count,shi,ge);
+C51 COMPILER V6.12  TEST                                                                   09/28/2013 14:37:42 PAGE 2   
+
+  56   2      	}
+  57   1      }
+  58          
+  59          void timeInt() interrupt 3
+  60          {
+  61   1      	TH1=(65535-1000)>>8;
+  62   1      	TL1=(65535-1000)%256;
+  63   1      	num++;
+  64   1      }
+  65          
+  66          void delay1()
+  67          {
+  68   1      	int i,j;
+  69   1      	for(i=1;i>0;i--)
+  70   1      		for(j=110;j>0;j--);
+  71   1      }
+  72          
+  73          void display(unsigned char sec,unsigned char shi,unsigned char ge)
+  74          {
+  75   1      			duan=1;
+  76   1      			P0=table1[sec];
+  77   1      			duan=0;	
+  78   1      			P0=0xff;//消抖部分
+  79   1      			wei=1;
+  80   1      			P0=0xfe;
+  81   1      			wei=0;
+  82   1      			delay1();
+  83   1      			//	
+  84   1      			duan=1;
+  85   1      			P0=table[shi];
+  86   1      			duan=0;
+  87   1      			P0=0xff;//消抖部分
+  88   1      			wei=1;
+  89   1      			P0=0xfd;
+  90   1      			wei=0;
+  91   1      			delay1();
+  92   1      			//			
+  93   1      			duan=1;
+  94   1      			P0=table[ge];
+  95   1      			duan=0;	
+  96   1      			P0=0xff;//消抖部分
+  97   1      			wei=1;
+  98   1      			P0=0xfb;
+  99   1      			wei=0;
+ 100   1      			delay1();
+ 101   1      			//
+ 102   1      	}
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    251    ----
+   CONSTANT SIZE    =     32    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

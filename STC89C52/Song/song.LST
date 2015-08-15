@@ -1,0 +1,251 @@
+C51 COMPILER V6.12  SONG                                                                   04/24/2014 16:05:35 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE SONG
+OBJECT MODULE PLACED IN .\song.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\song.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>           
+   2          #define uchar unsigned char 
+   3          #define uint unsigned int 
+   4          
+   5          sbit sound=P2^3; 
+   6          uint counter=0,sound_pace,temp; 
+   7          uchar k=0,flag=0; 
+   8          uchar sound_signalhigh,sound_signallow;//定时器的高8位与低8位 
+   9          //定义节拍计数器 
+  10          //
+  11          #define NOTE_END 0x0000
+  12          #define NOTE_SONGEND 0x0001
+  13          //
+  14          #define NOTE_E1 0xfa8c
+  15          #define NOTE_E2 0xfadc
+  16          #define NOTE_E3 0xfa6c
+  17          #define NOTE_E4 0xfaec
+  18          #define NOTE_E5 0xfc5e
+  19          #define NOTE_E6 0xfcc4
+  20          #define NOTE_E7 0xfd1e
+  21          
+  22          #define NOTE_EL1 0xf518
+  23          #define NOTE_EL2 0xf5b7
+  24          #define NOTE_EL3 0xf6d1
+  25          #define NOTE_EL4 0xf7db
+  26          #define NOTE_EL5 0xf8be
+  27          #define NOTE_EL6 0xf987
+  28          #define NOTE_EL7 0xfa3c
+  29          
+  30          #define NOTE_EH1 0xfd47
+  31          #define NOTE_EH2 0xfd6e
+  32          #define NOTE_EH3 0xfdb6
+  33          #define NOTE_EH4 0xfdf6
+  34          #define NOTE_EH5 0xfe2f
+  35          #define NOTE_EH6 0xfe62
+  36          #define NOTE_EH7 0xfe8f
+  37          //
+  38          #define NOTE_D0 0xffff
+  39          #define NOTE_D1 0xf9e1
+  40          #define NOTE_D2 0xfa8c
+  41          #define NOTE_D3 0xfadc
+  42          #define NOTE_D4 0xfb6c
+  43          #define NOTE_D5 0xfbec
+  44          #define NOTE_D6 0xfc5e
+  45          #define NOTE_D7 0xfcc4
+  46          
+  47          #define NOTE_DL1 0xf3c2
+  48          #define NOTE_DL2 0xf518
+  49          #define NOTE_DL3 0xf5b7
+  50          #define NOTE_DL4 0xf6d1
+  51          #define NOTE_DL5 0xf7db
+  52          #define NOTE_DL6 0xf8be
+  53          #define NOTE_DL7 0xf987
+  54          
+  55          #define NOTE_DH1 0xfcf2
+C51 COMPILER V6.12  SONG                                                                   04/24/2014 16:05:35 PAGE 2   
+
+  56          #define NOTE_DH2 0xfd47
+  57          #define NOTE_DH3 0xfd6e
+  58          #define NOTE_DH4 0xfdb6
+  59          #define NOTE_DH5 0xfdf6
+  60          #define NOTE_DH6 0xfe2f
+  61          #define NOTE_DH7 0xefee
+  62          
+  63          uint code tune[]= 
+  64          {
+  65           //茉莉花
+  66            NOTE_E3,NOTE_E3,NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_EH1,NOTE_E6,NOTE_E5,NOTE_E5,NOTE_E6,
+  67            NOTE_E5,NOTE_E3,NOTE_E3,NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_EH1,NOTE_E6,
+  68            
+  69            NOTE_E5,NOTE_E5,NOTE_E6,NOTE_E5,NOTE_E5,NOTE_E5,NOTE_E5,NOTE_E3,NOTE_E5,NOTE_E6,
+  70            NOTE_E6,NOTE_E5,
+  71            
+  72            NOTE_E3,NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E3,NOTE_E2,NOTE_E1,NOTE_E1,NOTE_E2,NOTE_E1,
+  73            NOTE_E3,NOTE_E2,NOTE_E1,NOTE_E3,NOTE_E2,NOTE_E3,
+  74            
+  75            NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_E5,NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E2,NOTE_E3,NOTE_E1,
+  76            NOTE_EL6,NOTE_EL5,NOTE_EL6,NOTE_E1,
+  77            
+  78            NOTE_E2,NOTE_E3,NOTE_E1,NOTE_E2,NOTE_E1,NOTE_EL6,NOTE_EL5,NOTE_SONGEND,
+  79            //葫芦娃
+  80            NOTE_DH1,NOTE_D6,NOTE_D5,NOTE_D6,NOTE_D0,
+  81            NOTE_DH1,NOTE_D6,NOTE_D5,NOTE_DH1,NOTE_D6,NOTE_D0,NOTE_D6,
+  82            NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D6,NOTE_D0,NOTE_D6,
+  83            NOTE_DH1,NOTE_D6,NOTE_D5,NOTE_DH1,NOTE_D6,NOTE_D0,
+  84            
+  85            NOTE_D1,NOTE_D1,NOTE_D3,
+  86            NOTE_D1,NOTE_D1,NOTE_D3,NOTE_D0,
+  87            NOTE_D6,NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D6,
+  88            NOTE_D5,NOTE_D1,NOTE_D3,NOTE_D0,
+  89            NOTE_DH1,NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D6,
+  90            NOTE_D5,NOTE_D1,NOTE_D2,NOTE_D0,
+  91            NOTE_D7,NOTE_D7,NOTE_D5,NOTE_D3,
+  92            NOTE_D5,
+  93            NOTE_DH1,NOTE_D0,NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D5,NOTE_D6,NOTE_D6,
+  94            NOTE_D0,NOTE_D5,NOTE_D1,NOTE_D3,NOTE_D0,
+  95            NOTE_DH1,NOTE_D0,NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D5,NOTE_D6,NOTE_D6,
+  96            NOTE_D0,NOTE_D5,NOTE_D1,NOTE_D2,NOTE_D0,
+  97            NOTE_D3,NOTE_D3,NOTE_D1,NOTE_DL6,
+  98            NOTE_D1,
+  99            NOTE_D3,NOTE_D5,NOTE_D6,NOTE_D6,
+ 100            NOTE_D3,NOTE_D5,NOTE_D6,NOTE_D6,
+ 101            NOTE_DH1,NOTE_D0,NOTE_D7,NOTE_D5,
+ 102            NOTE_D6,NOTE_END
+ 103          
+ 104            };
+ 105            //
+ 106          float code duration[]=
+ 107          {
+ 108          	//茉莉花
+ 109            1,0.5,0.5,0.5,0.5,0.5,0.5,1,0.5,0.5,2,1,0.5,0.5,0.5,0.5,0.5,0.5,
+ 110            1,0.5,0.5,2,1,1,1,0.5,0.5,1,1,2,
+ 111            1,0.5,0.5,1,0.5,0.5,1,0.5,0.5,2,0.5,0.5,0.5,0.5,1.5,0.5,
+ 112            1,0.5,0.5,2,1,0.5,0.5,0.5,0.5,0.5,0.5,2,1,1,
+ 113            1.5,0.5,0.5,0.5,0.5,0.5,3,1,
+ 114            //葫芦娃
+ 115            1,1,0.5,0.5,1,
+ 116            0.5,0.5,0.5,0.5,1,0.5,0.5,
+ 117            0.5,1,0.5,1,0.5,0.5,
+C51 COMPILER V6.12  SONG                                                                   04/24/2014 16:05:35 PAGE 3   
+
+ 118            0.5,0.5,0.5,0.5,1,1,
+ 119            
+ 120            1,1,1+1,
+ 121            0.5,1,1+0.5,1,
+ 122            1,1,0.5,0.5,1,
+ 123            0.5,1,1+0.5,1,
+ 124            0.5,0.5,0.5,0.5,1+1,
+ 125            0.5,1,1+0.5,1,
+ 126            1+1,0.5,0.5,1,
+ 127            1+1+1+1,
+ 128            0.5,0.5,0.5+0.25,0.25,0.5+0.25,0.25,0.5+0.25,0.25,
+ 129            0.5,1,0.5,1,1,
+ 130            0.5,0.5,0.5+0.25,0.25,0.5+0.25,0.25,0.5+0.25,0.25,
+ 131            0.5,1,0.5,1,1,
+ 132            1+1,0.5,0.5,1,
+ 133            1+1+1+1,
+ 134            0.5,1,0.5,1+1,
+ 135            0.5,1,0.5,1+1,
+ 136            1+1,0.5,0.5,1,
+ 137            1+1+1+1,1
+ 138          
+ 139            };
+ 140            //
+ 141          void init() 
+ 142          {//定时器初始化 
+ 143   1       TMOD=0x11; 
+ 144   1       TH0=0xd8; 
+ 145   1       TL0=0xef; 
+ 146   1       EA=1; 
+ 147   1       ET0=1;
+ 148   1       ET1=1;
+ 149   1      }  
+ 150          
+ 151          void timer0() interrupt 1 using 3
+ 152          {//timer0中断服务程序，中断一次延时10ms 
+ 153   1       counter++;//节拍次数计数  
+ 154   1       TH0=0xd8; //定义单位节拍的延时大小  
+ 155   1       TL0=0xef; 
+ 156   1      } 
+ 157          
+ 158          void timer1() interrupt 3
+ 159          {//timer1中断服务程序
+ 160   1       flag=1;
+ 161   1      } 
+ 162          
+ 163          void delay(uchar n) 
+ 164          { //延时n毫秒
+ 165   1       uchar i; 
+ 166   1       while(n--) 
+ 167   1        for(i=0;i<125;i++);  
+ 168   1      } 
+ 169          
+ 170          void sound_delay(uchar sound_signalhigh,uchar sound_signallow)//产生一定频率的音调 
+ 171          {  
+ 172   1       TH1=sound_signalhigh; 
+ 173   1       TL1=sound_signallow; 
+ 174   1       TR1=1; 
+ 175   1       while(!flag);
+ 176   1       	flag=0;
+ 177   1      	TR1=0; 
+ 178   1      } 
+ 179          /*
+C51 COMPILER V6.12  SONG                                                                   04/24/2014 16:05:35 PAGE 4   
+
+ 180          void pwm_delay(uint x)
+ 181          {
+ 182          	uint time,i;
+ 183          	time=0xffff-x+1;
+ 184          	for(i=time;i>0;i--);
+ 185          }
+ 186          */
+ 187          void main() 
+ 188          {  
+ 189   1       init(); 
+ 190   1       while(1) 
+ 191   1         { 
+ 192   2            k=0; 
+ 193   2         while(tune[k]!=NOTE_END)//因为歌曲的结尾处人为的加入了 结束标示符  0  
+ 194   2         { 
+ 195   3      	/*从表中取得 音符音高，也就是这个音符是低音，中音还是高
+ 196   3      音,有了这两个参数我们就可以确定音符对应的定时器初值在表中的位置了。 */
+ 197   3          if(tune[k]==NOTE_SONGEND)
+ 198   3      	{
+ 199   4      		k++;
+ 200   4      	}
+ 201   3          sound_signalhigh=0xff&(tune[k]>>8); 
+ 202   3          sound_signallow=0xff&tune[k]; 
+ 203   3          //从表中取得 节拍大小  
+ 204   3          sound_pace=40*duration[k];//600为一拍的时长 ,在此修改一拍的时长。 
+ 205   3      	k++;
+ 206   3          TR0=1; 
+ 207   3         //当节拍数未达到时候，继续循环，产生该音调的声音  
+ 208   3         while(counter!=sound_pace) 
+ 209   3            {  
+ 210   4             sound=~sound; 
+ 211   4             sound_delay(sound_signalhigh,sound_signallow); 
+ 212   4      	  // pwm_delay(temp);
+ 213   4            } 
+ 214   3           counter=0;//节拍计数器置0，进入下一个音调  
+ 215   3           TR0=0; 
+ 216   3          } 
+ 217   2         delay(100); //歌曲演唱完毕后,延时一段时间     }  
+ 218   2      } 
+ 219   1      }
+ 220          
+ 221          
+ 222           
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    223    ----
+   CONSTANT SIZE    =   1002    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

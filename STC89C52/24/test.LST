@@ -1,0 +1,87 @@
+C51 COMPILER V6.12  TEST                                                                   10/15/2013 11:07:16 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #define uchar unsigned char
+   3          sbit duan=P2^6;
+   4          sbit wei=P2^7;
+   5          sbit lcden=P3^4;
+   6          sbit lcdrs=P3^5;
+   7          
+   8          void delay(int n);
+   9          void writeCom(uchar com);
+  10          void writeData(uchar value);
+  11          void init();
+  12          uchar  code table[]="I LOVE CHNINA!";
+  13          uchar count;
+  14          void main()
+  15          {
+  16   1      	init();
+  17   1      	//writeData('1');
+  18   1      	//writeData('A');
+  19   1      	for(count=0;count<14;count++)
+  20   1      	{
+  21   2      		writeData(table[count]);	
+  22   2      		delay(200);
+  23   2      	}
+  24   1      	while(1);
+  25   1      
+  26   1      }
+  27          void init()
+  28          {
+  29   1      	duan=0;
+  30   1      	wei=0;
+  31   1      	lcden=0;
+  32   1      	count=0;
+  33   1      	writeCom(0x38);
+  34   1      	writeCom(0x0f);
+  35   1      	writeCom(0x06);
+  36   1      	writeCom(0x01);//ÇåÆÁ
+  37   1      	writeCom(0x80);
+  38   1      }
+  39          void delay(int n)
+  40          {
+  41   1      	int x,y;
+  42   1      	for(x=n;x>0;x--)
+  43   1      		for(y=110;y>0;y--);
+  44   1      }
+  45          void writeCom(uchar com)
+  46          {
+  47   1      	lcdrs=0;
+  48   1      	P0=com;
+  49   1      	delay(1);
+  50   1      	lcden=1;
+  51   1      	delay(5);
+  52   1      	lcden=0;
+  53   1      }
+  54          void writeData(uchar value)
+  55          {
+C51 COMPILER V6.12  TEST                                                                   10/15/2013 11:07:16 PAGE 2   
+
+  56   1      	lcdrs=1;
+  57   1      	P0=value;
+  58   1      	delay(1);
+  59   1      	lcden=1;
+  60   1      	delay(5);
+  61   1      	lcden=0;
+  62   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    131    ----
+   CONSTANT SIZE    =     15    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

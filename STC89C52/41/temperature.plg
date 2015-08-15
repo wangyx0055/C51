@@ -1,0 +1,85 @@
+Build target 'Target 1'
+compiling test.c...
+.\TEST.C(168): error C141: syntax error near 'int'
+.\TEST.C(168): error C202: 'i': undefined identifier
+.\TEST.C(168): error C202: 'i': undefined identifier
+.\TEST.C(168): error C202: 'i': undefined identifier
+.\TEST.C(168): error C141: syntax error near ')'
+.\TEST.C(171): error C141: syntax error near 'putstring'
+Target not created
+Build target 'Target 1'
+compiling test.c...
+.\TEST.C(168): error C141: syntax error near 'int'
+.\TEST.C(168): error C202: 'i': undefined identifier
+.\TEST.C(169): error C202: 'i': undefined identifier
+.\TEST.C(170): error C202: 'i': undefined identifier
+.\TEST.C(172): error C141: syntax error near 'putstring'
+Target not created
+Build target 'Target 1'
+compiling test.c...
+.\TEST.C(167): error C141: syntax error near 'int'
+.\TEST.C(167): error C202: 'i': undefined identifier
+.\TEST.C(168): error C202: 'i': undefined identifier
+.\TEST.C(169): error C202: 'i': undefined identifier
+.\TEST.C(171): error C141: syntax error near 'putstring'
+Target not created
+Build target 'Target 1'
+compiling test.c...
+.\TEST.C(167): error C141: syntax error near 'int'
+.\TEST.C(167): error C202: 'i': undefined identifier
+.\TEST.C(168): error C202: 'i': undefined identifier
+.\TEST.C(169): error C202: 'i': undefined identifier
+.\TEST.C(171): error C141: syntax error near 'putstring'
+Target not created
+Build target 'Target 1'
+compiling test.c...
+.\TEST.C(167): error C141: syntax error near 'int'
+.\TEST.C(167): error C202: 'i': undefined identifier
+.\TEST.C(168): error C202: 'i': undefined identifier
+.\TEST.C(169): error C202: 'i': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling test.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?READROM?TEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY10MS?TEST
+
+creating hex file from "temperature"...
+"temperature" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?READROM?TEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY10MS?TEST
+
+creating hex file from "temperature"...
+"temperature" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?READROM?TEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY10MS?TEST
+
+creating hex file from "temperature"...
+"temperature" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+.\TEST.C(163): warning C280: 'i': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?READROM?TEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY10MS?TEST
+
+creating hex file from "temperature"...
+"temperature" - 0 Error(s), 3 Warning(s).

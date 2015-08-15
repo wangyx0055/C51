@@ -1,0 +1,288 @@
+C51 COMPILER V6.12  SDTEST                                                                 05/28/2014 20:56:00 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE SDTEST
+OBJECT MODULE PLACED IN .\sdtest.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\sdtest.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #include "Serial.h" 
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          #define ulon unsigned long
+   6          
+   7          sbit CLK=P3^4;
+   8          sbit DI=P3^5;
+   9          sbit DO=P3^6;
+  10          sbit CS=P3^7;
+  11          
+  12          void Display(uchar);
+  13          void SPI_W(uchar);
+  14          uchar SPI_R();
+  15          uchar SD_Response();
+  16          void SD_Cmd(uchar,ulon,uchar);
+  17          uchar SD_Init();
+  18          uchar SD_Block_W(uchar,ulon,uint);
+  19          uchar* SD_Block_R(ulon,uint);
+  20          uchar xdata *DATA;
+  21          
+  22          uchar code Test_1[]={
+  23          	0x83, 0x7E, 0x57, 0x24, 0x0E, 0x3A, 0x68, 0x89, 0x87, 0x87, 0xA7, 0xBE, 0xBB, 0x94, 0x65, 0x31, 
+  24          	0x00, 0x2F, 0x7C, 0xA8, 0x97, 0x64, 0x62, 0x7A, 0xA5, 0xBE, 0xA6, 0x94, 0x6D, 0x50, 0x25, 0x47, 
+  25          	0x5F, 0x77, 0x74, 0x7C, 0x7B, 0x82, 0x9E, 0xB8, 0xBD, 0xA7, 0x7E, 0x4F, 0x00, 0x14, 0x6A, 0x93, 
+  26          	0xA4, 0x6D, 0x5A, 0x6A, 0x83, 0xB8, 0xAB, 0x97, 0x7E, 0x5A, 0x07, 0x23, 0x6B, 0xA1, 0x95, 0x62, 
+  27          	0x61, 0x80, 0xA0, 0xAA, 0xBF, 0xBC, 0xBF, 0x99, 0x51, 0x26, 0x81, 0xA7, 0xB0, 0x77, 0x62, 0x70, 
+  28          	0x91, 0xA6, 0xA8, 0xAE, 0xB5, 0xC3, 0xA4, 0x61, 0x16, 0x5D, 0x93, 0xB2, 0x95, 0x6E, 0x71, 0x94, 
+  29          	0xB0, 0xB6, 0xB8, 0xAD, 0xA9, 0x90, 0x61, 0x03, 0x52, 0xAE, 0xD3, 0xB4, 0x7D, 0x7D, 0x98, 0xAE, 
+  30          	0xA3, 0xBA, 0xC1, 0xC4, 0xAC, 0x6B, 0x00, 0x2E, 0x9B, 0xDA, 0xCF, 0x8E, 0x90, 0xA8, 0xC5, 0xC1, 
+  31          	0xB4, 0xA6, 0xA3, 0x9F, 0x86, 0x3A, 0x4C, 0x95, 0xC8, 0xD8, 0xA4, 0x93, 0x92, 0xAC, 0xB6, 0xA3, 
+  32          	0x98, 0xAE, 0xCE, 0xBB, 0x85, 0x22, 0x69, 0xA3, 0xD4, 0xC4, 0x91, 0x8D, 0x9B, 0xA4, 0x90, 0x94, 
+  33          	0xBA, 0xD6, 0xD0, 0x9B, 0x52, 0x4F, 0x98, 0xC8, 0xE0, 0xA1, 0x9C, 0x95, 0x92, 0x7F, 0xA6, 0xD5, 
+  34          	0xE9, 0xE2, 0xAE, 0x85, 0x39, 0x84, 0xBA, 0xD6, 0xB1, 0x98, 0x81, 0x7D, 0x8C, 0xAE, 0xD2, 0xDD, 
+  35          	0xD2, 0xB5, 0x9A, 0x5E, 0x64, 0x94, 0xAD, 0xC0, 0x9C, 0x93, 0x8F, 0x97, 0xA6, 0xC4, 0xD8, 0xC9, 
+  36          	0xC0, 0xA2, 0x8A, 0x5C, 0x7F, 0x99, 0xA8, 0xA0, 0x90, 0x86, 0x7C, 0x98, 0xD3, 0xDB, 0xC9, 0xA7, 
+  37          	0x8B, 0x82, 0x71, 0x75, 0x81, 0x81, 0x8D, 0x85, 0x89, 0x93, 0xA2, 0xB0, 0xBB, 0xB5, 0xAA, 0xA2, 
+  38          	0x96, 0x7E, 0x65, 0x7F, 0x8E, 0x97, 0x83, 0x82, 0x77, 0x89, 0x9A, 0xBE, 0xBD, 0xB8, 0xA3, 0x8D
+  39          };
+  40          //
+  41          uchar code Test_2[]={
+  42          	0xFE, 0xAF, 0xBD, 0xFA, 0xAA, 0xBB, 0xCD, 0x89, 0x87, 0x87, 0xA7, 0xBE, 0xBB, 0x94, 0x65, 0x31, 
+  43          	0x00, 0x2F, 0x7C, 0xA8, 0x97, 0x64, 0x62, 0x7A, 0xA5, 0xBE, 0xA6, 0x94, 0x6D, 0x50, 0x25, 0x47, 
+  44          	0x5F, 0x77, 0x74, 0x7C, 0x7B, 0x82, 0x9E, 0xB8, 0xBD, 0xA7, 0x7E, 0x4F, 0x00, 0x14, 0x6A, 0x93, 
+  45          	0xA4, 0x6D, 0x5A, 0x6A, 0x83, 0xB8, 0xAB, 0x97, 0x7E, 0x5A, 0x07, 0x23, 0x6B, 0xA1, 0x95, 0x62, 
+  46          	0x61, 0x80, 0xA0, 0xAA, 0xBF, 0xBC, 0xBF, 0x99, 0x51, 0x26, 0x81, 0xA7, 0xB0, 0x77, 0x62, 0x70, 
+  47          	0x91, 0xA6, 0xA8, 0xAE, 0xB5, 0xC3, 0xA4, 0x61, 0x16, 0x5D, 0x93, 0xB2, 0x95, 0x6E, 0x71, 0x94, 
+  48          	0xB0, 0xB6, 0xB8, 0xAD, 0xA9, 0x90, 0x61, 0x03, 0x52, 0xAE, 0xD3, 0xB4, 0x7D, 0x7D, 0x98, 0xAE, 
+  49          	0xA3, 0xBA, 0xC1, 0xC4, 0xAC, 0x6B, 0x00, 0x2E, 0x9B, 0xDA, 0xCF, 0x8E, 0x90, 0xA8, 0xC5, 0xC1, 
+  50          	0xB4, 0xA6, 0xA3, 0x9F, 0x86, 0x3A, 0x4C, 0x95, 0xC8, 0xD8, 0xA4, 0x93, 0x92, 0xAC, 0xB6, 0xA3, 
+  51          	0x98, 0xAE, 0xCE, 0xBB, 0x85, 0x22, 0x69, 0xA3, 0xD4, 0xC4, 0x91, 0x8D, 0x9B, 0xA4, 0x90, 0x94, 
+  52          	0xBA, 0xD6, 0xD0, 0x9B, 0x52, 0x4F, 0x98, 0xC8, 0xE0, 0xA1, 0x9C, 0x95, 0x92, 0x7F, 0xA6, 0xD5, 
+  53          	0xE9, 0xE2, 0xAE, 0x85, 0x39, 0x84, 0xBA, 0xD6, 0xB1, 0x98, 0x81, 0x7D, 0x8C, 0xAE, 0xD2, 0xDD, 
+  54          	0xD2, 0xB5, 0x9A, 0x5E, 0x64, 0x94, 0xAD, 0xC0, 0x9C, 0x93, 0x8F, 0x97, 0xA6, 0xC4, 0xD8, 0xC9, 
+  55          	0xC0, 0xA2, 0x8A, 0x5C, 0x7F, 0x99, 0xA8, 0xA0, 0x90, 0x86, 0x7C, 0x98, 0xD3, 0xDB, 0xC9, 0xA7, 
+C51 COMPILER V6.12  SDTEST                                                                 05/28/2014 20:56:00 PAGE 2   
+
+  56          	0x8B, 0x82, 0x71, 0x75, 0x81, 0x81, 0x8D, 0x85, 0x89, 0x93, 0xA2, 0xB0, 0xBB, 0xB5, 0xAA, 0xA2, 
+  57          	0x96, 0x7E, 0x65, 0x7F, 0x8E, 0x97, 0x83, 0x82, 0x77, 0x89, 0x9A, 0xBE, 0xBD, 0xB8, 0xA3, 0x8D,
+  58          };
+  59          //
+  60          void main()
+  61          {
+  62   1      	uint i=0,j;
+  63   1      	ulon const Lenth=512;//数据块长度
+  64   1      	SD_Init();	//SD卡初始化
+  65   1      	SerialInit();//
+  66   1      	//LCDInit();
+  67   1      	SD_Block_W(Test_1,Lenth*100,Lenth);//往地址51200处写测试数据
+  68   1      	SD_Block_W(Test_2,Lenth*100+512,Lenth);//往地址51200处写测试数据
+  69   1      	//
+  70   1      	DATA=SD_Block_R(Lenth*100,Lenth);
+  71   1      	//
+  72   1      	while(1)
+  73   1      	{
+  74   2      		for(i=0;i<512;i++)
+  75   2      		{
+  76   3      			P1=DATA[i];
+  77   3      			SerialPutString(&DATA[i]);
+  78   3      		}
+  79   2      	}
+  80   1      }
+*** WARNING C280 IN LINE 62 OF .\SDTEST.C: 'j': unreferenced local variable
+  81          /***************************************
+  82          *                 显示函数
+  83          *****************************************/
+  84          void Display(uchar Num)
+  85          {
+  86   1      	//uchar 
+  87   1      }
+*** WARNING C280 IN LINE 84 OF .\SDTEST.C: 'Num': unreferenced local variable
+  88          /***************************************
+  89          *                 SPI写函数
+  90          *****************************************/
+  91          void SPI_W(uchar Data)
+  92          {
+  93   1      	uchar i;
+  94   1      	for(i=0;i<8;i++)
+  95   1      	{
+  96   2      		Data<<=1;
+  97   2      		CLK=0;
+  98   2      		DI=CY;
+  99   2      		CLK=1;
+ 100   2      	}
+ 101   1      	DI=1;
+ 102   1      }
+ 103          /***************************************
+ 104          *                 SPI读函数
+ 105          *****************************************/
+ 106          uchar SPI_R()
+ 107          {
+ 108   1      	uchar Data,i;
+ 109   1      	DO=1;
+ 110   1      
+ 111   1      	for(i=0;i<8;i++)
+ 112   1      	{
+ 113   2      		Data<<=1;
+ 114   2      		CLK=0;
+ 115   2      		CLK=1;
+C51 COMPILER V6.12  SDTEST                                                                 05/28/2014 20:56:00 PAGE 3   
+
+ 116   2      		Data|=DO;
+ 117   2      	}
+ 118   1      	return Data;
+ 119   1      }
+ 120          /***************************************
+ 121          *                 读SD卡函数
+ 122          *****************************************/
+ 123          uchar SD_Response()
+ 124          {
+ 125   1      	uchar i,Response;
+ 126   1      
+ 127   1      	for(i=0;i<10;i++)
+ 128   1      	{
+ 129   2      		Response=SPI_R();
+ 130   2      		if(Response==0x00)
+ 131   2      			break;
+ 132   2      		if(Response==0x01)
+ 133   2      			break;
+ 134   2      	}
+ 135   1      	return Response;
+ 136   1      }
+ 137          /***************************************
+ 138          *                 向SD卡写命令
+ 139          *****************************************/
+ 140          void SD_Cmd(uchar Cmd,ulon Argument,uchar CRC)
+ 141          {
+ 142   1      	uchar arg[4];
+ 143   1      
+ 144   1      	arg[0]=(uchar)Argument;
+ 145   1      	arg[1]=(uchar)(Argument>>8);
+ 146   1      	arg[2]=(uchar)(Argument>>16);
+ 147   1      	arg[3]=(uchar)(Argument>>24);
+ 148   1      	//
+ 149   1      	SPI_W(Cmd|0x40);
+ 150   1      	SPI_W(arg[3]);
+ 151   1      	SPI_W(arg[2]);
+ 152   1      	SPI_W(arg[1]);
+ 153   1      	SPI_W(arg[0]);
+ 154   1      	SPI_W(CRC);
+ 155   1      }
+ 156          /***************************************
+ 157          *                 SD卡初始化函数
+ 158          *****************************************/
+ 159          uchar SD_Init()
+ 160          {
+ 161   1      	uint delay=0,trials=0;
+ 162   1      	uchar i;
+ 163   1      	uchar Response=0xff;
+ 164   1      	//
+ 165   1      	CS=1;
+ 166   1      	for(i=0;i<10;i++)
+ 167   1      		SPI_W(0xff);
+ 168   1      	CS=0;
+ 169   1      	//
+ 170   1      	SD_Cmd(0x00,0,0x95);
+ 171   1      	//
+ 172   1      	i=0;
+ 173   1      	while(SD_Response()!=0x01)
+ 174   1      	{
+ 175   2      		i++;
+ 176   2      		if(i>=100)
+ 177   2      			return 0;
+C51 COMPILER V6.12  SDTEST                                                                 05/28/2014 20:56:00 PAGE 4   
+
+ 178   2      	}
+ 179   1      	//
+ 180   1      	CS=1;
+ 181   1      	SPI_W(0xff);
+ 182   1      	//
+ 183   1      	i=0;
+ 184   1      	CS=0;
+ 185   1      	while(Response!=0x00)
+ 186   1      	{
+ 187   2      		SD_Cmd(0x01,0,0xff);
+ 188   2      		//
+ 189   2      		Response=SD_Response();
+ 190   2      		i++;
+ 191   2      		if(i>100)
+ 192   2      			return 0;
+ 193   2      	}
+ 194   1      	//
+ 195   1      	CS=1;
+ 196   1      	SPI_W(0xff);
+ 197   1      	return 1;
+ 198   1      }
+ 199          /***************************************
+ 200          *                 SD卡数据写入函数
+ 201          *****************************************/
+ 202          uchar SD_Block_W(uchar *Block,ulon address,uint len)
+ 203          {
+*** WARNING C235 IN LINE 203 OF .\SDTEST.C: parameter 1: different types
+ 204   1      	uint i;
+ 205   1      	uchar Respose_Write;
+ 206   1      	P1=0xff;
+ 207   1      	CS=0;
+ 208   1      	SD_Cmd(0x18,address,0xff);
+ 209   1      	//
+ 210   1      	while(Respose_Write!=0x00)
+ 211   1      	{
+ 212   2      		for(i=0;i<10;i++)
+ 213   2      			SPI_W(0xff);
+ 214   2      		//
+ 215   2      		SPI_W(0xfe);
+ 216   2      		//
+ 217   2      		for(i=0;i<len;i++)
+ 218   2      			SPI_W(Block[i]);
+ 219   2      		SPI_W(0xff);
+ 220   2      		SPI_W(0xff);
+ 221   2      		//
+ 222   2      		Respose_Write=SPI_R()&0x0f;
+ 223   2      		while(SPI_R()==0);
+ 224   2      		CS=1;
+ 225   2      		SPI_W(0xff);
+ 226   2      		//
+ 227   2      		if(Respose_Write==0x05)
+ 228   2      			return 1;
+ 229   2      		else
+ 230   2      			return 0;
+ 231   2      	}
+ 232   1      }
+ 233          /***************************************
+ 234          *                 SD卡读数据块函数
+ 235          *****************************************/
+ 236          uchar* SD_Block_R(ulon address,uint len)
+ 237          {
+ 238   1      	uint i;
+C51 COMPILER V6.12  SDTEST                                                                 05/28/2014 20:56:00 PAGE 5   
+
+ 239   1      	uchar xdata Block[512];
+ 240   1      	SD_Cmd(0x11,address,0xff);
+ 241   1      	//
+ 242   1      	while(SD_Response()!=0x00);
+ 243   1      	while(SPI_R()!=0xfe);
+ 244   1      	//
+ 245   1      	for(i=0;i<len;i++)
+ 246   1      		Block[i]=SPI_R();
+ 247   1      	SPI_R();
+ 248   1      	SPI_R();
+ 249   1      
+ 250   1      	CS=1;
+ 251   1      	SPI_R();
+ 252   1      
+ 253   1      	return Block;
+ 254   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    926    ----
+   CONSTANT SIZE    =    512    ----
+   XDATA SIZE       =   ----     512
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     38      47
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  3 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,40 @@
+Build target 'Target 1'
+linking...
+creating hex file from "Dust"...
+
+OBJECT TO HEX FILE CONVERTER OH51 V2.5
+COPYRIGHT KEIL ELEKTRONIK GmbH 1991 - 2000
+
+GENERATING INTEL HEX FILE: Dust.hex
+
+*** ERROR: PREMATURE END OF FILE ON 'Dust'
+*** OH51 ABORTED.
+"Dust" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+creating hex file from "Dust"...
+
+OBJECT TO HEX FILE CONVERTER OH51 V2.5
+COPYRIGHT KEIL ELEKTRONIK GmbH 1991 - 2000
+
+GENERATING INTEL HEX FILE: Dust.hex
+
+*** ERROR: PREMATURE END OF FILE ON 'Dust'
+*** OH51 ABORTED.
+"Dust" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Dust.c...
+linking...
+creating hex file from "Dust"...
+
+OBJECT TO HEX FILE CONVERTER OH51 V2.5
+COPYRIGHT KEIL ELEKTRONIK GmbH 1991 - 2000
+
+GENERATING INTEL HEX FILE: Dust.hex
+
+*** ERROR: PREMATURE END OF FILE ON 'Dust'
+*** OH51 ABORTED.
+"Dust" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+"Dust" - 0 Error(s), 0 Warning(s).

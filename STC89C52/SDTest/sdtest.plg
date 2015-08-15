@@ -1,0 +1,45 @@
+Build target 'Target 1'
+compiling sdtest.c...
+.\SDTEST.C(209): warning C280: 's': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?SDTEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?SDTEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?SDTEST
+
+creating hex file from "sdtest"...
+"sdtest" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+compiling sdtest.c...
+.\SDTEST.C(209): warning C280: 's': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?SDTEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?SDTEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?SDTEST
+
+creating hex file from "sdtest"...
+"sdtest" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+compiling sdtest.c...
+.\SDTEST.C(209): warning C280: 's': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?SDTEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?SDTEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?SDTEST
+
+creating hex file from "sdtest"...
+"sdtest" - 0 Error(s), 4 Warning(s).

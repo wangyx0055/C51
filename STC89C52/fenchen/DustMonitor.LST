@@ -1,0 +1,12 @@
+C51 COMPILER V6.12  DUSTMONITOR                                                            05/31/2014 20:01:37 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE DUSTMONITOR
+OBJECT MODULE PLACED IN .\DustMonitor.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\DustMonitor.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+*** ERROR 318 OF .\DustMonitor.c: can't open file '.\DustMonitor.c'
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)

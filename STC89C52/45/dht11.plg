@@ -1,0 +1,91 @@
+Build target 'Target 1'
+compiling dht11.c...
+.\DHT11.C(8): warning C206: 'delay': missing function-prototype
+.\DHT11.C(8): error C267: 'delay': requires ANSI-style prototype
+.\DHT11.C(12): warning C206: 'delay_1': missing function-prototype
+.\DHT11.C(15): error C129: missing ';' before 'receive_byte'
+Target not created
+Build target 'Target 1'
+compiling dht11.c...
+.\DHT11.C(6): error C202: 'uchar': undefined identifier
+.\DHT11.C(6): error C141: syntax error near 'a'
+.\DHT11.C(7): error C202: 'a': undefined identifier
+.\DHT11.C(8): error C202: 'b': undefined identifier
+.\DHT11.C(15): warning C206: 'delay': missing function-prototype
+.\DHT11.C(15): error C267: 'delay': requires ANSI-style prototype
+.\DHT11.C(19): warning C206: 'delay_1': missing function-prototype
+.\DHT11.C(22): error C129: missing ';' before 'receive_byte'
+Target not created
+Build target 'Target 1'
+compiling dht11.c...
+.\DHT11.C(6): error C202: 'uchar': undefined identifier
+.\DHT11.C(6): error C141: syntax error near 'a'
+.\DHT11.C(7): error C202: 'a': undefined identifier
+.\DHT11.C(8): error C202: 'b': undefined identifier
+.\DHT11.C(19): warning C206: 'delay_1': missing function-prototype
+.\DHT11.C(19): error C267: 'delay_1': requires ANSI-style prototype
+.\DHT11.C(22): error C129: missing ';' before 'receive_byte'
+Target not created
+Build target 'Target 1'
+compiling dht11.c...
+.\DHT11.C(19): warning C206: 'delay_1': missing function-prototype
+.\DHT11.C(19): error C267: 'delay_1': requires ANSI-style prototype
+.\DHT11.C(35): error C202: 'data_byte': undefined identifier
+.\DHT11.C(36): error C202: 'data_byte': undefined identifier
+.\DHT11.C(38): error C202: 'data_byte': undefined identifier
+.\DHT11.C(64): error C202: 'RH': undefined identifier
+.\DHT11.C(65): error C202: 'RL': undefined identifier
+.\DHT11.C(66): error C202: 'TH': undefined identifier
+.\DHT11.C(67): error C202: 'TL': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling dht11.c...
+.\DHT11.C(24): error C208: 'delay_1': too many actual parameters
+.\DHT11.C(35): error C208: 'delay_1': too many actual parameters
+.\DHT11.C(40): error C202: 'data_byte': undefined identifier
+.\DHT11.C(41): error C202: 'data_byte': undefined identifier
+.\DHT11.C(43): error C202: 'data_byte': undefined identifier
+.\DHT11.C(64): error C208: 'delay_1': too many actual parameters
+.\DHT11.C(69): error C202: 'RH': undefined identifier
+.\DHT11.C(70): error C202: 'RL': undefined identifier
+.\DHT11.C(71): error C202: 'TH': undefined identifier
+.\DHT11.C(72): error C202: 'TL': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling dht11.c...
+.\DHT11.C(40): error C202: 'data_byte': undefined identifier
+.\DHT11.C(41): error C202: 'data_byte': undefined identifier
+.\DHT11.C(43): error C202: 'data_byte': undefined identifier
+.\DHT11.C(69): error C202: 'RH': undefined identifier
+.\DHT11.C(70): error C202: 'RL': undefined identifier
+.\DHT11.C(71): error C202: 'TH': undefined identifier
+.\DHT11.C(72): error C202: 'TL': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling dht11.c...
+.\DHT11.C(71): error C202: 'RH': undefined identifier
+.\DHT11.C(72): error C202: 'RL': undefined identifier
+.\DHT11.C(73): error C202: 'TH': undefined identifier
+.\DHT11.C(74): error C202: 'TL': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling dht11.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?RECEIVE?DHT11
+
+*** WARNING L10: CANNOT DETERMINE ROOT SEGMENT
+"dht11" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+creating hex file from "dht11"...
+"dht11" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling dht11.c...
+linking...
+creating hex file from "dht11"...
+"dht11" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling dht11.c...
+linking...
+creating hex file from "dht11"...
+"dht11" - 0 Error(s), 0 Warning(s).

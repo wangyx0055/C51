@@ -1,0 +1,151 @@
+C51 COMPILER V6.12  DHT11                                                                  05/31/2014 16:33:43 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE DHT11
+OBJECT MODULE PLACED IN .\DHT11.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\DHT11.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h> 
+   3          typedef unsigned char U8;
+   4          typedef unsigned int   U16;
+   5          U8 code table[]={0xc0,0xf9,0xa4,0xb0,
+   6                 0x99,0x92,0x82,0xf8,
+   7                 0x80,0x90,0x88,0x83,
+   8                 0xc6,0xa1};
+   9          sbit P2_0 = P2^2 ;
+  10          U8 U8FLAG,U8temp;
+  11          U8 shidu_shi,shidu_ge,wendu_shi,wendu_ge;
+  12          U8 U8T_data_H,U8T_data_L,U8RH_data_H,U8RH_data_L,U8checkdata;
+  13          U8 U8T_data_H_temp,U8T_data_L_temp,U8RH_data_H_temp,U8RH_data_L_temp,U8checkdata_temp;
+  14          U8 U8comdata;
+  15          
+  16          void Delay(U16 z)
+  17          {
+  18   1      U8 x,y;
+  19   1      for(x=z;x>0;x--)
+  20   1         for(y=110;y>0;y--);
+  21   1      }
+  22          
+  23          void Delay_10us(void)
+  24             {
+  25   1           U8 i;
+  26   1           i--;
+  27   1           i--;
+  28   1           i--;
+  29   1           i--;
+  30   1           i--;
+  31   1           i--;
+  32   1          }
+  33          
+  34          void COM(void)
+  35          {     
+  36   1          U8 i;         
+  37   1          for(i=0;i<8;i++)    
+  38   1          {
+  39   2      
+  40   2           U8FLAG=2; 
+  41   2           while((!P2_0)&&U8FLAG++);
+  42   2          Delay_10us();
+  43   2           Delay_10us();
+  44   2           Delay_10us();
+  45   2         U8temp=0;
+  46   2           if(P2_0)U8temp=1;
+  47   2           U8FLAG=2;
+  48   2          while((P2_0)&&U8FLAG++);   
+  49   2           if(U8FLAG==1)break;    
+  50   2           U8comdata<<=1;
+  51   2           U8comdata|=U8temp; 
+  52   2           }    
+  53   1      }
+  54          void display(U8 shidu_shi,U8 shidu_ge,U8 wendu_shi,U8 wendu_ge)
+  55          {
+C51 COMPILER V6.12  DHT11                                                                  05/31/2014 16:33:43 PAGE 2   
+
+  56   1      P2=0xff;
+  57   1      P2=0xbf;
+  58   1      P0=table[shidu_shi];
+  59   1      Delay(5);
+  60   1      P2=0xff;
+  61   1      P2=0xdf;
+  62   1      P0=table[shidu_ge];
+  63   1      Delay(5);
+  64   1      P2=0xff;
+  65   1      P2=0xfb;
+  66   1      P0=table[wendu_shi];
+  67   1      Delay(5);
+  68   1      P2=0xff;
+  69   1      P2=0xfd;
+  70   1      P0=table[wendu_ge];
+  71   1      Delay(5);
+  72   1      }
+  73          void RH(void)
+  74          {
+  75   1            P2_0=0;
+  76   1          Delay(34);
+  77   1          P2_0=1;
+  78   1          Delay_10us();
+  79   1          Delay_10us();
+  80   1          Delay_10us();
+  81   1          Delay_10us();
+  82   1          P2_0=1;   
+  83   1           if(!P2_0) 
+  84   1           {
+  85   2            U8FLAG=2; 
+  86   2            while((!P2_0)&&U8FLAG++);
+  87   2            U8FLAG=2;
+  88   2            while((P2_0)&&U8FLAG++); 
+  89   2            COM();
+  90   2            U8RH_data_H_temp=U8comdata;
+  91   2      	  P1=U8RH_data_H_temp;//
+  92   2            COM();
+  93   2            U8RH_data_L_temp=U8comdata;
+  94   2            COM();
+  95   2            U8T_data_H_temp=U8comdata;
+  96   2            COM();
+  97   2            U8T_data_L_temp=U8comdata;
+  98   2            COM();
+  99   2            U8checkdata_temp=U8comdata;
+ 100   2            P2_0=1; 
+ 101   2            U8temp=(U8T_data_H_temp+U8T_data_L_temp+U8RH_data_H_temp+U8RH_data_L_temp);
+ 102   2             if(U8temp==U8checkdata_temp)
+ 103   2             {
+ 104   3                U8RH_data_H=U8RH_data_H_temp;
+ 105   3                U8RH_data_L=U8RH_data_L_temp;
+ 106   3                U8T_data_H=U8T_data_H_temp;
+ 107   3                U8T_data_L=U8T_data_L_temp;
+ 108   3                U8checkdata=U8checkdata_temp;
+ 109   3             }
+ 110   2             shidu_shi=U8T_data_H/10; 
+ 111   2               shidu_ge=U8T_data_H%10; 
+ 112   2               wendu_shi=U8RH_data_H/10; 
+ 113   2               wendu_ge=U8RH_data_H%10;        
+ 114   2          }
+ 115   1          //display(shidu_shi,shidu_ge,wendu_shi,wendu_ge);
+ 116   1      }
+ 117          void main()
+C51 COMPILER V6.12  DHT11                                                                  05/31/2014 16:33:43 PAGE 3   
+
+ 118          {
+ 119   1      while(1)
+ 120   1      { 
+ 121   2          RH();
+ 122   2      }
+ 123   1      
+ 124   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    302    ----
+   CONSTANT SIZE    =     14    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     17       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,71 @@
+Build target 'Target 1'
+compiling DustMonitor.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALPUTEND?DUSTMONITOR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?DUSTMONITOR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?DUSTMONITOR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?DUSTMONITOR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SENDSMS?DUSTMONITOR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DIALVOICECALL?DUSTMONITOR
+
+creating hex file from "DustMonitor"...
+"DustMonitor" - 0 Error(s), 6 Warning(s).
+Build target 'Target 1'
+compiling DustMonitor.c...
+linking...
+creating hex file from "DustMonitor"...
+
+OBJECT TO HEX FILE CONVERTER OH51 V2.5
+COPYRIGHT KEIL ELEKTRONIK GmbH 1991 - 2000
+
+GENERATING INTEL HEX FILE: DustMonitor.hex
+
+*** ERROR: PREMATURE END OF FILE ON 'DustMonitor'
+*** OH51 ABORTED.
+"DustMonitor" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+creating hex file from "DustMonitor"...
+
+OBJECT TO HEX FILE CONVERTER OH51 V2.5
+COPYRIGHT KEIL ELEKTRONIK GmbH 1991 - 2000
+
+GENERATING INTEL HEX FILE: DustMonitor.hex
+
+*** ERROR: PREMATURE END OF FILE ON 'DustMonitor'
+*** OH51 ABORTED.
+"DustMonitor" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling DustMonitor.c...
+linking...
+creating hex file from "DustMonitor"...
+
+OBJECT TO HEX FILE CONVERTER OH51 V2.5
+COPYRIGHT KEIL ELEKTRONIK GmbH 1991 - 2000
+
+GENERATING INTEL HEX FILE: DustMonitor.hex
+
+*** ERROR: PREMATURE END OF FILE ON 'DustMonitor'
+*** OH51 ABORTED.
+"DustMonitor" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling DustMonitor.c...
+nitor.c(0): error  318: can't open file '.\DustMonitor.c'
+compiling Dust.c...
+Target not created
+Build target 'Target 1'
+compiling DustMonitor.c...
+nitor.c(0): error  318: can't open file '.\DustMonitor.c'
+compiling Dust.c...
+Target not created

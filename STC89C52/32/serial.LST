@@ -1,0 +1,159 @@
+C51 COMPILER V6.12  SERIAL                                                                 04/22/2014 11:02:14 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE SERIAL
+OBJECT MODULE PLACED IN .\serial.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\serial.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #include<string.h>
+   3          #include <intrins.h>
+   4          #define uchar unsigned char
+   5          #define uint unsigned int
+   6          
+   7          uchar flag=0,a,i=0,num,temp,m,count;
+   8          uchar inbuff[32],buff[5];
+   9          sbit  wei=P2^6;
+  10          sbit  duan=P2^7;
+  11          unsigned char table[]={0x3f  , 0x06 , 0x5b , 0x4f , 0x66 , 0x6d ,
+  12          					   0x7d , 0x07 , 0x7f  , 0x6f , 0x77 , 0x7c ,
+  13          					   0x39 , 0x5e , 0x79 , 0x71};
+  14          
+  15          void putbyte(uchar c);
+  16          void putstring(uchar *puts,uchar n);
+  17          int getIndex(uchar val);
+  18          void main()
+  19          {
+  20   1      	ET0=1;
+  21   1      	TMOD=0x21;//设置定时器1为工作方式2
+  22   1      	TH0=(65535-50000)>>8;
+  23   1      	TL0=(65535-50000)%256;	//
+  24   1      	TH1=0xfd;
+  25   1      	TL1=0xfd;//
+  26   1      	TR0=1;//
+  27   1      	TR1=1;
+  28   1      	//
+  29   1      	REN=1;
+  30   1      	SM0=0;
+  31   1      	SM1=1;
+  32   1      	EA=1;
+  33   1      	ES=1;
+  34   1      	//
+  35   1      	duan=1;
+  36   1      	P0=temp=0xfe;//段选低电平有效
+  37   1      	duan=0;
+  38   1      	
+  39   1      	wei=1;
+  40   1      	P0=0x3f;//段选低电平有效
+  41   1      	wei=0;
+  42   1      	
+  43   1      	m=num=0;
+  44   1      	memset(inbuff,0x00,32);
+  45   1      	while(1)
+  46   1      		{
+  47   2      			//实现数据发送不使用中断，而数据接收使用中断
+  48   2      			if(flag==1)
+  49   2      				{
+  50   3      				flag=0;
+  51   3      				
+  52   3      					
+  53   3      				ES=0;
+  54   3      			//	flag=0;
+  55   3      				memcpy(buff,&inbuff[2],4);
+C51 COMPILER V6.12  SERIAL                                                                 04/22/2014 11:02:14 PAGE 2   
+
+  56   3      				putstring(inbuff,strlen(inbuff));
+  57   3      				ES=1;
+  58   3      				
+  59   3      				}
+  60   2      				if(num==5)
+  61   2      				{
+  62   3      					num=0;
+  63   3      					duan=1;
+  64   3      					P0= _crol_(temp,m);//段选低电平有效
+  65   3      					duan=0;
+  66   3      		
+  67   3      					wei=1;
+  68   3      					P0=table[getIndex(buff[m])];
+  69   3      					wei=0;			
+  70   3      					//
+  71   3      					m++;
+  72   3      					m=m%4;		
+  73   3      					
+  74   3      				}
+  75   2      		}
+  76   1      }
+  77          
+  78          void serial() interrupt 4
+  79          {
+  80   1      	if(RI)
+  81   1      	{
+  82   2      		RI=0;
+  83   2      		a=SBUF;
+  84   2      		if(a!='\n')
+  85   2      		{
+  86   3      			inbuff[i]=a;
+  87   3      			i++;
+  88   3      		}
+  89   2      		else
+  90   2      		{
+  91   3      			i=0;
+  92   3      			flag=1;
+  93   3      		}
+  94   2      	}
+  95   1      	
+  96   1      //	P1=SBUF;
+  97   1      	
+  98   1      //	flag=1;
+  99   1      }
+ 100          
+ 101          void Timershow()interrupt 1
+ 102          {
+ 103   1      	TH0=(65535-500)>>8;
+ 104   1      	TL0=(65535-500)%256;
+ 105   1      	num++;
+ 106   1      }
+ 107          
+ 108          void putbyte(uchar c)
+ 109          {
+ 110   1      	SBUF=c;
+ 111   1      	while(!TI);
+ 112   1      	TI=0;
+ 113   1      }
+ 114          
+ 115          void putstring(uchar *puts,uchar n)
+ 116          {	
+ 117   1      	int j;
+C51 COMPILER V6.12  SERIAL                                                                 04/22/2014 11:02:14 PAGE 3   
+
+ 118   1      	//short showdata=0;
+ 119   1      	for(j=0;j<n;j++)
+ 120   1      		putbyte(puts[j]);
+ 121   1      	memset(puts,0x00,32);
+ 122   1      }
+ 123          int getIndex(uchar val)
+ 124          {
+ 125   1      	if(val>='0'&&val<='9')
+ 126   1      		return val-'0';
+ 127   1      	if((val>='A'&&val<='F'))
+ 128   1      		return val-'A'+10;
+ 129   1      	if(val>='a'&&val<='f')
+ 130   1      		return val-'a'+10;
+ 131   1      		
+ 132   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    356    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     60       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

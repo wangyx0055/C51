@@ -1,0 +1,160 @@
+C51 COMPILER V6.12  TEST                                                                   10/23/2013 20:41:29 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #define uchar unsigned char
+   3          sbit sda=P2^0;
+   4          sbit scl=P2^1;
+   5          uchar a;
+   6          void delay()
+   7          { ;; }
+   8          void start()  //开始信号
+   9          {	
+  10   1      	sda=1;
+  11   1      	delay();
+  12   1      	scl=1;
+  13   1      	delay();
+  14   1      	sda=0;
+  15   1      	delay();
+  16   1      }
+  17          
+  18          void stop()   //停止
+  19          {
+  20   1      	sda=0;
+  21   1      	delay();
+  22   1      	scl=1;
+  23   1      	delay();
+  24   1      	sda=1;
+  25   1      	delay();
+  26   1      }
+  27          
+  28          void respons()  //应答
+  29          {
+  30   1      	uchar i;
+  31   1      	scl=1;
+  32   1      	delay();
+  33   1      	while((sda==1)&&(i<250))i++;
+  34   1      	scl=0;
+  35   1      	delay();
+  36   1      }
+  37          
+  38          void init()
+  39          {
+  40   1      	sda=1;
+  41   1      	delay();
+  42   1      	scl=1;
+  43   1      	delay();
+  44   1      }
+  45          
+  46          void write_byte(uchar date)
+  47          {
+  48   1      	uchar i,temp;
+  49   1      	temp=date;
+  50   1      
+  51   1      
+  52   1      	for(i=0;i<8;i++)
+  53   1      	{
+  54   2      		temp=temp<<1;
+  55   2      		scl=0;
+C51 COMPILER V6.12  TEST                                                                   10/23/2013 20:41:29 PAGE 2   
+
+  56   2      	    delay();
+  57   2      		sda=CY;
+  58   2      		delay();
+  59   2      		scl=1;
+  60   2      		delay();
+  61   2      	//	scl=0;
+  62   2           //   delay();
+  63   2      	}
+  64   1      	//为写完后写应答信号做准备
+  65   1      	scl=0;
+  66   1      	delay();
+  67   1      //	sda=1;
+  68   1      //	delay();
+  69   1      }
+  70          
+  71          uchar read_byte()
+  72          {
+  73   1      	uchar i,k;
+  74   1      	scl=0;
+  75   1      	delay();
+  76   1      	sda=1;
+  77   1      	delay();
+  78   1      	for(i=0;i<8;i++)
+  79   1      	{
+  80   2      		scl=1;
+  81   2      		delay();	
+  82   2      		k=(k<<1)|sda;
+  83   2      		scl=0;
+  84   2      		delay();	
+  85   2      	}
+  86   1      	return k;
+  87   1      }
+  88          
+  89          void delay1(uchar x)
+  90          {
+  91   1      	uchar a,b;
+  92   1      	for(a=x;a>0;a--)
+  93   1      	 for(b=100;b>0;b--);
+  94   1      }
+  95          
+  96          void write_add(uchar address,uchar date)
+  97          {
+  98   1      	start();
+  99   1      	write_byte(0xa0);
+ 100   1      	respons();
+ 101   1      	write_byte(address);
+ 102   1      	respons();
+ 103   1      	write_byte(date);
+ 104   1      	respons();
+ 105   1      	stop();
+ 106   1      }
+ 107          
+ 108          uchar read_add(uchar address)
+ 109          {
+ 110   1      	uchar date;
+ 111   1      	start();
+ 112   1      	write_byte(0xa0);
+ 113   1      	respons();
+ 114   1      	write_byte(address);
+ 115   1      	respons();
+ 116   1      	start();
+ 117   1      	write_byte(0xa1);
+C51 COMPILER V6.12  TEST                                                                   10/23/2013 20:41:29 PAGE 3   
+
+ 118   1      	respons();
+ 119   1      	date=read_byte();
+ 120   1      	stop();
+ 121   1      	return date;
+ 122   1      }
+ 123          
+ 124          void main()
+ 125          {
+ 126   1      	init();
+ 127   1      	write_add(23,0xa2);
+ 128   1      	delay1(100);
+ 129   1      	P1=read_add(23);
+ 130   1      	while(1);
+ 131   1      }
+ 132          
+ 133          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    216    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

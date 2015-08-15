@@ -1,0 +1,126 @@
+C51 COMPILER V6.12  TEST                                                                   05/31/2014 10:22:02 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          #include <string.h>
+   4          #include <math.h>
+   5          #include "LCD1602.h"
+   6          #define uchar unsigned char
+   7          #define uint unsigned int
+   8          
+   9          sbit pulse=P3^3;
+  10          uint  counter=0;
+  11          uchar len,i,count;
+  12          uchar buff[10]="hello";
+  13          uint lowpulseoccupancy;
+  14          uint code sampletime_ms = 3000;
+  15          float ratio,concentration,duration;
+  16          void delay(int n);
+  17          void init();
+  18          
+  19          void main()
+  20          {
+  21   1      	LCDInit();
+  22   1      	init();
+  23   1      	//
+  24   1      	while(1)
+  25   1      	{
+  26   2      			//
+  27   2      		if(counter>299)
+  28   2      		{
+  29   3      			TR1=0;
+  30   3      			//P1=TL0;
+  31   3      	    	counter=0;
+  32   3      			duration=(float)lowpulseoccupancy;
+  33   3      			ratio = duration/(sampletime_ms*10);  // Integer percentage 0=>100
+  34   3      	        concentration = 1.1*pow(ratio,3)-3.8*pow(ratio,2)+520*ratio+0.62; // using spec sheet curve
+  35   3      			sprintf(buff,"%f",ratio);
+  36   3      			lowpulseoccupancy = 0;
+  37   3      			//
+  38   3      			TR1=1;
+  39   3      			//
+  40   3      			len=strlen(buff);
+  41   3      			LCDWriteCom(0x01);
+  42   3      			LCDWriteCom(0x80);
+  43   3      			for(i=0;i<len;i++)
+  44   3      				LCDWriteData(buff[i]);
+  45   3      		}					
+  46   2      		//delay(2000);
+  47   2      	}
+  48   1      }
+  49          //
+  50          void delay(int n)
+  51          {
+  52   1      	int x,y;
+  53   1      	for(x=n;x>0;x--)
+  54   1      		for(y=110;y>0;y--);
+  55   1      }
+C51 COMPILER V6.12  TEST                                                                   05/31/2014 10:22:02 PAGE 2   
+
+  56          //
+  57          void init()
+  58          {
+  59   1      	lowpulseoccupancy = 0;
+  60   1      	//
+  61   1      	TMOD=0x11;
+  62   1      	TL0=0;
+  63   1      	TH0=0;
+  64   1      	TR0=0;
+  65   1      	TH1=0xd8; 
+  66   1       	TL1=0xef; 
+  67   1      	TR1=1;
+  68   1      	//
+  69   1      	EA=1; 
+  70   1      	EX1=1;
+  71   1      	IT1=1;//负跳变沿
+  72   1       	ET0=1;
+  73   1       	ET1=1;
+  74   1      
+  75   1      	//
+  76   1      }
+  77          //
+  78          void int1() interrupt 2 using 0
+  79          {
+  80   1      	TR0=1;
+  81   1      	while(pulse==0);
+  82   1      	//count=TL0;
+  83   1      	P1=TL0;
+  84   1      	lowpulseoccupancy = lowpulseoccupancy+(long)TL0;
+  85   1      	TR0=0;
+  86   1      	TL0=0;
+  87   1      }
+  88          //
+  89          void timer1() interrupt 3
+  90          {//timer0中断服务程序，中断一次延时10ms 
+  91   1       counter++;//节拍次数计数  
+  92   1       TH1=0xd8; //定义单位节拍的延时大小  
+  93   1       TL1=0xef; 
+  94   1       /*
+  95   1       if(counter==300)
+  96   1       	P1=0x0f;
+  97   1       else
+  98   1       	P1=0xff;
+  99   1      	*/
+ 100   1      } 
+ 101          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    516    ----
+   CONSTANT SIZE    =      5    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     29    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

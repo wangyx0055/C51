@@ -1,0 +1,608 @@
+BL51 BANKED LINKER/LOCATER V4.13                                                        06/01/2014  17:27:24  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V4.13, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE test.obj TO test RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL WITH FLOATING POINT ARITHMETIC
+
+
+INPUT MODULES INCLUDED:
+  test.obj (TEST)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPADD)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPMUL)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPDIV)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FCAST)
+  C:\KEIL\C51\LIB\C51FPS.LIB (PRINTF)
+  C:\KEIL\C51\LIB\C51FPS.LIB (POW)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPGETOPN)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPCMP)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPNEG)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?CASTF)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPROUND)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPCONVERT)
+  C:\KEIL\C51\LIB\C51FPS.LIB (EXP)
+  C:\KEIL\C51\LIB\C51FPS.LIB (LOG)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FTNPWR)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPSERIES)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?COPY)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CSTPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CSTOPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?LNEG)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?LLDCODE)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?LLDCODE0)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?PLDIIDATA)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CCASE)
+  C:\KEIL\C51\LIB\C51S.LIB (PUTCHAR)
+  C:\KEIL\C51\LIB\C51S.LIB (STRLEN)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?MEMSET)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  test (TEST)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0005H     UNIT         ?DT?_SERIALPUTSTRING?TEST
+            DATA    000DH     0003H     UNIT         ?DT?_SERIALREVDATA?TEST
+                    0010H     0008H                  *** GAP ***
+            REG     0018H     0008H     ABSOLUTE     "REG BANK 3"
+            BIT     0020H.0   0001H.2   UNIT         _BIT_GROUP_
+                    0021H.2   0000H.6                *** GAP ***
+            DATA    0022H     0032H     UNIT         _DATA_GROUP_
+            DATA    0054H     0017H     UNIT         ?DT?TEST
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/01/2014  17:27:24  PAGE 2
+
+
+            IDATA   006BH     0001H     UNIT         ?STACK
+
+            * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
+            XDATA   0000H     0034H     UNIT         ?XD?TEST
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+            CODE    0006H     0015H     UNIT         ?PR?_STRLEN?STRLEN
+            CODE    001BH     0003H     UNIT         ?PR?SERAILREVCHECK?TEST
+            CODE    001EH     0003H     UNIT         ?PR?SERIALGETDATALEN?TEST
+                    0021H     0002H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+                    0026H     0005H                  *** GAP ***
+            CODE    002BH     0003H     ABSOLUTE     
+            CODE    002EH     07CAH     UNIT         ?C?LIB_CODE
+            CODE    07F8H     046FH     UNIT         ?PR?PRINTF?PRINTF
+            CODE    0C67H     0135H     UNIT         ?PR?LOG?LOG
+            CODE    0D9CH     012BH     UNIT         ?PR?MAIN?TEST
+            CODE    0EC7H     00DBH     UNIT         ?PR?_POW?POW
+            CODE    0FA2H     009AH     UNIT         ?PR?EXP?EXP
+            CODE    103CH     008FH     UNIT         ?PR?_TODEM?TEST
+            CODE    10CBH     008CH     UNIT         ?C_C51STARTUP
+            CODE    1157H     0052H     UNIT         ?PR?_SERIALREVDATA?TEST
+            CODE    11A9H     004DH     UNIT         ?PR?INT1?TEST
+            CODE    11F6H     0048H     UNIT         ?PR?_SERIALPUTSTR?TEST
+            CODE    123EH     0043H     UNIT         ?PR?_SERIALPUTSTRING?TEST
+            CODE    1281H     0037H     UNIT         ?PR?SERIALINT?TEST
+            CODE    12B8H     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
+            CODE    12DFH     0024H     UNIT         ?PR?SERIALINIT?TEST
+            CODE    1303H     0022H     UNIT         ?PR?INIT?TEST
+            CODE    1325H     0020H     UNIT         ?PR?_DELAY?TEST
+            CODE    1345H     0012H     UNIT         ?CO?TEST
+            CODE    1357H     0010H     UNIT         ?PR?_SERIALPUTBYTE?TEST
+            CODE    1367H     000FH     UNIT         ?PR?TIMER2?TEST
+            CODE    1376H     000BH     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   test (TEST)
+
+
+SEGMENT                              BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT             START    LENGTH     START    LENGTH
+---------------------------------------------------------------------
+?PR?INT1?TEST                     -----    -----      -----    -----
+  +--> ?PR?_TODEM?TEST
+
+?PR?_TODEM?TEST                   -----    -----      0022H    0008H
+  +--> ?PR?_POW?POW
+
+?PR?_POW?POW                      -----    -----      0038H    000AH
+  +--> ?PR?LOG?LOG
+  +--> ?PR?EXP?EXP
+
+?PR?LOG?LOG                       0020H.1  0000H.1    0042H    0004H
+
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/01/2014  17:27:24  PAGE 3
+
+
+*** NEW ROOT ***************************************************
+
+?C_C51STARTUP                     -----    -----      -----    -----
+  +--> ?PR?MAIN?TEST
+  +--> ?C_INITSEG
+
+?PR?MAIN?TEST                     -----    -----      -----    -----
+  +--> ?PR?SERIALINIT?TEST
+  +--> ?PR?INIT?TEST
+  +--> ?CO?TEST
+  +--> ?PR?_POW?POW
+  +--> ?PR?PRINTF?PRINTF
+  +--> ?PR?_SERIALPUTSTR?TEST
+
+?PR?PRINTF?PRINTF                 0020H.1  0001H.1    0038H    001CH
+  +--> ?PR?PUTCHAR?PUTCHAR
+
+?PR?_SERIALPUTSTR?TEST            -----    -----      0038H    0005H
+  +--> ?PR?_STRLEN?STRLEN
+  +--> ?PR?_SERIALPUTBYTE?TEST
+
+
+
+SYMBOL TABLE OF MODULE:  test (TEST)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        TEST
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0054H         PUBLIC        concentration
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        T0
+  B:00D0H.6       PUBLIC        AC
+  D:0058H         PUBLIC        counter
+  B:00B0H.5       PUBLIC        T1
+  B:0090H.0       PUBLIC        T2
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:135FH         PUBLIC        _SerialPutByte
+  B:00C8H.6       PUBLIC        EXF2
+  B:00B0H.7       PUBLIC        RD
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  D:005AH         PUBLIC        flag
+  B:00B0H.2       PUBLIC        INT0
+  B:00D0H.7       PUBLIC        CY
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.3       PUBLIC        INT1
+  D:005BH         PUBLIC        ratio
+  D:00CBH         PUBLIC        RCAP2H
+  B:00B8H.4       PUBLIC        PS
+  C:001EH         PUBLIC        SerialGetDataLen
+  B:0090H.1       PUBLIC        T2EX
+  X:0000H         PUBLIC        buff
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/01/2014  17:27:24  PAGE 4
+
+
+  B:00D0H.2       PUBLIC        OV
+  D:00CAH         PUBLIC        RCAP2L
+  C:0D9CH         PUBLIC        main
+  B:00C8H.1       PUBLIC        C_T2
+  B:00B0H.6       PUBLIC        WR
+  D:005FH         PUBLIC        count
+  B:00B0H.2       PUBLIC        pulse
+  B:00C8H.5       PUBLIC        RCLK
+  B:00C8H.4       PUBLIC        TCLK
+  C:1281H         PUBLIC        serialInt
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:1303H         PUBLIC        init
+  C:11F6H         PUBLIC        _SerialPutStr
+  C:103CH         PUBLIC        _ToDem
+  B:0088H.1       PUBLIC        IE0
+  B:0088H.3       PUBLIC        IE1
+  D:0060H         PUBLIC        len
+  B:00C8H.0       PUBLIC        CP_RL2
+  B:00A8H.1       PUBLIC        ET0
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.5       PUBLIC        TF0
+  B:00A8H.5       PUBLIC        ET2
+  B:0088H.7       PUBLIC        TF1
+  B:00C8H.7       PUBLIC        TF2
+  B:0098H.2       PUBLIC        RB8
+  D:008CH         PUBLIC        TH0
+  D:0061H         PUBLIC        lowpulseoccupancy
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  D:008DH         PUBLIC        TH1
+  B:0098H.3       PUBLIC        TB8
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  B:00D0H.0       PUBLIC        P
+  B:0098H.7       PUBLIC        SM0
+  D:008AH         PUBLIC        TL0
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+  B:0098H.5       PUBLIC        SM2
+  B:00B8H.1       PUBLIC        PT0
+  B:00B8H.3       PUBLIC        PT1
+  B:00D0H.3       PUBLIC        RS0
+  C:1367H         PUBLIC        timer2
+  B:00B8H.5       PUBLIC        PT2
+  B:0088H.4       PUBLIC        TR0
+  B:00D0H.4       PUBLIC        RS1
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  B:00B8H.0       PUBLIC        PX0
+  B:00B8H.2       PUBLIC        PX1
+  D:0065H         PUBLIC        a
+  B:00C8H.3       PUBLIC        EXEN2
+  B:0098H.4       PUBLIC        REN
+  D:00C9H         PUBLIC        T2MOD
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/01/2014  17:27:24  PAGE 5
+
+
+  D:00C8H         PUBLIC        T2CON
+  D:0066H         PUBLIC        i
+  D:0067H         PUBLIC        duration
+  B:00B0H.0       PUBLIC        RXD
+  C:1157H         PUBLIC        _SerialRevData
+  B:00B0H.1       PUBLIC        TXD
+  C:1325H         PUBLIC        _delay
+  C:001BH         PUBLIC        SerailRevCheck
+  B:00D0H.5       PUBLIC        F0
+  C:1355H         PUBLIC        sampletime_ms
+  C:123EH         PUBLIC        _SerialPutString
+  C:12DFH         PUBLIC        SerialInit
+  D:00D0H         PUBLIC        PSW
+  C:11A9H         PUBLIC        int1
+  X:0014H         PUBLIC        inbuff
+  -------         PROC          SERIALINIT
+  C:12DFH         LINE#         14
+  C:12DFH         LINE#         15
+  C:12DFH         LINE#         16
+  C:12E2H         LINE#         17
+  C:12E5H         LINE#         18
+  C:12E8H         LINE#         19
+  C:12EAH         LINE#         21
+  C:12ECH         LINE#         22
+  C:12EEH         LINE#         23
+  C:12F0H         LINE#         24
+  C:12F2H         LINE#         25
+  C:12F4H         LINE#         27
+  -------         ENDPROC       SERIALINIT
+  -------         PROC          L?0048
+  -------         ENDPROC       L?0048
+  -------         PROC          _SERIALPUTBYTE
+  D:0007H         SYMBOL        c
+  C:135FH         LINE#         32
+  C:135FH         LINE#         33
+  C:135FH         LINE#         34
+  C:1361H         LINE#         35
+  C:1364H         LINE#         36
+  C:1366H         LINE#         37
+  -------         ENDPROC       _SERIALPUTBYTE
+  -------         PROC          _SERIALPUTSTRING
+  D:0008H         SYMBOL        puts
+  -------         DO            puts
+  D:0004H         SYMBOL        j
+  D:000BH         SYMBOL        n
+  -------         ENDDO         n
+  C:123EH         LINE#         41
+  C:1244H         LINE#         42
+  C:1244H         LINE#         45
+  C:1246H         LINE#         46
+  C:124DH         LINE#         48
+  C:125FH         LINE#         49
+  C:126FH         LINE#         52
+  C:127EH         LINE#         53
+  C:1280H         LINE#         54
+  -------         ENDPROC       _SERIALPUTSTRING
+  -------         PROC          _SERIALPUTSTR
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/01/2014  17:27:24  PAGE 6
+
+
+  D:0038H         SYMBOL        puts
+  -------         DO            puts
+  D:0004H         SYMBOL        j
+  D:003BH         SYMBOL        n
+  -------         ENDDO         n
+  C:11F6H         LINE#         58
+  C:11FCH         LINE#         59
+  C:11FCH         LINE#         62
+  C:11FEH         LINE#         63
+  C:1205H         LINE#         65
+  C:1217H         LINE#         66
+  C:1227H         LINE#         67
+  C:122CH         LINE#         69
+  C:123BH         LINE#         70
+  C:123DH         LINE#         71
+  -------         ENDPROC       _SERIALPUTSTR
+  -------         PROC          SERIALINT
+  C:1281H         LINE#         75
+  C:1289H         LINE#         77
+  C:128CH         LINE#         78
+  C:128CH         LINE#         79
+  C:128EH         LINE#         80
+  C:1291H         LINE#         81
+  C:1297H         LINE#         82
+  C:1297H         LINE#         83
+  C:12A5H         LINE#         84
+  C:12A7H         LINE#         85
+  C:12A9H         LINE#         87
+  C:12A9H         LINE#         88
+  C:12ACH         LINE#         89
+  C:12AFH         LINE#         90
+  C:12AFH         LINE#         91
+  C:12AFH         LINE#         93
+  -------         ENDPROC       SERIALINT
+  -------         PROC          SERAILREVCHECK
+  C:001BH         LINE#         97
+  C:001BH         LINE#         98
+  C:001BH         LINE#         99
+  C:001DH         LINE#         100
+  -------         ENDPROC       SERAILREVCHECK
+  -------         PROC          _SERIALREVDATA
+  D:000DH         SYMBOL        buff
+  C:1157H         LINE#         104
+  C:115DH         LINE#         105
+  C:115DH         LINE#         106
+  C:1160H         LINE#         107
+  C:116BH         LINE#         108
+  C:1183H         LINE#         109
+  C:119AH         LINE#         110
+  -------         ENDPROC       _SERIALREVDATA
+  -------         PROC          SERIALGETDATALEN
+  C:001EH         LINE#         117
+  C:001EH         LINE#         118
+  C:001EH         LINE#         119
+  C:0020H         LINE#         120
+  -------         ENDPROC       SERIALGETDATALEN
+  -------         PROC          MAIN
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/01/2014  17:27:24  PAGE 7
+
+
+  C:0D9CH         LINE#         23
+  C:0D9CH         LINE#         24
+  C:0D9CH         LINE#         25
+  C:0D9FH         LINE#         26
+  C:0DA2H         LINE#         28
+  C:0DA2H         LINE#         29
+  C:0DA2H         LINE#         38
+  C:0DB1H         LINE#         39
+  C:0DB1H         LINE#         42
+  C:0DB3H         LINE#         43
+  C:0DB8H         LINE#         45
+  C:0DFAH         LINE#         46
+  C:0E7EH         LINE#         47
+  C:0EB0H         LINE#         48
+  C:0EB9H         LINE#         49
+  C:0EC2H         LINE#         50
+  C:0EC4H         LINE#         52
+  C:0EC4H         LINE#         53
+  -------         ENDPROC       MAIN
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        n
+  -------         DO            n
+  D:0006H         SYMBOL        x
+  D:0004H         SYMBOL        y
+  -------         ENDDO         y
+  C:1325H         LINE#         56
+  C:1325H         LINE#         57
+  C:1325H         LINE#         59
+  C:1330H         LINE#         60
+  C:1344H         LINE#         61
+  -------         ENDPROC       _DELAY
+  -------         PROC          INIT
+  C:1303H         LINE#         63
+  C:1303H         LINE#         64
+  C:1303H         LINE#         65
+  C:130CH         LINE#         67
+  C:130EH         LINE#         68
+  C:1310H         LINE#         73
+  C:1312H         LINE#         74
+  C:1314H         LINE#         76
+  C:1317H         LINE#         77
+  C:131AH         LINE#         78
+  C:131CH         LINE#         79
+  C:131EH         LINE#         81
+  C:1320H         LINE#         82
+  C:1322H         LINE#         83
+  C:1324H         LINE#         85
+  -------         ENDPROC       INIT
+  -------         PROC          INT1
+  C:11A9H         LINE#         87
+  C:11B6H         LINE#         89
+  C:11B8H         LINE#         90
+  C:11BBH         LINE#         91
+  C:11BEH         LINE#         92
+  C:11E6H         LINE#         93
+  C:11E8H         LINE#         94
+  C:11EBH         LINE#         95
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/01/2014  17:27:24  PAGE 8
+
+
+  -------         ENDPROC       INT1
+  -------         PROC          TIMER2
+  C:1367H         LINE#         98
+  C:1369H         LINE#         100
+  C:136BH         LINE#         101
+  C:1373H         LINE#         102
+  -------         ENDPROC       TIMER2
+  -------         PROC          _TODEM
+  D:0022H         SYMBOL        x
+  -------         DO            x
+  D:0023H         SYMBOL        i
+  D:0025H         SYMBOL        y
+  D:0029H         SYMBOL        m
+  -------         ENDDO         m
+  C:103CH         LINE#         104
+  C:103EH         LINE#         105
+  C:103EH         LINE#         106
+  C:1043H         LINE#         107
+  C:104BH         LINE#         108
+  C:104EH         LINE#         109
+  C:1055H         LINE#         110
+  C:1060H         LINE#         111
+  C:1066H         LINE#         112
+  C:1066H         LINE#         113
+  C:106CH         LINE#         114
+  C:1071H         LINE#         115
+  C:10AFH         LINE#         117
+  C:10C2H         LINE#         118
+  C:10CAH         LINE#         119
+  -------         ENDPROC       _TODEM
+  -------         ENDMOD        TEST
+
+  -------         MODULE        ?C?FPADD
+  C:0035H         PUBLIC        ?C?FPADD
+  C:0031H         PUBLIC        ?C?FPSUB
+  -------         ENDMOD        ?C?FPADD
+
+  -------         MODULE        ?C?FPMUL
+  C:0126H         PUBLIC        ?C?FPMUL
+  -------         ENDMOD        ?C?FPMUL
+
+  -------         MODULE        ?C?FPDIV
+  C:022FH         PUBLIC        ?C?FPDIV
+  -------         ENDMOD        ?C?FPDIV
+
+  -------         MODULE        ?C?FCAST
+  C:02D6H         PUBLIC        ?C?FCASTC
+  C:02D1H         PUBLIC        ?C?FCASTI
+  C:02CCH         PUBLIC        ?C?FCASTL
+  -------         ENDMOD        ?C?FCAST
+
+  -------         MODULE        PRINTF
+  D:0038H         PUBLIC        ?_PRINTF?BYTE
+  D:0038H         PUBLIC        ?_SPRINTF?BYTE
+  C:085AH         PUBLIC        _PRINTF
+  C:0854H         PUBLIC        _SPRINTF
+  -------         ENDMOD        PRINTF
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/01/2014  17:27:24  PAGE 9
+
+
+
+  -------         MODULE        POW
+  D:0038H         PUBLIC        ?_pow?BYTE
+  C:0EC7H         PUBLIC        _pow
+  -------         ENDMOD        POW
+
+  -------         MODULE        ?C?FPCMP
+  C:0356H         PUBLIC        ?C?FPCMP
+  C:0354H         PUBLIC        ?C?FPCMP3
+  -------         ENDMOD        ?C?FPCMP
+
+  -------         MODULE        ?C?FPNEG
+  C:03C1H         PUBLIC        ?C?FPNEG
+  -------         ENDMOD        ?C?FPNEG
+
+  -------         MODULE        ?C?CASTF
+  C:03D2H         PUBLIC        ?C?CASTF
+  -------         ENDMOD        ?C?CASTF
+
+  -------         MODULE        ?C?FPROUND
+  C:0409H         PUBLIC        ?C?FPROUND
+  -------         ENDMOD        ?C?FPROUND
+
+  -------         MODULE        ?C?FPCONVERT
+  C:0438H         PUBLIC        ?C?FPCONVERT
+  -------         ENDMOD        ?C?FPCONVERT
+
+  -------         MODULE        EXP
+  C:0FDAH         PUBLIC        _EXP
+  -------         ENDMOD        EXP
+
+  -------         MODULE        LOG
+  C:0C9BH         PUBLIC        _LOG
+  C:0C97H         PUBLIC        _LOG10
+  -------         ENDMOD        LOG
+
+  -------         MODULE        ?C?FTNPWR
+  C:056BH         PUBLIC        ?C?FTNPWR
+  -------         ENDMOD        ?C?FTNPWR
+
+  -------         MODULE        ?C?COPY
+  C:06C8H         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+
+  -------         MODULE        ?C?CLDPTR
+  C:06EEH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:0707H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:0734H         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?CSTOPTR
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/01/2014  17:27:24  PAGE 10
+
+
+  C:0746H         PUBLIC        ?C?CSTOPTR
+  -------         ENDMOD        ?C?CSTOPTR
+
+  -------         MODULE        ?C?LNEG
+  C:0768H         PUBLIC        ?C?LNEG
+  -------         ENDMOD        ?C?LNEG
+
+  -------         MODULE        ?C?LLDCODE
+  C:0776H         PUBLIC        ?C?LLDCODE
+  -------         ENDMOD        ?C?LLDCODE
+
+  -------         MODULE        ?C?LLDCODE0
+  C:0786H         PUBLIC        ?C?LLDCODE0
+  -------         ENDMOD        ?C?LLDCODE0
+
+  -------         MODULE        ?C?PLDIIDATA
+  C:0796H         PUBLIC        ?C?PLDIIDATA
+  -------         ENDMOD        ?C?PLDIIDATA
+
+  -------         MODULE        ?C?CCASE
+  C:07A6H         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+
+  -------         MODULE        PUTCHAR
+  C:12B8H         PUBLIC        _PUTCHAR
+  -------         ENDMOD        PUTCHAR
+
+  -------         MODULE        STRLEN
+  C:0006H         PUBLIC        _STRLEN
+  -------         ENDMOD        STRLEN
+
+  -------         MODULE        ?C?MEMSET
+  C:07CCH         PUBLIC        ?C?MEMSET
+  -------         ENDMOD        ?C?MEMSET
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALPUTSTRING?TEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERAILREVCHECK?TEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SERIALREVDATA?TEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SERIALGETDATALEN?TEST
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?TEST
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_POW?POW
+    CALLER1: ?PR?INT1?TEST
+    CALLER2: ?C_C51STARTUP
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?LOG?LOG
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/01/2014  17:27:24  PAGE 11
+
+
+    CALLER1: ?PR?INT1?TEST
+    CALLER2: ?C_C51STARTUP
+
+LINK/LOCATE RUN COMPLETE.  7 WARNING(S),  0 ERROR(S)

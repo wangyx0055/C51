@@ -1,0 +1,135 @@
+C51 COMPILER V6.12  DHT11                                                                  05/31/2014 14:16:36 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE DHT11
+OBJECT MODULE PLACED IN .\dht11.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\dht11.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include <math.h>
+   3          #include <stdio.h>
+   4          #include "Serial.h"
+   5          #define uchar unsigned char
+   6          #define uint  unsigned int
+   7          
+   8          sbit signal=P2^0;
+   9          uchar tempH,tempL,HumiH,HumiL,check;
+  10          uchar xdata buff[40];
+  11          float temperature,humidity;
+  12          void delay(int n);
+  13          void readByte(uchar x);
+  14          void delay_10us();
+  15          void binToDem(uchar x,float y);
+  16          
+  17          void main()
+  18          {
+  19   1      	SerialInit();
+  20   1      	//初始化信号
+  21   1      	signal=1;
+  22   1      	delay(5);
+  23   1      	signal=0;
+  24   1      	delay(30);
+  25   1      	//开始信号
+  26   1      	signal=1;
+  27   1      	delay_10us();
+  28   1      	delay_10us();
+  29   1      	delay_10us();
+  30   1      	//读取DHT11响应信号
+  31   1      	if(!signal)
+  32   1      	{
+  33   2      		while(!signal);
+  34   2      		while(signal);
+  35   2      		readByte(HumiH);
+  36   2      		readByte(HumiL);
+  37   2      		readByte(tempH);
+  38   2      		readByte(tempL);
+  39   2      		readByte(check);
+  40   2      		signal=0;
+  41   2      		delay(1);
+  42   2      		signal=1;
+  43   2      		P1=HumiH;
+  44   2      		binToDem(HumiL,humidity);
+  45   2      		humidity=humidity+(int)HumiH;
+  46   2      		binToDem(tempL,temperature);
+  47   2      		temperature=temperature+(int)tempH;
+  48   2      		sprintf(buff,"%f,%f",humidity,temperature);
+  49   2      		SerialPutString(buff);
+  50   2      	}
+  51   1      	delay(3000);
+  52   1      //	while(1);
+  53   1      }
+  54          /***********************************************
+  55          *                       延迟1ms函数
+C51 COMPILER V6.12  DHT11                                                                  05/31/2014 14:16:36 PAGE 2   
+
+  56          ************************************************/
+  57          void delay(int n)
+  58          {
+  59   1      	int x,y;
+  60   1      	for(x=n;x>0;x--)
+  61   1      		for(y=110;y>0;y--);
+  62   1      }
+  63          /***********************************************
+  64          *                       延迟10us函数
+  65          ************************************************/
+  66          void delay_10us()
+  67          {
+  68   1      	uchar i=10;
+  69   1      	i--;
+  70   1      	i--;
+  71   1      	i--;
+  72   1      	i--;
+  73   1      	i--;
+  74   1      	i--;
+  75   1      }
+  76          
+  77          void readByte(uchar x)
+  78          {
+  79   1      	uchar i;
+  80   1      	bit temp;
+  81   1      	x=0;
+  82   1      	for(i=0;i<8;i++)
+  83   1      	{
+  84   2      		while(!signal);
+  85   2      		delay_10us();
+  86   2      		delay_10us();
+  87   2      		delay_10us();
+  88   2      		temp=0;
+  89   2      		if(signal==1)
+  90   2      			temp=1;
+  91   2      		while(signal);
+  92   2      		x=(x<<1);
+  93   2      		x=x|temp;		
+  94   2      	}
+  95   1      }
+  96          //
+  97          void binToDem(uchar x,float y)
+  98          {
+  99   1      	uchar i,m;
+ 100   1      //	bit temp;
+ 101   1      	m=0x80;
+ 102   1      	y=0;
+ 103   1      	for(i=0;i<8;i++)
+ 104   1      	{
+ 105   2      		if((x&(m>>i))>0)
+ 106   2      			y=y+1/pow(2,i+1);
+ 107   2      	}
+ 108   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    724    ----
+   CONSTANT SIZE    =      6    ----
+   XDATA SIZE       =     40    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     49      15
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V6.12  DHT11                                                                  05/31/2014 14:16:36 PAGE 3   
+
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,116 @@
+C51 COMPILER V6.12  LESSSON4_3                                                             09/28/2013 12:11:22 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE LESSSON4_3
+OBJECT MODULE PLACED IN .\lessson4_3.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\lessson4_3.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #define uint unsigned int
+   3          #define uchar unsigned char
+   4          uchar temp,aa,bai,shi,ge;
+   5          sbit dula=P2^6;
+   6          sbit wela=P2^7;
+   7          uchar code table[]={
+   8          0x3f,0x06,0x5b,0x4f,
+   9          0x66,0x6d,0x7d,0x07,
+  10          0x7f,0x6f,0x77,0x7c,
+  11          0x39,0x5e,0x79,0x71};
+  12          void display(uchar bai,uchar shi,uchar ge);
+  13          void delay(uint z);
+  14          void init();
+  15          void main()
+  16          {	
+  17   1      	init();//初始化子程序
+  18   1      	while(1)
+  19   1      	{
+  20   2      		if(aa==20)
+  21   2      		  {
+  22   3      			aa=0;
+  23   3      			temp++;
+  24   3      			if(temp==100)
+  25   3      			   {
+  26   4      					temp=0;
+  27   4      			   }
+  28   3      			bai=temp/100;
+  29   3      			shi=temp%100/10;
+  30   3      			ge=temp%10;
+  31   3      		  }
+  32   2      		display(bai,shi,ge);
+  33   2      	}
+  34   1      }
+  35          
+  36          void delay(uint z)
+  37          {
+  38   1      	uint x,y;
+  39   1      	for(x=z;x>0;x--)
+  40   1      		for(y=110;y>0;y--);
+  41   1      }
+  42          
+  43          void display(uchar bai,uchar shi,uchar ge)
+  44          {
+  45   1              dula=1;
+  46   1      		P0=table[bai];
+  47   1      		dula=0;
+  48   1      		P0=0xff;
+  49   1      		wela=1;
+  50   1      		P0=0xfe;
+  51   1      		wela=0;
+  52   1      		delay(1);
+  53   1      
+  54   1      		dula=1;
+  55   1      		P0=table[shi];
+C51 COMPILER V6.12  LESSSON4_3                                                             09/28/2013 12:11:22 PAGE 2   
+
+  56   1      		dula=0;
+  57   1      		P0=0xff;
+  58   1      		wela=1;
+  59   1      		P0=0xfd;
+  60   1      		wela=0;
+  61   1      		delay(1);
+  62   1      
+  63   1      		dula=1;
+  64   1      		P0=table[ge];
+  65   1      		dula=0;
+  66   1      		P0=0xff;
+  67   1      		wela=1;
+  68   1      		P0=0xfb;
+  69   1      		wela=0;
+  70   1      		delay(1);
+  71   1      }
+  72          
+  73          void init()
+  74          {	
+  75   1      	wela=0;
+  76   1      	dula=0;
+  77   1      	temp=0;
+  78   1      	TMOD=0x01;
+  79   1      	TH0=(65536-50000)/256;
+  80   1      	TL0=(65536-50000)%256;
+  81   1      	EA=1;
+  82   1      	ET0=1;
+  83   1      	TR0=1;	
+  84   1      }
+  85          
+  86          void timer0() interrupt 1
+  87          {
+  88   1      	TH0=(65536-50000)/256;
+  89   1      	TL0=(65536-50000)%256;
+  90   1      	aa++;	
+  91   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    193    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

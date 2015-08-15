@@ -1,0 +1,717 @@
+C51 COMPILER V6.12  SONG                                                                   06/15/2014 18:50:31 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE SONG
+OBJECT MODULE PLACED IN .\song.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\song.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h> 
+   2          #include<string.h>  
+   3          #include "Serial.h"        
+   4          #define uchar unsigned char 
+   5          #define uint unsigned int 
+   6          #define SONGNUM 6
+   7          
+   8          sfr  T2MOD=0xC9;
+   9          sbit sound=P2^3; 
+  10          uint counter=0,sound_pace,record=0,k=0,count,m=1; 
+  11          uchar flag=0,len; 
+  12          uchar sound_signalhigh,sound_signallow;//定时器的高8位与低8位 
+  13          //定义节拍计数器 
+  14          sbit  wei=P2^6;
+  15          sbit  duan=P2^7;
+  16          sbit lcden=P3^4;
+  17          sbit lcdrs=P3^5;
+  18          uchar code *song[]={"Molihua","Huluwa","Throw","ReadBoy","TwoTiger","HappyNewYear"};
+  19          uchar code *info[]={"Curr:","   Next:"};
+  20          short code index[]={0,68,167,271,352,385};
+  21          //
+  22          void lcdelay(int n);
+  23          void writeCom(uchar com);
+  24          void writeData(uchar value);
+  25          void init();
+  26          void delay(uchar n);
+  27          void sound_delay(uchar sound_signalhigh,uchar sound_signallow);
+  28          uint getNext(uint x);
+  29          uint getForward(uint x);
+  30          //
+  31          
+  32          #define NOTE_END 0x0000
+  33          #define NOTE_SONGEND 0x0001
+  34          //定义E调的高、中、低音
+  35          #define NOTE_E0 0xffff
+  36          #define NOTE_E1 0xfa8c
+  37          #define NOTE_E2 0xfadc
+  38          #define NOTE_E3 0xfa6c
+  39          #define NOTE_E4 0xfaec
+  40          #define NOTE_E5 0xfc5e
+  41          #define NOTE_E6 0xfcc4
+  42          #define NOTE_E7 0xfd1e
+  43          
+  44          #define NOTE_EL1 0xf518
+  45          #define NOTE_EL2 0xf5b7
+  46          #define NOTE_EL3 0xf6d1
+  47          #define NOTE_EL4 0xf7db
+  48          #define NOTE_EL5 0xf8be
+  49          #define NOTE_EL6 0xf987
+  50          #define NOTE_EL7 0xfa3c
+  51          
+  52          #define NOTE_EH1 0xfd47
+  53          #define NOTE_EH2 0xfd6e
+  54          #define NOTE_EH3 0xfdb6
+  55          #define NOTE_EH4 0xfdf6
+C51 COMPILER V6.12  SONG                                                                   06/15/2014 18:50:31 PAGE 2   
+
+  56          #define NOTE_EH5 0xfe2f
+  57          #define NOTE_EH6 0xfe62
+  58          #define NOTE_EH7 0xfe8f
+  59          //定义D调的高、中、低音
+  60          #define NOTE_D0 0xffff
+  61          #define NOTE_D1 0xf9e1
+  62          #define NOTE_D2 0xfa8c
+  63          #define NOTE_D3 0xfadc
+  64          #define NOTE_D4 0xfb6c
+  65          #define NOTE_D5 0xfbec
+  66          #define NOTE_D6 0xfc5e
+  67          #define NOTE_D7 0xfcc4
+  68          
+  69          #define NOTE_DL1 0xf3c2
+  70          #define NOTE_DL2 0xf518
+  71          #define NOTE_DL3 0xf5b7
+  72          #define NOTE_DL4 0xf6d1
+  73          #define NOTE_DL5 0xf7db
+  74          #define NOTE_DL6 0xf8be
+  75          #define NOTE_DL7 0xf987
+  76          
+  77          #define NOTE_DH1 0xfcf2
+  78          #define NOTE_DH2 0xfd47
+  79          #define NOTE_DH3 0xfd6e
+  80          #define NOTE_DH4 0xfdb6
+  81          #define NOTE_DH5 0xfdf6
+  82          #define NOTE_DH6 0xfe2f
+  83          #define NOTE_DH7 0xefee
+  84          
+  85          //定义C调的高、中、低音
+  86          #define NOTE_C0 0xffff
+  87          #define NOTE_C1 0xf922
+  88          #define NOTE_C2 0xf9e1
+  89          #define NOTE_C3 0xfa8c
+  90          #define NOTE_C4 0xfadc
+  91          #define NOTE_C5 0xfb6c
+  92          #define NOTE_C6 0xfbec
+  93          #define NOTE_C7 0xfc5e
+  94          
+  95          #define NOTE_CL1 0xf243
+  96          #define NOTE_CL2 0xf3c2
+  97          #define NOTE_CL3 0xf518
+  98          #define NOTE_CL4 0xf5b7
+  99          #define NOTE_CL5 0xf6d1
+ 100          #define NOTE_CL6 0xf7db
+ 101          #define NOTE_CL7 0xf8be
+ 102          
+ 103          #define NOTE_CH1 0xfc93
+ 104          #define NOTE_CH2 0xfcf2
+ 105          #define NOTE_CH3 0xfd47
+ 106          #define NOTE_CH4 0xfd6e
+ 107          #define NOTE_CH5 0xfdb6
+ 108          #define NOTE_CH6 0xfdf6
+ 109          #define NOTE_CH7 0xfe2f
+ 110          
+ 111          
+ 112          uint code tune[]= 
+ 113          {
+ 114           //茉莉花
+ 115            NOTE_E3,NOTE_E3,NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_EH1,NOTE_E6,NOTE_E5,NOTE_E5,NOTE_E6,
+ 116            NOTE_E5,NOTE_E3,NOTE_E3,NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_EH1,NOTE_E6,
+ 117            
+C51 COMPILER V6.12  SONG                                                                   06/15/2014 18:50:31 PAGE 3   
+
+ 118            NOTE_E5,NOTE_E5,NOTE_E6,NOTE_E5,NOTE_E5,NOTE_E5,NOTE_E5,NOTE_E3,NOTE_E5,NOTE_E6,
+ 119            NOTE_E6,NOTE_E5,
+ 120            
+ 121            NOTE_E3,NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E3,NOTE_E2,NOTE_E1,NOTE_E1,NOTE_E2,NOTE_E1,
+ 122            NOTE_E3,NOTE_E2,NOTE_E1,NOTE_E3,NOTE_E2,NOTE_E3,
+ 123            
+ 124            NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_E5,NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E2,NOTE_E3,NOTE_E1,
+ 125            NOTE_EL6,NOTE_EL5,NOTE_EL6,NOTE_E1,
+ 126            
+ 127            NOTE_E2,NOTE_E3,NOTE_E1,NOTE_E2,NOTE_E1,NOTE_EL6,NOTE_EL5,NOTE_SONGEND,
+ 128            //葫芦娃
+ 129            NOTE_DH1,NOTE_D6,NOTE_D5,NOTE_D6,NOTE_D0,
+ 130            NOTE_DH1,NOTE_D6,NOTE_D5,NOTE_DH1,NOTE_D6,NOTE_D0,NOTE_D6,
+ 131            NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D6,NOTE_D0,NOTE_D6,
+ 132            NOTE_DH1,NOTE_D6,NOTE_D5,NOTE_DH1,NOTE_D6,NOTE_D0,
+ 133            
+ 134            NOTE_D1,NOTE_D1,NOTE_D3,
+ 135            NOTE_D1,NOTE_D1,NOTE_D3,NOTE_D0,
+ 136            NOTE_D6,NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D6,
+ 137            NOTE_D5,NOTE_D1,NOTE_D3,NOTE_D0,
+ 138            NOTE_DH1,NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D6,
+ 139            NOTE_D5,NOTE_D1,NOTE_D2,NOTE_D0,
+ 140            NOTE_D7,NOTE_D7,NOTE_D5,NOTE_D3,
+ 141            NOTE_D5,
+ 142            NOTE_DH1,NOTE_D0,NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D5,NOTE_D6,NOTE_D6,
+ 143            NOTE_D0,NOTE_D5,NOTE_D1,NOTE_D3,NOTE_D0,
+ 144            NOTE_DH1,NOTE_D0,NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D5,NOTE_D6,NOTE_D6,
+ 145            NOTE_D0,NOTE_D5,NOTE_D1,NOTE_D2,NOTE_D0,
+ 146            NOTE_D3,NOTE_D3,NOTE_D1,NOTE_DL6,
+ 147            NOTE_D1,
+ 148            NOTE_D3,NOTE_D5,NOTE_D6,NOTE_D6,
+ 149            NOTE_D3,NOTE_D5,NOTE_D6,NOTE_D6,
+ 150            NOTE_DH1,NOTE_D0,NOTE_D7,NOTE_D5,
+ 151            NOTE_D6,NOTE_SONGEND,
+ 152           //丢手绢
+ 153            NOTE_E5,NOTE_E6,NOTE_E5,NOTE_E3,NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E0,
+ 154            NOTE_EH1,NOTE_EH2,NOTE_EH1,NOTE_E6,NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_E0,
+ 155            NOTE_E5,NOTE_E6,NOTE_E5,NOTE_E6,NOTE_E5,NOTE_E3,NOTE_E2,NOTE_E3,NOTE_E5,
+ 156            NOTE_E5,NOTE_E2,NOTE_E3,NOTE_E2,NOTE_E3,
+ 157            NOTE_E5,NOTE_E6,NOTE_E5,NOTE_E3,NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E0,
+ 158            NOTE_EH1,NOTE_EH2,NOTE_EH1,NOTE_E6,NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_E0,
+ 159            NOTE_E5,NOTE_E6,NOTE_E5,NOTE_E6,NOTE_E5,NOTE_E3,NOTE_E2,NOTE_E3,NOTE_E5,
+ 160            NOTE_E5,NOTE_E2,NOTE_E3,NOTE_E2,NOTE_E1,
+ 161            NOTE_E5,NOTE_E0,NOTE_E5,NOTE_E0,
+ 162            NOTE_E5,NOTE_E3,NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E0,
+ 163            NOTE_E5,NOTE_E5,NOTE_E3,NOTE_E6,NOTE_E5,
+ 164            NOTE_E3,NOTE_E5,NOTE_E3,NOTE_E2,NOTE_E1,NOTE_E2,
+ 165            NOTE_E3,NOTE_E5,NOTE_E3,NOTE_E2,NOTE_E1,NOTE_E2,
+ 166            NOTE_E3,NOTE_E6,NOTE_E5,NOTE_E6,NOTE_E5,
+ 167            NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E6,NOTE_E5,NOTE_E6,NOTE_E5,
+ 168            NOTE_E2,NOTE_E3,NOTE_E1,NOTE_E1,NOTE_SONGEND,
+ 169           //读书郎
+ 170            NOTE_EL6,NOTE_E1,NOTE_EL6,NOTE_E5,NOTE_EL6,NOTE_E1,NOTE_EL6,
+ 171            NOTE_EL6,NOTE_EL6,NOTE_E1,NOTE_E2,NOTE_E3,NOTE_E2,NOTE_E1,NOTE_EL6,
+ 172            NOTE_EL6,NOTE_E1,NOTE_E3,NOTE_E3,NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E3,
+ 173            NOTE_E3,NOTE_E5,NOTE_E6,NOTE_E6,NOTE_E6,NOTE_E5,NOTE_E3,NOTE_E2,
+ 174            NOTE_E6,NOTE_E6,NOTE_E6,NOTE_E6,NOTE_E6,NOTE_E6,NOTE_E5,NOTE_E3,NOTE_E2,
+ 175            NOTE_EL6,NOTE_E1,NOTE_EL6,NOTE_E5,NOTE_EL6,NOTE_E1,NOTE_EL6,
+ 176            NOTE_EL6,NOTE_EL6,NOTE_E1,NOTE_E2,NOTE_E3,NOTE_E2,NOTE_E1,NOTE_EL6,
+ 177            NOTE_EL6,NOTE_E1,NOTE_E3,NOTE_E3,NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E3,
+ 178            NOTE_E3,NOTE_E5,NOTE_E6,NOTE_E6,NOTE_E6,NOTE_E5,NOTE_E3,NOTE_E2,
+ 179            NOTE_E6,NOTE_E6,NOTE_E6,NOTE_E6,NOTE_E6,NOTE_E6,NOTE_E5,NOTE_E3,NOTE_E2,NOTE_SONGEND,
+C51 COMPILER V6.12  SONG                                                                   06/15/2014 18:50:31 PAGE 4   
+
+ 180           //两只老虎
+ 181            NOTE_C1,NOTE_C2,NOTE_C3,NOTE_C1,NOTE_C1,NOTE_C2,NOTE_C3,NOTE_C1,
+ 182            NOTE_C3,NOTE_C4,NOTE_C5,NOTE_C3,NOTE_C4,NOTE_C5,
+ 183            NOTE_C5,NOTE_C6,NOTE_C5,NOTE_C4,NOTE_C3,NOTE_C1,NOTE_C5,NOTE_C6,NOTE_C5,NOTE_C4,NOTE_C3,NOTE_C1,
+ 184            NOTE_C1,NOTE_C5,NOTE_C1,NOTE_C1,NOTE_C5,NOTE_C1,NOTE_SONGEND,
+ 185           //新年好
+ 186            NOTE_E1,NOTE_E1,NOTE_E1,NOTE_EL5,NOTE_E3,NOTE_E3,NOTE_E3,NOTE_E1,
+ 187            NOTE_E1,NOTE_E3,NOTE_E5,NOTE_E5,NOTE_E4,NOTE_E3,NOTE_E2,
+ 188            NOTE_E2,NOTE_E3,NOTE_E4,NOTE_E4,NOTE_E3,NOTE_E2,NOTE_E3,NOTE_E1,
+ 189            NOTE_E1,NOTE_E3,NOTE_E2,NOTE_EL5,NOTE_EL7,NOTE_E2,NOTE_E1,NOTE_END//NOTE_SONGEND
+ 190            };
+ 191            //
+ 192          float code duration[]=
+ 193          {
+ 194          	//茉莉花
+ 195            1,0.5,0.5,0.5,0.5,0.5,0.5,1,0.5,0.5,2,1,0.5,0.5,0.5,0.5,0.5,0.5,
+ 196            1,0.5,0.5,2,1,1,1,0.5,0.5,1,1,2,
+ 197            1,0.5,0.5,1,0.5,0.5,1,0.5,0.5,2,0.5,0.5,0.5,0.5,1.5,0.5,
+ 198            1,0.5,0.5,2,1,0.5,0.5,0.5,0.5,0.5,0.5,2,1,1,
+ 199            1.5,0.5,0.5,0.5,0.5,0.5,3,1,
+ 200            //葫芦娃
+ 201            1,1,0.5,0.5,1,
+ 202            0.5,0.5,0.5,0.5,1,0.5,0.5,
+ 203            0.5,1,0.5,1,0.5,0.5,
+ 204            0.5,0.5,0.5,0.5,1,1,
+ 205            
+ 206            1,1,1+1,
+ 207            0.5,1,1+0.5,1,
+ 208            1,1,0.5,0.5,1,
+ 209            0.5,1,1+0.5,1,
+ 210            0.5,0.5,0.5,0.5,1+1,
+ 211            0.5,1,1+0.5,1,
+ 212            1+1,0.5,0.5,1,
+ 213            1+1+1+1,
+ 214            0.5,0.5,0.5+0.25,0.25,0.5+0.25,0.25,0.5+0.25,0.25,
+ 215            0.5,1,0.5,1,1,
+ 216            0.5,0.5,0.5+0.25,0.25,0.5+0.25,0.25,0.5+0.25,0.25,
+ 217            0.5,1,0.5,1,1,
+ 218            1+1,0.5,0.5,1,
+ 219            1+1+1+1,
+ 220            0.5,1,0.5,1+1,
+ 221            0.5,1,0.5,1+1,
+ 222            1+1,0.5,0.5,1,
+ 223            1+1+1+1,1,
+ 224          //丢手绢
+ 225            0.25,0.25,0.25,0.25,0.5,0.5,1,1,
+ 226            0.25,0.25,0.25,0.25,0.5,0.5,1,1,
+ 227            0.25,0.25,0.25,0.25,0.5,0.5,0.5,0.5,1,
+ 228            0.5,0.5,0.5,0.5,2,
+ 229            0.25,0.25,0.25,0.25,0.5,0.5,1,1,
+ 230            0.25,0.25,0.25,0.25,0.5,0.5,1,1,
+ 231            0.25,0.25,0.25,0.25,0.5,0.5,0.5,0.5,1,
+ 232            0.5,0.5,0.5,0.5,2,
+ 233            1,1,1,1,
+ 234            0.5+0.5,0.25,0.5,0.5,1,1,
+ 235            0.5,1,0.5,1,1,
+ 236            0.5+0.5,0.25,0.5,0.5,1,1,
+ 237            1,1,0.5,0.5,0.5,0.5,
+ 238            2,0.5,0.5,0.5,0.5,
+ 239            0.5,0.5,1,0.5,0.5,0.5,0.5,
+ 240            1,1,2,2,1,
+ 241           //读书郎
+C51 COMPILER V6.12  SONG                                                                   06/15/2014 18:50:31 PAGE 5   
+
+ 242            1,0.25,0.5,0.5,1,0.25,1,
+ 243            0.5,0.25,0.25,0.5,0.5,0.5,0.5,1,
+ 244            1,0.25,1,0.5,0.25,0.25,0.5,0.5,
+ 245            0.25,0.25,0.25,0.25,0.25,0.25,0.5,2,
+ 246            0.5,0.25,0.25,0.5,0.5,0.5,0.5,0.5,0.5,
+ 247            1,0.25,0.5,0.5,1,0.25,1,
+ 248            0.5,0.25,0.25,0.5,0.5,0.5,0.5,1,
+ 249            1,0.25,1,0.5,0.25,0.25,0.5,0.5,
+ 250            0.25,0.25,0.25,0.25,0.25,0.25,0.5,2,
+ 251            0.5,0.25,0.25,0.5,0.5,0.5,0.5,0.5,0.5,1,
+ 252           //两只老虎
+ 253            1,1,1,1,1,1,1,1,
+ 254            1,1,2,1,1,2,
+ 255            1,0.25,1,0.25,1,1,1,0.25,1,0.25,1,1,
+ 256            1,1,2,1,1,2,1,
+ 257           //新年好
+ 258             0.5,0.5,1,1,0.5,0.5,1,1,
+ 259             0.5,0.5,1,1,0.5,0.5,2,
+ 260             0.5,0.5,1,1,0.5,0.5,1,1,
+ 261             0.5,0.5,1,1,0.5,0.5,2,1
+ 262            };
+ 263            
+ 264          void main() 
+ 265          {  
+ 266   1       init(); 
+ 267   1       SerialInit();
+ 268   1       while(1) 
+ 269   1         { 
+ 270   2            k=0; 
+ 271   2      	  init();
+ 272   2      	  sound=1;
+ 273   2         while(tune[k]!=NOTE_END)//因为歌曲的结尾处人为的加入了 结束标示符  0  
+ 274   2         { 
+ 275   3         //检测串口是否发送控制信息过来，如果有，执行命令，否则继续
+ 276   3         	if(SerailRevCheck())
+ 277   3      	{
+ 278   4      		switch(getIndex())
+ 279   4      		{
+ 280   5      			case 200:sound=1;continue;//暂停播放歌曲
+ 281   5      			case 201:sound=1;SerailSetCheck();break;//恢复播放歌曲
+ 282   5      			case 202:sound=0;continue;//蜂鸣器报警
+ 283   5      			case 203:sound=1;SerailSetCheck();break;//蜂鸣器停止报警
+ 284   5      			case 204:P1=0x00;SerailSetCheck();break;//控制灯亮
+ 285   5      			case 205:P1=0xff;SerailSetCheck();break;//控制灯灭
+ 286   5      			case 206:sound=1;k=getNext(k);SerailSetCheck();break;//下一首歌
+ 287   5      			case 207:sound=1;k=getForward(k);SerailSetCheck();break;//前一首歌
+ 288   5      			default:
+ 289   5      				sound=1;
+ 290   5      				k=index[getIndex()];
+ 291   5      				SerailSetCheck();
+ 292   5      				//更新LCD显示内容
+ 293   5      				m=getIndex();
+ 294   5      				writeCom(0x01);//清屏
+ 295   5      				writeCom(0x80);
+ 296   5      				//
+ 297   5      				 len=strlen(info[0]);
+ 298   5      				 for(count=0;count<len;count++)
+ 299   5      				 {
+ 300   6      				 	writeData(info[0][count]);	
+ 301   6      					delay(20);
+ 302   6      				 }
+ 303   5      				 len=strlen(song[m]);
+C51 COMPILER V6.12  SONG                                                                   06/15/2014 18:50:31 PAGE 6   
+
+ 304   5      				 for(count=0;count<len;count++)
+ 305   5      				 {
+ 306   6      				 	writeData(song[m][count]);	
+ 307   6      					delay(20);
+ 308   6      				 }
+ 309   5      				 //
+ 310   5      				 m++;
+ 311   5      				 m=m%SONGNUM;
+ 312   5      				 writeCom(0x80+0x40);
+ 313   5      				 len=strlen(info[1]);
+ 314   5      				 for(count=0;count<len;count++)
+ 315   5      				 {
+ 316   6      				 	writeData(info[1][count]);	
+ 317   6      					delay(20);
+ 318   6      				 }
+ 319   5      				 len=strlen(song[m]);
+ 320   5      				 for(count=0;count<len;count++)
+ 321   5      				 {
+ 322   6      				 	writeData(song[m][count]);	
+ 323   6      					delay(20);
+ 324   6      				 }
+ 325   5      
+ 326   5      		}
+ 327   4      	}
+ 328   3      	/*从表中取得 音符音高，也就是这个音符是低音，中音还是高
+ 329   3      音,有了这两个参数我们就可以确定音符对应的定时器初值在表中的位置了。 */
+ 330   3          if(tune[k]==NOTE_SONGEND)
+ 331   3      	{
+ 332   4      		k++;
+ 333   4      		sound=1;
+ 334   4      		writeCom(0x01);//清屏
+ 335   4      		writeCom(0x80);
+ 336   4      		//
+ 337   4      		 len=strlen(info[0]);
+ 338   4      		 for(count=0;count<len;count++)
+ 339   4      		 {
+ 340   5      		 	writeData(info[0][count]);	
+ 341   5      			delay(20);
+ 342   5      		 }
+ 343   4      		 len=strlen(song[m]);
+ 344   4      		 for(count=0;count<len;count++)
+ 345   4      		 {
+ 346   5      		 	writeData(song[m][count]);	
+ 347   5      			delay(20);
+ 348   5      		 }
+ 349   4      		 //
+ 350   4      		 m++;
+ 351   4      		 m=m%SONGNUM;
+ 352   4      		 writeCom(0x80+0x40);
+ 353   4      		 len=strlen(info[1]);
+ 354   4      		 for(count=0;count<len;count++)
+ 355   4      		 {
+ 356   5      		 	writeData(info[1][count]);	
+ 357   5      			delay(20);
+ 358   5      		 }
+ 359   4      		 len=strlen(song[m]);
+ 360   4      		 for(count=0;count<len;count++)
+ 361   4      		 {
+ 362   5      		 	writeData(song[m][count]);	
+ 363   5      			delay(20);
+ 364   5      		 }
+ 365   4      	
+C51 COMPILER V6.12  SONG                                                                   06/15/2014 18:50:31 PAGE 7   
+
+ 366   4      	}
+ 367   3          sound_signalhigh=0xff&(tune[k]>>8); 
+ 368   3          sound_signallow=0xff&tune[k]; 
+ 369   3          //从表中取得 节拍大小  
+ 370   3          sound_pace=40*duration[k];//600为一拍的时长 ,在此修改一拍的时长。 
+ 371   3      	k++;
+ 372   3          TR2=1; 
+ 373   3         //当节拍数未达到时候，继续循环，产生该音调的声音  
+ 374   3         while(counter!=sound_pace) 
+ 375   3            {  
+ 376   4             sound=~sound; 
+ 377   4             sound_delay(sound_signalhigh,sound_signallow); 
+ 378   4      	  // pwm_delay(temp);
+ 379   4            } 
+ 380   3           counter=0;//节拍计数器置0，进入下一个音调  
+ 381   3           TR2=0; 
+ 382   3          } 
+ 383   2         delay(100); //歌曲演唱完毕后,延时一段时间     }  
+ 384   2      } 
+ 385   1      }
+ 386          //
+ 387          void init() 
+ 388          {//定时器初始化 
+ 389   1      	 TMOD=0x21; 
+ 390   1      	// TH0=0xd8; 
+ 391   1      	// TL0=0xef;  
+ 392   1      	 ET0=1;
+ 393   1      	// ET1=1;
+ 394   1      	//定时器2
+ 395   1      	RCAP2H=(65536-10000)/256;
+ 396   1      	RCAP2L=(65536-10000)%256;
+ 397   1      	T2CON=0;
+ 398   1      	T2MOD=0;
+ 399   1      
+ 400   1      	ET2=1;
+ 401   1      	EA=1;
+ 402   1      	//TR2=1;
+ 403   1      	 duan=0;
+ 404   1      	wei=0;
+ 405   1      	lcden=0;
+ 406   1      	count=0;
+ 407   1      	writeCom(0x38);
+ 408   1      	writeCom(0x0c);
+ 409   1      	writeCom(0x06);
+ 410   1      	writeCom(0x01);//清屏
+ 411   1      	writeCom(0x80);
+ 412   1      //
+ 413   1       len=strlen(info[0]);
+ 414   1       for(count=0;count<len;count++)
+ 415   1       {
+ 416   2       	writeData(info[0][count]);	
+ 417   2      	delay(20);
+ 418   2       }
+ 419   1       len=strlen(song[0]);
+ 420   1       for(count=0;count<len;count++)
+ 421   1       {
+ 422   2       	writeData(song[0][count]);	
+ 423   2      	delay(20);
+ 424   2       }
+ 425   1       //
+ 426   1       writeCom(0x80+0x40);
+ 427   1       len=strlen(info[1]);
+C51 COMPILER V6.12  SONG                                                                   06/15/2014 18:50:31 PAGE 8   
+
+ 428   1       for(count=0;count<len;count++)
+ 429   1       {
+ 430   2       	writeData(info[1][count]);	
+ 431   2      	delay(20);
+ 432   2       }
+ 433   1       len=strlen(song[1]);
+ 434   1       for(count=0;count<len;count++)
+ 435   1       {
+ 436   2       	writeData(song[1][count]);	
+ 437   2      	delay(20);
+ 438   2       }
+ 439   1       P1=0xff;
+ 440   1      }  
+ 441          
+ 442          void timer0() interrupt 1 using 3
+ 443          {//timer0中断服务程序，中断一次延时10ms 
+ 444   1      /*
+ 445   1       counter++;//节拍次数计数  
+ 446   1       TH0=0xd8; //定义单位节拍的延时大小  
+ 447   1       TL0=0xef; 
+ 448   1       */
+ 449   1      	flag=1;
+ 450   1      } 
+ 451          /*
+ 452          void timer1() interrupt 3
+ 453          {//timer1中断服务程序
+ 454           flag=1;
+ 455          } 
+ 456          */
+ 457          /*********************************
+ 458          *
+ 459          *********************************/
+ 460          void timer2() interrupt 5
+ 461          {
+ 462   1      	TF2=0;
+ 463   1      	counter++;	
+ 464   1      }
+ 465          
+ 466          void delay(uchar n) 
+ 467          { //延时n毫秒
+ 468   1       uchar i; 
+ 469   1       while(n--) 
+ 470   1        for(i=0;i<125;i++);  
+ 471   1      } 
+ 472          
+ 473          void sound_delay(uchar sound_signalhigh,uchar sound_signallow)//产生一定频率的音调 
+ 474          {  
+ 475   1       TH0=sound_signalhigh; 
+ 476   1       TL0=sound_signallow; 
+ 477   1       TR0=1; 
+ 478   1       while(!flag);
+ 479   1       	flag=0;
+ 480   1      	TR0=0; 
+ 481   1      } 
+ 482          
+ 483          uint getNext(uint x)
+ 484          {
+ 485   1      	uchar i;
+ 486   1      	for(i=0;i<SONGNUM;i++)
+ 487   1      	{
+ 488   2      		if(x<index[i])
+ 489   2      		{
+C51 COMPILER V6.12  SONG                                                                   06/15/2014 18:50:31 PAGE 9   
+
+ 490   3      		//更新LCD显示内容
+ 491   3      		m=i;
+ 492   3      		writeCom(0x01);//清屏
+ 493   3      		writeCom(0x80);
+ 494   3      		//
+ 495   3      		 len=strlen(info[0]);
+ 496   3      		 for(count=0;count<len;count++)
+ 497   3      		 {
+ 498   4      		 	writeData(info[0][count]);	
+ 499   4      			delay(20);
+ 500   4      		 }
+ 501   3      		 len=strlen(song[m]);
+ 502   3      		 for(count=0;count<len;count++)
+ 503   3      		 {
+ 504   4      		 	writeData(song[m][count]);	
+ 505   4      			delay(20);
+ 506   4      		 }
+ 507   3      		 //
+ 508   3      		 m++;
+ 509   3      		 m=m%SONGNUM;
+ 510   3      		 writeCom(0x80+0x40);
+ 511   3      		 len=strlen(info[1]);
+ 512   3      		 for(count=0;count<len;count++)
+ 513   3      		 {
+ 514   4      		 	writeData(info[1][count]);	
+ 515   4      			delay(20);
+ 516   4      		 }
+ 517   3      		 len=strlen(song[m]);
+ 518   3      		 for(count=0;count<len;count++)
+ 519   3      		 {
+ 520   4      		 	writeData(song[m][count]);	
+ 521   4      			delay(20);
+ 522   4      		 }
+ 523   3      
+ 524   3      			return index[i];
+ 525   3      			}
+ 526   2      	}
+ 527   1      		//
+ 528   1      		m=0;
+ 529   1      		writeCom(0x01);//清屏
+ 530   1      		writeCom(0x80);
+ 531   1      		//
+ 532   1      		 len=strlen(info[0]);
+ 533   1      		 for(count=0;count<len;count++)
+ 534   1      		 {
+ 535   2      		 	writeData(info[0][count]);	
+ 536   2      			delay(20);
+ 537   2      		 }
+ 538   1      		 len=strlen(song[m]);
+ 539   1      		 for(count=0;count<len;count++)
+ 540   1      		 {
+ 541   2      		 	writeData(song[m][count]);	
+ 542   2      			delay(20);
+ 543   2      		 }
+ 544   1      		 //
+ 545   1      		 m++;
+ 546   1      		 m=m%SONGNUM;
+ 547   1      		 writeCom(0x80+0x40);
+ 548   1      		 len=strlen(info[1]);
+ 549   1      		 for(count=0;count<len;count++)
+ 550   1      		 {
+ 551   2      		 	writeData(info[1][count]);	
+C51 COMPILER V6.12  SONG                                                                   06/15/2014 18:50:31 PAGE 10  
+
+ 552   2      			delay(20);
+ 553   2      		 }
+ 554   1      		 len=strlen(song[m]);
+ 555   1      		 for(count=0;count<len;count++)
+ 556   1      		 {
+ 557   2      		 	writeData(song[m][count]);	
+ 558   2      			delay(20);
+ 559   2      		 }
+ 560   1      
+ 561   1      
+ 562   1      	return 0;
+ 563   1      }
+ 564          
+ 565          uint getForward(uint x)
+ 566          {
+ 567   1      	uchar i;
+ 568   1      	for(i=SONGNUM-1;i>0;i--)
+ 569   1      	{
+ 570   2      		if(x>index[i])
+ 571   2      		{
+ 572   3      			//更新LCD显示内容
+ 573   3      			m=i-1;
+ 574   3      			writeCom(0x01);//清屏
+ 575   3      			writeCom(0x80);
+ 576   3      			//
+ 577   3      			 len=strlen(info[0]);
+ 578   3      			 for(count=0;count<len;count++)
+ 579   3      			 {
+ 580   4      			 	writeData(info[0][count]);	
+ 581   4      				delay(20);
+ 582   4      			 }
+ 583   3      			 len=strlen(song[m]);
+ 584   3      			 for(count=0;count<len;count++)
+ 585   3      			 {
+ 586   4      			 	writeData(song[m][count]);	
+ 587   4      				delay(20);
+ 588   4      			 }
+ 589   3      			 //
+ 590   3      			 m++;
+ 591   3      			 m=m%SONGNUM;
+ 592   3      			 writeCom(0x80+0x40);
+ 593   3      			 len=strlen(info[1]);
+ 594   3      			 for(count=0;count<len;count++)
+ 595   3      			 {
+ 596   4      			 	writeData(info[1][count]);	
+ 597   4      				delay(20);
+ 598   4      			 }
+ 599   3      			 len=strlen(song[m]);
+ 600   3      			 for(count=0;count<len;count++)
+ 601   3      			 {
+ 602   4      			 	writeData(song[m][count]);	
+ 603   4      				delay(20);
+ 604   4      			 }
+ 605   3      
+ 606   3      			return index[i-1];
+ 607   3      		}
+ 608   2      	}
+ 609   1      			//
+ 610   1      			m=SONGNUM-1;
+ 611   1      			writeCom(0x01);//清屏
+ 612   1      			writeCom(0x80);
+ 613   1      			//
+C51 COMPILER V6.12  SONG                                                                   06/15/2014 18:50:31 PAGE 11  
+
+ 614   1      			 len=strlen(info[0]);
+ 615   1      			 for(count=0;count<len;count++)
+ 616   1      			 {
+ 617   2      			 	writeData(info[0][count]);	
+ 618   2      				delay(20);
+ 619   2      			 }
+ 620   1      			 len=strlen(song[m]);
+ 621   1      			 for(count=0;count<len;count++)
+ 622   1      			 {
+ 623   2      			 	writeData(song[m][count]);	
+ 624   2      				delay(20);
+ 625   2      			 }
+ 626   1      			 //
+ 627   1      			 m++;
+ 628   1      			 m=m%SONGNUM;
+ 629   1      			 writeCom(0x80+0x40);
+ 630   1      			 len=strlen(info[1]);
+ 631   1      			 for(count=0;count<len;count++)
+ 632   1      			 {
+ 633   2      			 	writeData(info[1][count]);	
+ 634   2      				delay(20);
+ 635   2      			 }
+ 636   1      			 len=strlen(song[m]);
+ 637   1      			 for(count=0;count<len;count++)
+ 638   1      			 {
+ 639   2      			 	writeData(song[m][count]);	
+ 640   2      				delay(20);
+ 641   2      			 }
+ 642   1      
+ 643   1      	return index[SONGNUM-1];
+ 644   1      }
+ 645          //
+ 646          void lcdelay(int n)
+ 647          {
+ 648   1      	int x,y;
+ 649   1      	for(x=n;x>0;x--)
+ 650   1      		for(y=110;y>0;y--);
+ 651   1      }
+ 652          void writeCom(uchar com)
+ 653          {
+ 654   1      	lcdrs=0;
+ 655   1      	P0=com;
+ 656   1      	lcdelay(1);
+ 657   1      	lcden=1;
+ 658   1      	lcdelay(5);
+ 659   1      	lcden=0;
+ 660   1      }
+ 661          void writeData(uchar value)
+ 662          {
+ 663   1      	lcdrs=1;
+ 664   1      	P0=value;
+ 665   1      	lcdelay(1);
+ 666   1      	lcden=1;
+ 667   1      	lcdelay(5);
+ 668   1      	lcden=0;
+ 669   1      }
+ 670          
+ 671          
+ 672           
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V6.12  SONG                                                                   06/15/2014 18:50:31 PAGE 12  
+
+   CODE SIZE        =   2839    ----
+   CONSTANT SIZE    =   2574    ----
+   XDATA SIZE       =     32    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     39      19
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

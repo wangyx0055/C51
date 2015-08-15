@@ -1,0 +1,4 @@
+"dht111.obj",
+"test.obj" 
+TO "DHT11" 
+RAMSIZE(256) 

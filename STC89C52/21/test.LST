@@ -1,0 +1,159 @@
+C51 COMPILER V6.12  TEST                                                                   10/09/2013 13:46:00 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #define uchar unsigned char
+   3          uchar code table[]={
+   4          0x3f,0x06,0x5b,0x4f,
+   5          0x66,0x6d,0x7d,0x07,
+   6          0x7f,0x6f,0x77,0x7c,
+   7          0x39,0x5e,0x79,0x71};
+   8          
+   9          sbit duan=P2^6;
+  10          sbit wei=P2^7;
+  11          sbit key1=P3^4;
+  12          
+  13          void delay1();
+  14          void init();
+  15          void display(uchar bai,uchar shi,uchar ge);
+  16          uchar aa,bai,shi,ge,value,flag;
+  17          int temp;
+  18          
+  19          void main()
+  20          {
+  21   1      	init();
+  22   1      	
+  23   1      	while(1)
+  24   1      	{	
+  25   2      	  if(aa==2)
+  26   2      		{
+  27   3      		aa=0;
+  28   3      		P1=0xff;
+  29   3      		value=P3;
+  30   3      		value=value&0xf0;
+  31   3      		if(value!=0xf0)
+  32   3      		{
+  33   4      			delay1();
+  34   4      			value=P3;
+  35   4      			value=value&0xf0;
+  36   4      			if(value!=0xf0)
+  37   4      			{	
+  38   5      				//value=P3;
+  39   5      				P1=0xfe;
+  40   5      				switch(value)
+  41   5      				{
+  42   6      					case 0xe0:	break;
+  43   6      					case 0xd0:	TR0=0;flag=0;break;
+  44   6      					case 0xb0:	TR0=1;flag=1;break;
+  45   6      					case 0x70:	temp=0;break;
+  46   6      				}
+  47   5      			}
+  48   4      			while(value!=0xf0)
+  49   4      			{
+  50   5      				value=P3;
+  51   5      				value=value&0xf0;
+  52   5      			}
+  53   4      		}
+  54   3      		else
+  55   3      		{
+C51 COMPILER V6.12  TEST                                                                   10/09/2013 13:46:00 PAGE 2   
+
+  56   4      			if(temp==1000)
+  57   4      			{
+  58   5      				temp=0;
+  59   5      			}		
+  60   4      			bai=temp/100;
+  61   4      			shi=(temp%100)/10;		
+  62   4      			ge=temp%10;
+  63   4      			if(flag)
+  64   4      				temp++;	
+  65   4      		}
+  66   3      		if(!flag)
+  67   3      		  aa=2;
+  68   3      	}
+  69   2      		display(bai,shi,ge);			  
+  70   2      	}
+  71   1      }
+  72          
+  73          void init()
+  74          {
+  75   1      	wei=0;
+  76   1      	duan=0;
+  77   1      	temp=0;
+  78   1      	flag=1;
+  79   1      
+  80   1      	TMOD=0x01;
+  81   1      	TH0=(65536-50000)/256;
+  82   1      	TL0=(65536-50000)%256;
+  83   1      	EA=1;
+  84   1      	ET0=1;	
+  85   1      	TR0=1;
+  86   1      }
+  87          
+  88          void delay1()
+  89          {
+  90   1      	int i,j;
+  91   1      	for(i=1;i>0;i--)
+  92   1      		for(j=110;j>0;j--);
+  93   1      }
+  94          
+  95          void display(uchar sec,uchar shi,uchar ge)
+  96          {
+  97   1      			duan=1;
+  98   1      			P0=table[sec];
+  99   1      			duan=0;	
+ 100   1      			P0=0xff;//消抖部分
+ 101   1      			wei=1;
+ 102   1      			P0=0xfe;
+ 103   1      			wei=0;
+ 104   1      			delay1();
+ 105   1      			//	
+ 106   1      			duan=1;
+ 107   1      			P0=table[shi];
+ 108   1      			duan=0;
+ 109   1      			P0=0xff;//消抖部分
+ 110   1      			wei=1;
+ 111   1      			P0=0xfd;
+ 112   1      			wei=0;
+ 113   1      			delay1();
+ 114   1      			//			
+ 115   1      			duan=1;
+ 116   1      			P0=table[ge];
+ 117   1      			duan=0;	
+C51 COMPILER V6.12  TEST                                                                   10/09/2013 13:46:00 PAGE 3   
+
+ 118   1      			P0=0xff;//消抖部分
+ 119   1      			wei=1;
+ 120   1      			P0=0xfb;
+ 121   1      			wei=0;
+ 122   1      			delay1();
+ 123   1      			//
+ 124   1      	}
+ 125          
+ 126          void timer0() interrupt 1
+ 127          {
+ 128   1      	TH0=(65536-50000)/256;
+ 129   1      	TL0=(65536-50000)%256;
+ 130   1      	aa++;
+ 131   1      }
+ 132          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    324    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

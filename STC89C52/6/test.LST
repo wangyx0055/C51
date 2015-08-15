@@ -1,0 +1,98 @@
+C51 COMPILER V6.12  TEST                                                                   09/25/2013 13:50:18 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          void delay1();
+   5          int m,n;
+   6          unsigned char temp1,temp2;
+   7          
+   8          void main()
+   9          {
+  10   1      	temp1=0xfe;
+  11   1      	temp2=0x7f;
+  12   1      	//间隔300ms先奇数亮再偶数亮，循环三次
+  13   1      	for(m=0;m<3;m++)
+  14   1      	{
+  15   2      		P1=0xAA;
+  16   2      		delay1();
+  17   2      		P1=0x55;
+  18   2      		delay1();
+  19   2      	}
+  20   1      	//一个灯上下循环三次
+  21   1      	for(m=0;m<3;m++)
+  22   1      	{
+  23   2      		for(n=0;n<8;n++)
+  24   2      		{
+  25   3      			P1=temp1;
+  26   3      			temp1= _crol_(temp1,1);
+  27   3      			delay1();
+  28   3      		}
+  29   2      		for(n=0;n<8;n++)
+  30   2      		{
+  31   3      			P1=temp2;
+  32   3      			temp2= _cror_(temp2,1);
+  33   3      			delay1();
+  34   3      		}
+  35   2      	}
+  36   1      	//两个分别从两边往中间流动三次,再从中间往两边流动三次
+  37   1      	for(m=0;m<3;m++)
+  38   1      	{
+  39   2      		for(n=0;n<4;n++)
+  40   2      		{
+  41   3      			P1=temp1&temp2;
+  42   3      			temp1= _crol_(temp1,1);
+  43   3      			temp2= _cror_(temp2,1);
+  44   3      			delay1();
+  45   3      		}
+  46   2      		for(n=0;n<4;n++)
+  47   2      		{
+  48   3      			P1=temp1&temp2;
+  49   3      			temp1= _crol_(temp1,1);
+  50   3      			temp2= _cror_(temp2,1);
+  51   3      			delay1();
+  52   3      		}
+  53   2      	}
+  54   1      	//8个全部闪烁3次
+  55   1      	for(m=0;m<3;m++)
+C51 COMPILER V6.12  TEST                                                                   09/25/2013 13:50:18 PAGE 2   
+
+  56   1      	{
+  57   2      		P1=0x00;
+  58   2      		delay1();
+  59   2      		P1=0xff;
+  60   2      		delay1();
+  61   2      	}
+  62   1      	//关闭发光管
+  63   1      	P1=0xff;
+  64   1      	delay1();
+  65   1      }
+  66          
+  67          void delay1()
+  68          {
+  69   1      	int i,j;
+  70   1      	for(i=250;i>0;i--)
+  71   1      		for(j=230;j>0;j--);
+  72   1      }
+  73          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    366    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

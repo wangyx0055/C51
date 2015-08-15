@@ -1,0 +1,302 @@
+C51 COMPILER V6.12  SDTEST                                                                 05/28/2014 17:11:37 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE SDTEST
+OBJECT MODULE PLACED IN .\sdtest.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\sdtest.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #include "Serial.h"   
+   3          
+   4          #define DELAY_TIME 80 //SDø®µƒ∏¥Œª”Î≥ı ºªØ ±SPIµƒ—” ±≤Œ ˝£¨∏˘æ› µº ÀŸ¬ –ﬁ∏ƒ∆‰÷µ£¨∑Ò‘Úª·‘Ï≥…SDø®∏¥ŒªªÚ≥ı ºª
+             -Ø ß∞‹
+   5          #define TRY_TIME 800    //œÚSDø®–¥»Î√¸¡Ó÷Æ∫Û£¨∂¡»°SDø®µƒªÿ”¶¥Œ ˝£¨º¥∂¡TRY_TIME¥Œ£¨»Áπ˚‘⁄TRY_TIME¥Œ÷–∂¡≤ªµΩ
+             -ªÿ”¶£¨≤˙…˙≥¨ ±¥ÌŒÛ£¨√¸¡Ó–¥»Î ß∞‹
+   6          sbit SD_SCL=P1^3; //SDø®Õ¨≤Ω ±÷”   ‰»Î
+   7          sbit SD_SI =P1^1; //SDø®Õ¨≤Ω ˝æ›   ‰»Î
+   8          sbit SD_CS =P1^2; //SDø®∆¨—°    ‰»Î
+   9          sbit SD_SO =P1^0; //SDø®Õ¨≤Ω ˝æ›   ‰≥ˆ
+  10           
+  11          unsigned long laddr;
+  12          unsigned char SD_Reset();
+  13          unsigned char SD_Init();
+  14          unsigned char SD_Read_Sector(unsigned long addr);
+  15          unsigned char xdata  pbuf[512]; // ˝æ›ª∫≥Â«¯
+  16          unsigned char  pbu[10];
+  17          unsigned char is_init; //‘⁄≥ı ºªØµƒ ±∫Ú…Ë÷√¥À±‰¡øŒ™1,                    
+  18          unsigned char bdata _dat;
+  19          
+  20          sbit _dat7=_dat^7;
+  21          sbit _dat6=_dat^6;
+  22          sbit _dat5=_dat^5;
+  23          sbit _dat4=_dat^4;
+  24          sbit _dat3=_dat^3;
+  25          sbit _dat2=_dat^2;
+  26          sbit _dat1=_dat^1;
+  27          sbit _dat0=_dat^0;
+  28          
+  29          void delay(unsigned int time)
+  30          {
+  31   1       while(time--);
+  32   1      }
+  33           
+  34           
+  35           
+  36          void SD_spi_write(unsigned char x)
+  37          {
+  38   1       _dat=x;
+  39   1       SD_SI=_dat7;
+  40   1       SD_SCL=0;
+  41   1       if(is_init) delay(DELAY_TIME);
+  42   1       SD_SCL=1;
+  43   1       if(is_init) delay(DELAY_TIME);
+  44   1       SD_SI=_dat6;
+  45   1       SD_SCL=0;
+  46   1       if(is_init) delay(DELAY_TIME);
+  47   1       SD_SCL=1;
+  48   1       if(is_init) delay(DELAY_TIME);
+  49   1       SD_SI=_dat5;
+  50   1       SD_SCL=0;
+  51   1       if(is_init) delay(DELAY_TIME);
+  52   1       SD_SCL=1;
+  53   1       if(is_init) delay(DELAY_TIME);
+C51 COMPILER V6.12  SDTEST                                                                 05/28/2014 17:11:37 PAGE 2   
+
+  54   1       SD_SI=_dat4;
+  55   1       SD_SCL=0;
+  56   1       if(is_init) delay(DELAY_TIME);
+  57   1       SD_SCL=1;
+  58   1       if(is_init) delay(DELAY_TIME);
+  59   1       SD_SI=_dat3;
+  60   1       SD_SCL=0;
+  61   1       if(is_init) delay(DELAY_TIME);
+  62   1       SD_SCL=1;
+  63   1       if(is_init) delay(DELAY_TIME);
+  64   1       SD_SI=_dat2;
+  65   1       SD_SCL=0;
+  66   1       if(is_init) delay(DELAY_TIME);
+  67   1       SD_SCL=1;
+  68   1       if(is_init) delay(DELAY_TIME);
+  69   1       SD_SI=_dat1;
+  70   1       SD_SCL=0;
+  71   1       if(is_init) delay(DELAY_TIME);
+  72   1       SD_SCL=1;
+  73   1       if(is_init) delay(DELAY_TIME);
+  74   1       SD_SI=_dat0;
+  75   1       SD_SCL=0;
+  76   1       if(is_init) delay(DELAY_TIME); 
+  77   1       SD_SCL=1;
+  78   1       if(is_init) delay(DELAY_TIME);
+  79   1      }
+  80           
+  81           
+  82          unsigned char SD_spi_read() //SPI∂¡“ª∏ˆ◊÷Ω⁄
+  83          { 
+  84   1       SD_SO=1;
+  85   1       
+  86   1       SD_SCL=1;
+  87   1       if(is_init) delay(DELAY_TIME);
+  88   1       SD_SCL=0;
+  89   1       if(is_init) delay(DELAY_TIME);
+  90   1       _dat7=SD_SO;
+  91   1       
+  92   1       SD_SCL=1;
+  93   1       if(is_init) delay(DELAY_TIME);
+  94   1       SD_SCL=0;
+  95   1       if(is_init) delay(DELAY_TIME);
+  96   1       _dat6=SD_SO;
+  97   1       
+  98   1       SD_SCL=1;
+  99   1       if(is_init) delay(DELAY_TIME);
+ 100   1       SD_SCL=0;
+ 101   1       if(is_init) delay(DELAY_TIME);
+ 102   1       _dat5=SD_SO;
+ 103   1       
+ 104   1       SD_SCL=1;
+ 105   1       if(is_init) delay(DELAY_TIME);
+ 106   1       SD_SCL=0;
+ 107   1       if(is_init) delay(DELAY_TIME);
+ 108   1       _dat4=SD_SO;
+ 109   1       
+ 110   1       SD_SCL=1;
+ 111   1       if(is_init) delay(DELAY_TIME);
+ 112   1       SD_SCL=0;
+ 113   1       if(is_init) delay(DELAY_TIME);
+ 114   1       _dat3=SD_SO;
+ 115   1       
+C51 COMPILER V6.12  SDTEST                                                                 05/28/2014 17:11:37 PAGE 3   
+
+ 116   1       SD_SCL=1;
+ 117   1       if(is_init) delay(DELAY_TIME);
+ 118   1       SD_SCL=0;
+ 119   1       if(is_init) delay(DELAY_TIME);
+ 120   1       _dat2=SD_SO;
+ 121   1       
+ 122   1       SD_SCL=1;
+ 123   1       if(is_init) delay(DELAY_TIME);
+ 124   1       SD_SCL=0;
+ 125   1       if(is_init) delay(DELAY_TIME);
+ 126   1       _dat1=SD_SO;
+ 127   1       
+ 128   1       SD_SCL=1;
+ 129   1       if(is_init) delay(DELAY_TIME);
+ 130   1       SD_SCL=0;
+ 131   1       if(is_init) delay(DELAY_TIME);
+ 132   1       _dat0=SD_SO;
+ 133   1       
+ 134   1       return (_dat);
+ 135   1      }
+ 136           
+ 137           
+ 138          unsigned char SD_Write_Cmd(unsigned char *pcmd) //œÚSDø®–¥√¸¡Ó£¨pcmd «√¸¡Ó◊÷Ω⁄–Ú¡–µƒ ◊µÿ÷∑
+ 139          {
+ 140   1       unsigned char temp,tim;
+ 141   1       tim=0;
+ 142   1       SD_CS=1;
+ 143   1       SD_spi_write(0xff); //Ã·∏ﬂºÊ»›–‘£¨»Áπ˚√ª”–’‚¿Ô£¨”––©SDø®ø…ƒ‹≤ª÷ß≥÷  
+ 144   1       SD_CS=0;
+ 145   1       SD_spi_write(pcmd[0]);
+ 146   1       SD_spi_write(pcmd[1]);
+ 147   1       SD_spi_write(pcmd[2]);
+ 148   1       SD_spi_write(pcmd[3]);
+ 149   1       SD_spi_write(pcmd[4]);
+ 150   1       SD_spi_write(pcmd[5]); 
+ 151   1       do
+ 152   1       { 
+ 153   2        temp = SD_spi_read();//“ª÷±∂¡£¨÷±µΩ∂¡µΩµƒ≤ª «0xffªÚ≥¨ ±
+ 154   2        tim++;
+ 155   2        
+ 156   2       }while((temp==0xff)&&(tim<TRY_TIME));
+ 157   1       
+ 158   1       return(temp);
+ 159   1      }
+ 160          
+ 161           
+ 162          unsigned char SD_Init() //≥ı ºªØ£¨ π”√CMD1£®√¸¡Ó1£©
+ 163          { 
+ 164   1       unsigned char temp;
+ 165   1       unsigned char pcmd[] = {0x41,0x00,0x00,0x00,0x00,0xff}; //√¸¡Ó1µƒ◊÷Ω⁄–Ú¡–
+ 166   1       
+ 167   1       SD_CS=0; //¥Úø™∆¨—° 
+ 168   1       temp=SD_Write_Cmd(pcmd);                 
+ 169   1       is_init=0; //≥ı ºªØÕÍ±œ£¨Ω´is_init…Ë÷√Œ™0,Œ™¡ÀÃ·∏ﬂ“‘∫Ûµƒ ˝æ›¥´ ‰ÀŸ∂»   
+ 170   1       SD_CS=1;  //πÿ±’∆¨—°
+ 171   1       SD_spi_write(0xff); //∞¥’’SDø®µƒ≤Ÿ◊˜ ±–Ú‘⁄’‚¿Ô≤π8∏ˆ ±÷”
+ 172   1       return(temp); //∑µªÿ0,Àµ√˜≥ı ºªØ≤Ÿ◊˜≥…π¶
+ 173   1      }
+ 174           
+ 175          unsigned char SD_Read_Sector(unsigned long addr)//¥”SDø®µƒ÷∏∂®…»«¯÷–∂¡≥ˆ512∏ˆ◊÷Ω⁄£¨ π”√CMD17£®17∫≈√¸¡Ó£©
+ 176          {unsigned char temp;
+ 177   1       unsigned char pcmd[]={0x51,0x00,0x00,0x00,0x00,0xff}; //CMD17µƒ◊÷Ω⁄–Ú¡–  
+C51 COMPILER V6.12  SDTEST                                                                 05/28/2014 17:11:37 PAGE 4   
+
+ 178   1       addr<<=9; //addr=addr*512    Ω´øÈµÿ÷∑£®…»«¯µÿ÷∑£©◊™Œ™◊÷Ω⁄µÿ÷∑
+ 179   1       pcmd[1]=((addr&0xff000000)>>24);//Ω´◊÷Ω⁄µÿ÷∑–¥»ÎµΩCMD17◊÷Ω⁄–Ú¡–÷–
+ 180   1       pcmd[2]=((addr&0x00FF0000)>>16);
+ 181   1       pcmd[3]=((addr&0x0000FF00)>>8);
+ 182   1       SD_CS=0;//¥Úø™∆¨—°
+ 183   1       //time=0;  
+ 184   1       temp=SD_Write_Cmd(pcmd); //–¥»ÎCMD17
+ 185   1       return (temp);
+ 186   1      }
+ 187          
+ 188          unsigned char SD_Reset()//SDø®∏¥Œª£¨Ω¯»ÎSPIƒ£ Ω£¨ π”√CMD0£®√¸¡Ó0£©
+ 189          {
+ 190   1       unsigned char temp,i;
+ 191   1       unsigned char pcmd[] = {0x40,0x00,0x00,0x00,0x00,0x95}; //√¸¡Ó0µƒ◊÷Ω⁄–Ú¡–
+ 192   1       is_init=1; //Ω´is_init÷√Œ™1
+ 193   1       SD_CS=1;  //πÿ±’∆¨—°
+ 194   1       for(i=0;i<0x0f;i++) //∏¥Œª ±£¨ ◊œ»“™∑¢ÀÕ◊Ó…Ÿ74∏ˆ ±÷”–≈∫≈£¨’‚ «±ÿ–Îµƒ£°£°£°
+ 195   1       {
+ 196   2        SD_spi_write(0xff);//120∏ˆ ±÷”
+ 197   2       }
+ 198   1       
+ 199   1       SD_CS=0; //¥Úø™∆¨—°      
+ 200   1       temp=SD_Write_Cmd(pcmd);//–¥»ÎCMD0   
+ 201   1       SD_CS=1; //πÿ±’∆¨—°
+ 202   1       //∞¥’’SDø®µƒ≤Ÿ◊˜ ±–Ú‘⁄’‚¿Ô≤π8∏ˆ ±÷”
+ 203   1       return (temp);//∑µªÿ0,Àµ√˜∏¥Œª≤Ÿ◊˜≥…π¶
+ 204   1       
+ 205   1      }
+ 206          
+ 207          void main()
+ 208          {
+ 209   1      	 unsigned char t,s;
+ 210   1      	 unsigned int j;
+ 211   1      	 laddr=8200;
+ 212   1      	 //P2=0x00;
+ 213   1      	 t=0x00;
+ 214   1      	SerialInit();
+ 215   1      	SerialPutString("hello world!");
+ 216   1      	 while(t!=0x01)
+ 217   1      	 {
+ 218   2      	 	t=SD_Reset();
+ 219   2      	 }
+ 220   1      	 SD_spi_write(0xff);
+ 221   1      	 //P2=0x0f;
+ 222   1      	 while(t!=0x00)
+ 223   1      	 {
+ 224   2      		 t=SD_Init();
+ 225   2      	 }    
+ 226   1      	 //SD_Write_Sector(ADDR,pbuf);//Ω´ ˝æ›ª∫≥Â«¯÷–µƒ512∏ˆ◊÷Ω⁄µƒ ˝æ›–¥»ÎSDø®µƒµ⁄ADDR…»«¯÷–
+ 227   1      	 
+ 228   1      	 t=0xff;
+ 229   1      	 while(t!=0x00)
+ 230   1      	 {
+ 231   2      	 	t=SD_Read_Sector(laddr);
+ 232   2      	 }//¥”SDø®µƒµ⁄ADDR…»«¯÷–∂¡»°512∏ˆ◊÷Ω⁄µƒ ˝æ›µΩ ˝æ›ª∫≥Â«¯
+ 233   1      	 //P2=0xca;
+ 234   1      	 while (t!=0xfe)
+ 235   1      	 {
+ 236   2      	 	t=SD_spi_read(); //“ª÷±∂¡£¨µ±∂¡µΩ0xfe ±£¨Àµ√˜∫Û√Êµƒ «512◊÷Ω⁄µƒ ˝æ›¡À                                
+ 237   2      	 }
+ 238   1      	 
+ 239   1      	  //P2=0x0f;
+C51 COMPILER V6.12  SDTEST                                                                 05/28/2014 17:11:37 PAGE 5   
+
+ 240   1      	 for(j=0;j<512;j++)       //Ω´ ˝æ›–¥»ÎµΩ ˝æ›ª∫≥Â«¯÷–
+ 241   1      	 {   
+ 242   2      	 //	if(((j%128)==0)&&j>0)
+ 243   2      	//		SerialPutString(pbuf);
+ 244   2      		pbuf[j]=SD_spi_read();			
+ 245   2      	 } 
+ 246   1      	 pbuf[10]='\0';
+ 247   1           SerialPutString(pbuf);
+ 248   1      	 //
+ 249   1      	 for(j=0;j<10;j++)  //Ω´ ˝æ›–¥»ÎµΩ ˝æ›ª∫≥Â«¯÷–
+ 250   1      	 {   
+ 251   2      	  	pbu[j]=pbuf[j];
+ 252   2      	 } 
+ 253   1           //                                                                                                  
+ 254   1      	 SD_spi_read();
+ 255   1      	 SD_spi_read();//∂¡»°¡Ω∏ˆ◊÷Ω⁄µƒCRC–£—È¬Î£¨≤ª”√πÿ–ƒÀ¸√«
+ 256   1      	 SD_CS=1;  //SDø®πÿ±’∆¨—°
+ 257   1      	 SD_spi_write(0xff);//∞¥’’SDø®µƒ≤Ÿ◊˜ ±–Ú‘⁄’‚¿Ô≤π8∏ˆ ±÷”
+ 258   1      	 /*
+ 259   1      	 for(j=0;j<10;j++)  //Ω´ ˝æ›–¥»ÎµΩ ˝æ›ª∫≥Â«¯÷–
+ 260   1      	 {   
+ 261   1      	   P2=pbu[j];
+ 262   1      	   for(s=0;s<200;s++){delay(1000);}
+ 263   1      	 
+ 264   1      	 }          
+ 265   1      	 */
+ 266   1      	 //P2=0x0c;
+ 267   1      	 while(1);
+ 268   1      }
+*** WARNING C280 IN LINE 209 OF .\SDTEST.C: 's': unreferenced local variable
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1096    ----
+   CONSTANT SIZE    =     31    ----
+   XDATA SIZE       =    512    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     52      35
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

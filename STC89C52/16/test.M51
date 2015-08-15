@@ -1,0 +1,255 @@
+BL51 BANKED LINKER/LOCATER V4.13                                                        09/28/2013  14:37:43  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V4.13, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE test.obj TO test RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  test.obj (TEST)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?SIDIV)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?UIDIV)
+
+
+LINK MAP OF MODULE:  test (TEST)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0009H     UNIT         ?DT?TEST
+            IDATA   0011H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0013H     UNIT         ?PR?TIMEINT?TEST
+                    0016H     0005H                  *** GAP ***
+            CODE    001BH     0003H     ABSOLUTE     
+            CODE    001EH     008BH     UNIT         ?C?LIB_CODE
+            CODE    00A9H     0086H     UNIT         ?PR?MAIN?TEST
+            CODE    012FH     0047H     UNIT         ?PR?_DISPLAY?TEST
+            CODE    0176H     0020H     UNIT         ?CO?TEST
+            CODE    0196H     001BH     UNIT         ?PR?DELAY1?TEST
+            CODE    01B1H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   test (TEST)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?TEST
+
+?PR?MAIN?TEST
+  +--> ?PR?_DISPLAY?TEST
+
+?PR?_DISPLAY?TEST
+  +--> ?CO?TEST
+  +--> ?PR?DELAY1?TEST
+
+
+
+SYMBOL TABLE OF MODULE:  test (TEST)
+BL51 BANKED LINKER/LOCATER V4.13                                                      09/28/2013  14:37:43  PAGE 2
+
+
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        TEST
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        T0
+  B:00D0H.6       PUBLIC        AC
+  B:00B0H.5       PUBLIC        T1
+  B:0090H.0       PUBLIC        T2
+  B:00A8H.7       PUBLIC        EA
+  C:0186H         PUBLIC        table
+  D:00A8H         PUBLIC        IE
+  B:00C8H.6       PUBLIC        EXF2
+  B:00B0H.7       PUBLIC        RD
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:00B0H.2       PUBLIC        INT0
+  B:00D0H.7       PUBLIC        CY
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.3       PUBLIC        INT1
+  B:00B8H.4       PUBLIC        PS
+  B:0090H.1       PUBLIC        T2EX
+  B:00D0H.2       PUBLIC        OV
+  C:00A9H         PUBLIC        main
+  B:00C8H.1       PUBLIC        C_T2
+  B:00B0H.6       PUBLIC        WR
+  B:00A0H.6       PUBLIC        duan
+  D:0008H         PUBLIC        count
+  B:00C8H.5       PUBLIC        RCLK
+  B:00C8H.4       PUBLIC        TCLK
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:000AH         PUBLIC        sec
+  C:0176H         PUBLIC        table1
+  B:0088H.1       PUBLIC        IE0
+  B:0088H.3       PUBLIC        IE1
+  C:0196H         PUBLIC        delay1
+  B:00C8H.0       PUBLIC        CP_RL2
+  D:000BH         PUBLIC        shi
+  B:00A0H.7       PUBLIC        wei
+  B:00A8H.1       PUBLIC        ET0
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.5       PUBLIC        TF0
+  B:00A8H.5       PUBLIC        ET2
+  B:0088H.7       PUBLIC        TF1
+  D:000CH         PUBLIC        ge
+  B:00C8H.7       PUBLIC        TF2
+  B:0098H.2       PUBLIC        RB8
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+BL51 BANKED LINKER/LOCATER V4.13                                                      09/28/2013  14:37:43  PAGE 3
+
+
+  D:008DH         PUBLIC        TH1
+  B:0098H.3       PUBLIC        TB8
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  B:00D0H.0       PUBLIC        P
+  B:0098H.7       PUBLIC        SM0
+  D:000DH         PUBLIC        num
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+  B:0098H.5       PUBLIC        SM2
+  B:00B8H.1       PUBLIC        PT0
+  B:00B8H.3       PUBLIC        PT1
+  B:00D0H.3       PUBLIC        RS0
+  B:00B8H.5       PUBLIC        PT2
+  B:0088H.4       PUBLIC        TR0
+  B:00D0H.4       PUBLIC        RS1
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  B:00B8H.0       PUBLIC        PX0
+  B:00B8H.2       PUBLIC        PX1
+  C:012FH         PUBLIC        _display
+  C:0003H         PUBLIC        timeInt
+  B:00C8H.3       PUBLIC        EXEN2
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  D:000FH         PUBLIC        m
+  B:00B0H.0       PUBLIC        RXD
+  B:00B0H.1       PUBLIC        TXD
+  B:00D0H.5       PUBLIC        F0
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:00A9H         LINE#         21
+  C:00A9H         LINE#         22
+  C:00A9H         LINE#         23
+  C:00ACH         LINE#         24
+  C:00AFH         LINE#         25
+  C:00B2H         LINE#         26
+  C:00B4H         LINE#         27
+  C:00B6H         LINE#         28
+  C:00B8H         LINE#         30
+  C:00C1H         LINE#         31
+  C:00C3H         LINE#         32
+  C:00C6H         LINE#         33
+  C:00C8H         LINE#         34
+  C:00CAH         LINE#         35
+  C:00CDH         LINE#         36
+  C:00CFH         LINE#         38
+  C:00D3H         LINE#         39
+  C:00D3H         LINE#         40
+  C:00D3H         LINE#         41
+  C:00DBH         LINE#         42
+  C:00DBH         LINE#         43
+  C:00DFH         LINE#         44
+  C:00E7H         LINE#         45
+  C:00E7H         LINE#         46
+  C:00EBH         LINE#         47
+  C:00F3H         LINE#         48
+BL51 BANKED LINKER/LOCATER V4.13                                                      09/28/2013  14:37:43  PAGE 4
+
+
+  C:00F3H         LINE#         49
+  C:0100H         LINE#         50
+  C:010DH         LINE#         51
+  C:0115H         LINE#         52
+  C:0124H         LINE#         53
+  C:012DH         LINE#         54
+  C:012DH         LINE#         56
+  -------         ENDPROC       MAIN
+  -------         PROC          TIMEINT
+  C:0003H         LINE#         59
+  C:0005H         LINE#         61
+  C:0008H         LINE#         62
+  C:000BH         LINE#         63
+  C:0013H         LINE#         64
+  -------         ENDPROC       TIMEINT
+  -------         PROC          DELAY1
+  -------         DO            DELAY1
+  D:0006H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         j
+  C:0196H         LINE#         66
+  C:0196H         LINE#         67
+  C:0196H         LINE#         69
+  C:019AH         LINE#         70
+  C:01B0H         LINE#         71
+  -------         ENDPROC       DELAY1
+  -------         PROC          _DISPLAY
+  D:0007H         SYMBOL        sec
+  D:0002H         SYMBOL        shi
+  D:0003H         SYMBOL        ge
+  C:012FH         LINE#         73
+  C:0131H         LINE#         74
+  C:0131H         LINE#         75
+  C:0133H         LINE#         76
+  C:013AH         LINE#         77
+  C:013CH         LINE#         78
+  C:013FH         LINE#         79
+  C:0141H         LINE#         80
+  C:0144H         LINE#         81
+  C:0146H         LINE#         82
+  C:0149H         LINE#         84
+  C:014BH         LINE#         85
+  C:0152H         LINE#         86
+  C:0154H         LINE#         87
+  C:0157H         LINE#         88
+  C:0159H         LINE#         89
+  C:015CH         LINE#         90
+  C:015EH         LINE#         91
+  C:0161H         LINE#         93
+  C:0163H         LINE#         94
+  C:0167H         LINE#         95
+  C:0169H         LINE#         96
+  C:016CH         LINE#         97
+  C:016EH         LINE#         98
+  C:0171H         LINE#         99
+  C:0173H         LINE#         100
+  -------         ENDPROC       _DISPLAY
+BL51 BANKED LINKER/LOCATER V4.13                                                      09/28/2013  14:37:43  PAGE 5
+
+
+  -------         ENDMOD        TEST
+
+  -------         MODULE        ?C?SIDIV
+  C:001EH         PUBLIC        ?C?SIDIV
+  -------         ENDMOD        ?C?SIDIV
+
+  -------         MODULE        ?C?UIDIV
+  C:0054H         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

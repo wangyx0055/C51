@@ -1,0 +1,197 @@
+C51 COMPILER V6.12  DHT111                                                                 05/31/2014 15:58:45 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE DHT111
+OBJECT MODULE PLACED IN .\dht111.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\dht111.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include "dht111.h"
+   2          #include <reg52.h> 
+   3          
+   4          //请根据自己的 dht11 接的 IO 口来改动位定义
+   5          sbit dht11 = P2^0; 
+   6          //防止在与硬件通信时发生死循环的计数范围 
+   7          #define NUMBER   20
+   8          #define SIZE 5 
+   9          static unsigned char status; 
+  10          //存放五字节数据的数组
+  11          static unsigned char value_array[SIZE]; 
+  12          /*可在其他的文件引用温湿度值,实际是温度的整数的 10 倍
+  13          如 dht11 读回的温度是 26,则 temp_value = 260,  湿度同理*/ 
+  14          int temp_value, humi_value; 
+  15          static unsigned char ReadValue(void); 
+  16          extern void Delay_1ms(unsigned int ms) 
+  17          { 
+  18   1      	unsigned int x, y;
+  19   1      	for(x = ms; x > 0; x--) 
+  20   1      	{
+  21   2      	for(y = 124; y > 0; y--); 
+  22   2      	}
+  23   1      } 
+  24          
+  25          static void DHT11_Delay_10us(void) 
+  26          { 
+  27   1      	unsigned char  i;
+  28   1      	i--; 
+  29   1      	i--; 
+  30   1      	i--; 
+  31   1      	i--; 
+  32   1      	i--; 
+  33   1      	i--; 
+  34   1      } 
+  35          
+  36          /*读一个字节的数据*/ 
+  37          static unsigned char DHT11_ReadValue(void) 
+  38          { 
+  39   1      	unsigned char count, value = 0, i; 
+  40   1      	status = OK;      //设定标志为正常状态
+  41   1      	for(i = 8; i > 0; i--) 
+  42   1      	{
+  43   2      		//高位在先
+  44   2      		value<<= 1;
+  45   2      		count = 0;
+  46   2      		//每一位数据前会有一个 50us 的低电平时间.等待 50us 低电平结束
+  47   2      		while(dht11 == 0 && count++ < NUMBER); 
+  48   2      		if(count>= NUMBER)
+  49   2      		{
+  50   3      		 	status = ERROR;//设定错误标志
+  51   3      			return 0;		//函数执行过程发生错误就退出函数
+  52   3      		} 
+  53   2      		//26-28us 的高电平表示该位是 0,为 70us 高电平表该位 1 
+  54   2      		DHT11_Delay_10us();
+  55   2      		DHT11_Delay_10us();
+C51 COMPILER V6.12  DHT111                                                                 05/31/2014 15:58:45 PAGE 2   
+
+  56   2      		DHT11_Delay_10us();
+  57   2      		//延时 30us 后检测数据线是否还是高电平
+  58   2      		if(dht11 != 0)
+  59   2      		{
+  60   3      			//进入这里表示该位是 1 
+  61   3      			value++; 
+  62   3      			//等待剩余(约 40us)的高电平结束
+  63   3      			while(dht11 != 0 && count++ < NUMBER) 
+  64   3      			{
+  65   4      				dht11 = 1;
+  66   4      			}
+  67   3      			if(count>= NUMBER)
+  68   3      			{
+  69   4      				status = ERROR;       //设定错误标志
+  70   4      				return 0;
+  71   4      			}
+  72   3      		 }
+  73   2      	}
+  74   1      		return (value);
+  75   1       }
+  76          
+  77          //读温度和湿度函数，读一次的数据,共五字节，读出成功函数返回 OK,  错误返回 ERROR 
+  78          extern unsigned char DHT11_ReadTempAndHumi(void) 
+  79          {
+  80   1      	unsigned char i = 0, check_value = 0,count = 0; 
+  81   1      	EA = 0; 	 
+  82   1      	dht11 = 0; 	 
+  83   1      	//拉低数据线大于 18ms 发送开始信号	 
+  84   1      	Delay_1ms(20);   //需大于 18 毫秒	 
+  85   1      	dht11 = 1; 	 
+  86   1      	 //释放数据线,用于检测低电平的应答信号	 
+  87   1      	//延时 20-40us,等待一段时间后检测应答信号,应答信号是从机拉低数据线 80us 
+  88   1      	DHT11_Delay_10us();
+  89   1      	DHT11_Delay_10us();
+  90   1      	DHT11_Delay_10us();
+  91   1      	DHT11_Delay_10us();
+  92   1      
+  93   1      	if(dht11 != 0)    //检测应答信号,应答信号是低电平
+  94   1      	{
+  95   2      		//没应答信号
+  96   2      		EA = 1;
+  97   2      		return ERROR;
+  98   2      	}
+  99   1      	else
+ 100   1      	{
+ 101   2      		//有应答信号
+ 102   2      		while(dht11 == 0 && count++ < NUMBER);     //等待应答信号结束
+ 103   2      		if(count>= NUMBER)   //检测计数器是否超过了设定的范围
+ 104   2      		{
+ 105   3      			dht11 = 1; 
+ 106   3      			EA = 1; 
+ 107   3      	
+ 108   3      			return ERROR;    //读数据出错,退出函数 	
+ 109   3      		}
+ 110   2      	 
+ 111   2      		count = 0;
+ 112   2      		dht11 = 1;//释放数据线
+ 113   2      		//应答信号后会有一个 80us 的高电平，等待高电平结束
+ 114   2      		while(dht11 != 0 && count++ < NUMBER); 
+ 115   2      		if(count>= NUMBER)
+ 116   2      		{
+ 117   3      		dht11 = 1; 
+C51 COMPILER V6.12  DHT111                                                                 05/31/2014 15:58:45 PAGE 3   
+
+ 118   3      		EA = 1; 
+ 119   3      	
+ 120   3      		return ERROR;   //退出函数
+ 121   3      		}
+ 122   2      	
+ 123   2      		//读出湿.温度值
+ 124   2      		for(i = 0; i < SIZE; i++) 
+ 125   2      		{
+ 126   3      			value_array[i] = DHT11_ReadValue();
+ 127   3      			if(status== ERROR)//调用 ReadValue()读数据出错会设定 status 为 ERROR 
+ 128   3      			{
+ 129   4      				dht11 = 1;
+ 130   4      				EA = 1;
+ 131   4      				return ERROR;
+ 132   4      			}
+ 133   3      			//读出的最后一个值是校验值不需加上去
+ 134   3      			if(i!= SIZE -1)
+ 135   3      			{
+ 136   4      			//读出的五字节数据中的前四字节数据和等于第五字节数据表示成功
+ 137   4      			check_value += value_array[i];
+ 138   4      			}
+ 139   3      		}//end for
+ 140   2      	 
+ 141   2      		//在没用发生函数调用失败时进行校验
+ 142   2      		if(check_value == value_array[SIZE - 1]) 
+ 143   2      		{
+ 144   3      			humi_value= value_array[0] * 10;
+ 145   3      			temp_value= value_array[2] *10;
+ 146   3      			dht11 = 1; 
+ 147   3      			EA = 1; 
+ 148   3      		 	
+ 149   3      			return OK;//正确的读出 dht11 输出的数据
+ 150   3      		}
+ 151   2      		else 
+ 152   2      		{	
+ 153   3      			//校验数据出错
+ 154   3      			EA = 1; 
+ 155   3      			return ERROR;
+ 156   3      		}
+ 157   2      	}
+ 158   1      
+ 159   1      }
+ 160          /*******************************************
+ 161          *
+ 162          ********************************************/
+ 163          void main()
+ 164          {
+ 165   1      		DHT11_ReadTempAndHumi();
+ 166   1      			P1=value_array[0];
+ 167   1      		Delay_1ms(3000);
+ 168   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    302    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V6.12  DHT111                                                                 05/31/2014 15:58:45 PAGE 4   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,238 @@
+C51 COMPILER V6.12  TEST                                                                   04/24/2014 13:09:03 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>         
+   2          #define uchar unsigned char 
+   3          #define uint unsigned int 
+   4          
+   5          sbit sound=P2^3; 
+   6          uint counter=0; 
+   7          //
+   8          #define NOTE_END 0x0000
+   9          #define NOTE_SONGEND 0x0001
+  10          //
+  11          #define NOTE_E1 0xfa8c
+  12          #define NOTE_E2 0xfadc
+  13          #define NOTE_E3 0xfa6c
+  14          #define NOTE_E4 0xfaec
+  15          #define NOTE_E5 0xfc5e
+  16          #define NOTE_E6 0xfcc4
+  17          #define NOTE_E7 0xfd1e
+  18          
+  19          #define NOTE_EL1 0xf518
+  20          #define NOTE_EL2 0xf5b7
+  21          #define NOTE_EL3 0xf6d1
+  22          #define NOTE_EL4 0xf7db
+  23          #define NOTE_EL5 0xf8be
+  24          #define NOTE_EL6 0xf987
+  25          #define NOTE_EL7 0xfa3c
+  26          
+  27          #define NOTE_EH1 0xfd47
+  28          #define NOTE_EH2 0xfd6e
+  29          #define NOTE_EH3 0xfdb6
+  30          #define NOTE_EH4 0xfdf6
+  31          #define NOTE_EH5 0xfe2f
+  32          #define NOTE_EH6 0xfe62
+  33          #define NOTE_EH7 0xfe8f
+  34          //“‘…œ≤ø∑÷ «∂®“Â «∞—√ø∏ˆ“Ù∑˚∫Õ∆µ¬ ÷µ∂‘”¶∆¿¥£¨∆‰ µ≤ª”√¥Ú’‚√¥∂‡£¨µ´ «∂º¥Ú…œ¡À£¨∫Û√Êø…“‘ÀÊ“‚±‡–¥Eµ˜µƒ∏˜÷÷∏Ë£
+             -¨Œ“’‚¿Ô”√NOTE_E+ ˝◊÷±Ì æ“Ù∑˚£¨NOTE_EH+ ˝◊÷±Ì æ…œ√Ê”–µ„µƒƒ«÷÷“Ù∑˚£¨NOTE_EL+ ˝◊÷±Ì æœ¬√Ê”–µ„µƒƒ«÷÷“Ù∑˚°£’‚—˘∫Û√Ê–¥∆¿¥±»Ωœ
+             -∫√ ∂±°£
+  35          
+  36          /*#define NOTE_D0 0xffff
+  37          #define NOTE_D1 0xf9e1
+  38          #define NOTE_D2 0xfa8c
+  39          #define NOTE_D3 0xfadc
+  40          #define NOTE_D4 0xfb6c
+  41          #define NOTE_D5 0xfbec
+  42          #define NOTE_D6 0xfc5e
+  43          #define NOTE_D7 0xfcc4
+  44          
+  45          #define NOTE_DL1 0xf3c2
+  46          #define NOTE_DL2 0xf518
+  47          #define NOTE_DL3 0xf5b7
+  48          #define NOTE_DL4 0xf6d1
+  49          #define NOTE_DL5 0xf7db
+  50          #define NOTE_DL6 0xf8be
+  51          #define NOTE_DL7 0xf987
+  52          
+  53          #define NOTE_DH1 0xfcf2
+C51 COMPILER V6.12  TEST                                                                   04/24/2014 13:09:03 PAGE 2   
+
+  54          #define NOTE_DH2 0xfd47
+  55          #define NOTE_DH3 0xfd6e
+  56          #define NOTE_DH4 0xfdb6
+  57          #define NOTE_DH5 0xfdf6
+  58          #define NOTE_DH6 0xfe2f
+  59          #define NOTE_DH7 0xefee
+  60          */
+  61          //“‘…œ≤ø∑÷ «∂®“Â «∞—√ø∏ˆ“Ù∑˚∫Õ∆µ¬ ÷µ∂‘”¶∆¿¥£¨∆‰ µ≤ª”√¥Ú’‚√¥∂‡£¨µ´ «∂º¥Ú…œ¡À£¨∫Û√Êø…“‘ÀÊ“‚±‡–¥Dµ˜µƒ∏˜÷÷∏Ë£
+             -¨Œ“’‚¿Ô”√NOTE_D+ ˝◊÷±Ì æ“Ù∑˚£¨NOTE_DH+ ˝◊÷±Ì æ…œ√Ê”–µ„µƒƒ«÷÷“Ù∑˚£¨NOTE_DL+ ˝◊÷±Ì æœ¬√Ê”–µ„µƒƒ«÷÷“Ù∑˚°£’‚—˘∫Û√Ê–¥∆¿¥±»Ωœ
+             -∫√ ∂±°£
+  62          uchar code tune[]= 
+  63          {
+  64           //‹‘¿Úª®
+  65            NOTE_E3,NOTE_E3,NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_EH1,NOTE_E6,NOTE_E5,NOTE_E5,NOTE_E6,
+  66            NOTE_E5,NOTE_E3,NOTE_E3,NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_EH1,NOTE_E6,
+  67            
+  68            NOTE_E5,NOTE_E5,NOTE_E6,NOTE_E5,NOTE_E5,NOTE_E5,NOTE_E5,NOTE_E3,NOTE_E5,NOTE_E6,
+  69            NOTE_E6,NOTE_E5,
+  70            
+  71            NOTE_E3,NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E3,NOTE_E2,NOTE_E1,NOTE_E1,NOTE_E2,NOTE_E1,
+  72            NOTE_E3,NOTE_E2,NOTE_E1,NOTE_E3,NOTE_E2,NOTE_E3,
+  73            
+  74            NOTE_E5,NOTE_E6,NOTE_EH1,NOTE_E5,NOTE_E2,NOTE_E3,NOTE_E5,NOTE_E2,NOTE_E3,NOTE_E1,
+  75            NOTE_EL6,NOTE_EL5,NOTE_EL6,NOTE_E1,
+  76            
+  77            NOTE_E2,NOTE_E3,NOTE_E1,NOTE_E2,NOTE_E1,NOTE_EL6,NOTE_EL5,NOTE_END/*NOTE_SONGEND,
+  78            //∫˘¬´Õﬁ
+  79            NOTE_DH1,NOTE_D6,NOTE_D5,NOTE_D6,NOTE_D0,
+  80            NOTE_DH1,NOTE_D6,NOTE_D5,NOTE_DH1,NOTE_D6,NOTE_D0,NOTE_D6,
+  81            NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D6,NOTE_D0,NOTE_D6,
+  82            NOTE_DH1,NOTE_D6,NOTE_D5,NOTE_DH1,NOTE_D6,NOTE_D0,NOTE_END,
+  83            
+  84            NOTE_D1,NOTE_D1,NOTE_D3,
+  85            NOTE_D1,NOTE_D1,NOTE_D3,NOTE_D0,
+  86            NOTE_D6,NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D6,
+  87            NOTE_D5,NOTE_D1,NOTE_D3,NOTE_D0,
+  88            NOTE_DH1,NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D6,
+  89            NOTE_D5,NOTE_D1,NOTE_D2,NOTE_D0,
+  90            NOTE_D7,NOTE_D7,NOTE_D5,NOTE_D3,
+  91            NOTE_D5,
+  92            NOTE_DH1,NOTE_D0,NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D5,NOTE_D6,NOTE_D6,
+  93            NOTE_D0,NOTE_D5,NOTE_D1,NOTE_D3,NOTE_D0,
+  94            NOTE_DH1,NOTE_D0,NOTE_D6,NOTE_D6,NOTE_D5,NOTE_D5,NOTE_D6,NOTE_D6,
+  95            NOTE_D0,NOTE_D5,NOTE_D1,NOTE_D2,NOTE_D0,
+  96            NOTE_D3,NOTE_D3,NOTE_D1,NOTE_DL6,
+  97            NOTE_D1,
+  98            NOTE_D3,NOTE_D5,NOTE_D6,NOTE_D6,
+  99            NOTE_D3,NOTE_D5,NOTE_D6,NOTE_D6,
+ 100            NOTE_DH1,NOTE_D0,NOTE_D7,NOTE_D5,
+ 101            NOTE_D6,NOTE_END
+ 102            */
+ 103          };
+ 104          //
+ 105          float code duration[]=
+ 106          {
+ 107          	//‹‘¿Úª®
+ 108            1,0.5,0.5,0.5,0.5,0.5,0.5,1,0.5,0.5,2,1,0.5,0.5,0.5,0.5,0.5,0.5,
+ 109            1,0.5,0.5,2,1,1,1,0.5,0.5,1,1,2,
+ 110            1,0.5,0.5,1,0.5,0.5,1,0.5,0.5,2,0.5,0.5,0.5,0.5,1.5,0.5,
+ 111            1,0.5,0.5,2,1,0.5,0.5,0.5,0.5,0.5,0.5,2,1,1,
+ 112            1.5,0.5,0.5,0.5,0.5,0.5,3,1/*,
+ 113             //∫˘¬´Õﬁ
+C51 COMPILER V6.12  TEST                                                                   04/24/2014 13:09:03 PAGE 3   
+
+ 114            1,1,0.5,0.5,1,
+ 115            0.5,0.5,0.5,0.5,1,0.5,0.5,
+ 116            0.5,1,0.5,1,0.5,0.5,
+ 117            0.5,0.5,0.5,0.5,1,1,
+ 118            
+ 119            1,1,1+1,
+ 120            0.5,1,1+0.5,1,
+ 121            1,1,0.5,0.5,1,
+ 122            0.5,1,1+0.5,1,
+ 123            0.5,0.5,0.5,0.5,1+1,
+ 124            0.5,1,1+0.5,1,
+ 125            1+1,0.5,0.5,1,
+ 126            1+1+1+1,
+ 127            0.5,0.5,0.5+0.25,0.25,0.5+0.25,0.25,0.5+0.25,0.25,
+ 128            0.5,1,0.5,1,1,
+ 129            0.5,0.5,0.5+0.25,0.25,0.5+0.25,0.25,0.5+0.25,0.25,
+ 130            0.5,1,0.5,1,1,
+ 131            1+1,0.5,0.5,1,
+ 132            1+1+1+1,
+ 133            0.5,1,0.5,1+1,
+ 134            0.5,1,0.5,1+1,
+ 135            1+1,0.5,0.5,1,
+ 136            1+1+1+1
+ 137            */
+ 138          };
+ 139          //
+ 140          void init() 
+ 141          {//∂® ±∆˜≥ı ºªØ 
+ 142   1       TMOD=0x11; 
+ 143   1       TH0=0xd8; 
+ 144   1       TL0=0xef; 
+ 145   1       EA=1; 
+ 146   1       ET0=1; 
+ 147   1      }  
+ 148          
+ 149          void timer0(void) interrupt 1 using 3  
+ 150          {//timer0÷–∂œ∑˛ŒÒ≥Ã–Ú£¨÷–∂œ“ª¥Œ—” ±10ms 
+ 151   1       counter++;//Ω⁄≈ƒ¥Œ ˝º∆ ˝  
+ 152   1       TH0=0xd8; //∂®“Âµ•ŒªΩ⁄≈ƒµƒ—” ±¥Û–°  
+ 153   1       TL0=0xef; 
+ 154   1      } 
+ 155          
+ 156          void delay(uchar n) 
+ 157          { //—” ±n∫¡√Î
+ 158   1       uchar i; 
+ 159   1       while(n--) 
+ 160   1        for(i=0;i<125;i++);  
+ 161   1      } 
+ 162          
+ 163          void sound_delay(uchar sound_signalhigh,uchar sound_signallow)//≤˙…˙“ª∂®∆µ¬ µƒ“Ùµ˜ 
+ 164          {  
+ 165   1       TH1=sound_signalhigh; 
+ 166   1       TL1=sound_signallow; 
+ 167   1       TR1=1; 
+ 168   1       while(TF1==0); 
+ 169   1       TR1=0; 
+ 170   1       TF1=0;   
+ 171   1      } 
+ 172          
+ 173          void main() 
+ 174          { 
+ 175   1       uint k=0; 
+C51 COMPILER V6.12  TEST                                                                   04/24/2014 13:09:03 PAGE 4   
+
+ 176   1       uchar sound_signalhigh,sound_signallow;//∂® ±∆˜µƒ∏ﬂ8Œª”ÎµÕ8Œª 
+ 177   1       uchar sound_pace;//∂®“ÂΩ⁄≈ƒº∆ ˝∆˜  
+ 178   1       init(); 
+ 179   1       while(1) 
+ 180   1         { 
+ 181   2            k=0; 
+ 182   2         while(tune[k]!=0x0000)//“ÚŒ™∏Ë«˙µƒΩ·Œ≤¥¶»ÀŒ™µƒº”»Î¡À Ω· ¯±Í æ∑˚  0  
+ 183   2         {
+ 184   3      	sound_signallow=0xff&tune[k];
+ 185   3          sound_signalhigh=0xff&(tune[k]>>8);      
+ 186   3          //¥”±Ì÷–»°µ√ Ω⁄≈ƒ¥Û–°  
+ 187   3          sound_pace=60*duration[k];//400Œ™“ª≈ƒµƒ ±≥§ ,‘⁄¥À–ﬁ∏ƒ“ª≈ƒµƒ ±≥§°£ 
+ 188   3      	k++;
+ 189   3          TR0=1; 
+ 190   3         //µ±Ω⁄≈ƒ ˝Œ¥¥ÔµΩ ±∫Ú£¨ºÃ–¯—≠ª∑£¨≤˙…˙∏√“Ùµ˜µƒ…˘“Ù  
+ 191   3         while(counter!=sound_pace) 
+ 192   3            {  
+ 193   4             sound=~sound; 
+ 194   4             sound_delay(sound_signalhigh,sound_signallow); 
+ 195   4            } 
+ 196   3           counter=0;//Ω⁄≈ƒº∆ ˝∆˜÷√0£¨Ω¯»Îœ¬“ª∏ˆ“Ùµ˜  
+ 197   3           TR0=0; 
+ 198   3          } 
+ 199   2         delay(100); //∏Ë«˙—›≥™ÕÍ±œ∫Û,—” ±“ª∂Œ ±º‰  
+ 200   2       } 
+ 201   1      }
+ 202          
+ 203          
+ 204          
+ 205           
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    178    ----
+   CONSTANT SIZE    =    340    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

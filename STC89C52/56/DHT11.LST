@@ -1,0 +1,208 @@
+C51 COMPILER V6.12  DHT11                                                                  06/01/2014 10:53:44 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE DHT11
+OBJECT MODULE PLACED IN .\DHT11.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\DHT11.C DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h> 
+   3          #include <stdio.h>
+   4          #include <string.h>
+   5          #include <math.h>
+   6          #include "Serial.h"
+   7          #include "LCD.h"
+   8          
+   9          #define uchar unsigned char
+  10          #define uint unsigned int
+  11          
+  12          sbit P2_2 = P2^2 ;
+  13          
+  14          uchar DHTFLAG,DHTtemp;
+  15          //uchar shidu_shi,shidu_ge,wendu_shi,wendu_ge;
+  16          uchar idata DHT_data_H,DHT_data_L,DHRH_data_H,DHRH_data_L,ucharcheckdata;
+  17          uchar xdata DHT_data_H_temp,DHT_data_L_temp,DHRH_data_H_temp,DHRH_data_L_temp,ucharcheckdata_temp;
+  18          uchar DHTcomdata;
+  19          uchar xdata buff[20];
+  20          uchar code info1[]="Temp:";
+  21          uchar code info2[]="Humid:";
+  22          float temperature,humidity;
+  23          
+  24          void Delay(uint z)
+  25          {
+  26   1      uchar x,y;
+  27   1      for(x=z;x>0;x--)
+  28   1         for(y=110;y>0;y--);
+  29   1      }
+  30          
+  31          void Delay_10us(void)
+  32             {
+  33   1           uchar i;
+  34   1           i--;
+  35   1           i--;
+  36   1           i--;
+  37   1           i--;
+  38   1           i--;
+  39   1           i--;
+  40   1          }
+  41          
+  42          void DHTCOM(void)
+  43          {     
+  44   1          uchar i;         
+  45   1          for(i=0;i<8;i++)    
+  46   1          {
+  47   2      
+  48   2           DHTFLAG=2; 
+  49   2           while((!P2_2)&&DHTFLAG++);
+  50   2          Delay_10us();
+  51   2           Delay_10us();
+  52   2           Delay_10us();
+  53   2         DHTtemp=0;
+  54   2           if(P2_2)DHTtemp=1;
+  55   2           DHTFLAG=2;
+C51 COMPILER V6.12  DHT11                                                                  06/01/2014 10:53:44 PAGE 2   
+
+  56   2          while((P2_2)&&DHTFLAG++);   
+  57   2           if(DHTFLAG==1)break;    
+  58   2           DHTcomdata<<=1;
+  59   2           DHTcomdata|=DHTtemp; 
+  60   2           }    
+  61   1      }
+  62          //
+  63          //
+  64          float ToDem(uchar x)
+  65          {
+  66   1      	int i=0;
+  67   1      	float y=0;
+  68   1      	unsigned char m=0x01;
+  69   1      	if((x&m)==m)
+  70   1      		y=1;
+  71   1      	for(i=1;i<8;i++)
+  72   1      	{
+  73   2      		m=m<<1;
+  74   2      		if((x&m)==m)
+  75   2      			y=y+pow(2.0,i);
+  76   2      	//	printf("%f,%d\n",y,m);
+  77   2      	}
+  78   1      	return y;
+  79   1      }
+  80          
+  81          //
+  82          float binToDem(uchar x)
+  83          {
+  84   1      	float y=0;
+  85   1      	uchar i,m;
+  86   1      	m=0x80;	
+  87   1      	for(i=0;i<4;i++)
+  88   1      	{
+  89   2      		if((x&(m>>i))>0)
+  90   2      			y=y+1/pow(2.0,i+1);
+  91   2      	}
+  92   1      	return y;
+  93   1      }
+  94          //-----------------------
+  95          void RH(void)
+  96          {
+  97   1          P2_2=0;
+  98   1          Delay(34);
+  99   1          P2_2=1;
+ 100   1          Delay_10us();
+ 101   1          Delay_10us();
+ 102   1          Delay_10us();
+ 103   1          Delay_10us();
+ 104   1          P2_2=1;   
+ 105   1           if(!P2_2) 
+ 106   1           {
+ 107   2            DHTFLAG=2; 
+ 108   2            while((!P2_2)&&DHTFLAG++);
+ 109   2            DHTFLAG=2;
+ 110   2            while((P2_2)&&DHTFLAG++); 
+ 111   2            DHTCOM();
+ 112   2            DHRH_data_H_temp=DHTcomdata;
+ 113   2      	  //P1=DHRH_data_H_temp;//
+ 114   2            DHTCOM();
+ 115   2            DHRH_data_L_temp=DHTcomdata;
+ 116   2            DHTCOM();
+ 117   2            DHT_data_H_temp=DHTcomdata;
+C51 COMPILER V6.12  DHT11                                                                  06/01/2014 10:53:44 PAGE 3   
+
+ 118   2      	  //
+ 119   2      	  //P1=DHT_data_H_temp;
+ 120   2            DHTCOM();
+ 121   2            DHT_data_L_temp=DHTcomdata;
+ 122   2      	 // P1=DHT_data_L_temp;
+ 123   2            DHTCOM();
+ 124   2            ucharcheckdata_temp=DHTcomdata;
+ 125   2            P2_2=1; 
+ 126   2            DHTtemp=(DHT_data_H_temp+DHT_data_L_temp+DHRH_data_H_temp+DHRH_data_L_temp);
+ 127   2             if(DHTtemp==ucharcheckdata_temp)
+ 128   2             {
+ 129   3                DHRH_data_H=DHRH_data_H_temp;
+ 130   3                DHRH_data_L=DHRH_data_L_temp;
+ 131   3                DHT_data_H=DHT_data_H_temp;
+ 132   3                DHT_data_L=DHT_data_L_temp;
+ 133   3                ucharcheckdata=ucharcheckdata_temp;
+ 134   3      		  humidity=ToDem(DHRH_data_H_temp)+binToDem(DHRH_data_L_temp);
+ 135   3      		  temperature=ToDem(DHT_data_H_temp)+binToDem(DHT_data_L_temp);
+ 136   3      		 // temperature=(int)DHRH_data_H_temp;
+ 137   3      		 // humidity=(int)DHT_data_H_temp;
+ 138   3      		  sprintf(buff,"%2.2f,%2.2f;",temperature,humidity);
+ 139   3             }    
+ 140   2          }
+ 141   1      //	return buff;
+ 142   1      }
+ 143          
+ 144          
+ 145          void main()
+ 146          {
+ 147   1      	uchar len,i;
+ 148   1      	uchar xdata Tvalue[6],Hvalue[6];
+ 149   1      	SerialInit();
+ 150   1      	LCDInit();
+ 151   1      	while(1)
+ 152   1      	{ 
+ 153   2      	    RH();
+ 154   2      		SerialPutString(buff);
+ 155   2      		sprintf(Tvalue,"%2.2f",temperature);
+ 156   2      		sprintf(Hvalue,"%2.2f%%",humidity);
+ 157   2      		LCDWriteCom(0x01);//清屏
+ 158   2      		LCDWriteCom(0x80);
+ 159   2      		len=strlen(info1);
+ 160   2      		//写数据到LCD1602
+ 161   2      		for(i=0;i<len;i++)
+ 162   2      			LCDWriteData(info1[i]);
+ 163   2      		len=strlen(Tvalue);
+ 164   2      		for(i=0;i<len;i++)
+ 165   2      			LCDWriteData(Tvalue[i]);
+ 166   2      		LCDWriteData((uchar)223);
+ 167   2      		LCDWriteData('C');
+ 168   2      		LCDWriteCom(0x80+0x43);
+ 169   2      		len=strlen(info2);
+ 170   2      		for(i=0;i<len;i++)
+ 171   2      			LCDWriteData(info2[i]);
+ 172   2      		len=strlen(Hvalue);
+ 173   2      		for(i=0;i<len;i++)
+ 174   2      			LCDWriteData(Hvalue[i]);
+ 175   2      	   //
+ 176   2      	   Delay(10000);
+ 177   2      	}
+ 178   1      
+ 179   1      }
+C51 COMPILER V6.12  DHT11                                                                  06/01/2014 10:53:44 PAGE 4   
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1253    ----
+   CONSTANT SIZE    =     40    ----
+   XDATA SIZE       =     25      12
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     47      26
+   IDATA SIZE       =      5    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

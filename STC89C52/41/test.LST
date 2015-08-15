@@ -1,0 +1,266 @@
+C51 COMPILER V6.12  TEST                                                                   04/26/2014 12:03:11 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          #include <string.h>
+   4          #define uchar unsigned char
+   5          #define uint unsigned int
+   6          sbit DS=P2^2;           //define interface
+   7          uint temp;             // variable of temperature
+   8          uchar flag1,buff[10];            // sign of the result positive or negative
+   9          sbit dula=P2^6;
+  10          sbit wela=P2^7;
+  11          unsigned char code table[]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,
+  12                                  0x07,0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};
+  13          unsigned char code table1[]={0xbf,0x86,0xdb,0xcf,0xe6,0xed,0xfd,
+  14                                  0x87,0xff,0xef};
+  15          
+  16          void delay(uint count)      //delay
+  17          {
+  18   1        uint i;
+  19   1        while(count)
+  20   1        {
+  21   2          i=200;
+  22   2          while(i>0)
+  23   2          i--;
+  24   2          count--;
+  25   2        }
+  26   1      }
+  27          //功能:串口初始化,波特率9600，方式1
+  28          void Init_Com(void)
+  29          {
+  30   1           TMOD = 0x20;
+  31   1           PCON = 0x00;
+  32   1           SCON = 0x50;
+  33   1           TH1 = 0xFd;
+  34   1           TL1 = 0xFd;
+  35   1           TR1 = 1;
+  36   1      }
+  37          
+  38          void dsreset(void)       //send reset and initialization command
+  39          {
+  40   1        uint i;
+  41   1        DS=0;
+  42   1        i=103;
+  43   1        while(i>0)i--;
+  44   1        DS=1;
+  45   1        i=4;
+  46   1        while(i>0)i--;
+  47   1      }
+  48          
+  49          bit tmpreadbit(void)       //read a bit
+  50          {
+  51   1         uint i;
+  52   1         bit dat;
+  53   1         DS=0;i++;          //i++ for delay
+  54   1         DS=1;i++;i++;
+  55   1         dat=DS;
+C51 COMPILER V6.12  TEST                                                                   04/26/2014 12:03:11 PAGE 2   
+
+  56   1         i=8;while(i>0)i--;
+  57   1         return (dat);
+  58   1      }
+  59          
+  60          uchar tmpread(void)   //read a byte date
+  61          {
+  62   1        uchar i,j,dat;
+  63   1        dat=0;
+  64   1        for(i=1;i<=8;i++)
+  65   1        {
+  66   2          j=tmpreadbit();
+  67   2          dat=(j<<7)|(dat>>1);   //读出的数据最低位在最前面，这样刚好一个字节在DAT里
+  68   2        }
+  69   1        return(dat);
+  70   1      }
+  71          
+  72          void tmpwritebyte(uchar dat)   //write a byte to ds18b20
+  73          {
+  74   1        uint i;
+  75   1        uchar j;
+  76   1        bit testb;
+  77   1        for(j=1;j<=8;j++)
+  78   1        {
+  79   2          testb=dat&0x01;
+  80   2          dat=dat>>1;
+  81   2          if(testb)     //write 1
+  82   2          {
+  83   3            DS=0;
+  84   3            i++;i++;
+  85   3            DS=1;
+  86   3            i=8;while(i>0)i--;
+  87   3          }
+  88   2          else
+  89   2          {
+  90   3            DS=0;       //write 0
+  91   3            i=8;while(i>0)i--;
+  92   3            DS=1;
+  93   3            i++;i++;
+  94   3          }
+  95   2      
+  96   2        }
+  97   1      }
+  98          
+  99          void tmpchange(void)  //DS18B20 begin change
+ 100          {
+ 101   1        dsreset();
+ 102   1        delay(1);
+ 103   1        tmpwritebyte(0xcc);  // address all drivers on bus
+ 104   1        tmpwritebyte(0x44);  //  initiates a single temperature conversion
+ 105   1      }
+ 106          
+ 107          uint tmp()               //get the temperature
+ 108          {
+ 109   1        float tt;
+ 110   1        uchar a,b;
+ 111   1        dsreset();
+ 112   1        delay(1);
+ 113   1        tmpwritebyte(0xcc);
+ 114   1        tmpwritebyte(0xbe);
+ 115   1        a=tmpread();
+ 116   1        b=tmpread();
+ 117   1        temp=b;
+C51 COMPILER V6.12  TEST                                                                   04/26/2014 12:03:11 PAGE 3   
+
+ 118   1        temp<<=8;             //two byte  compose a int variable
+ 119   1        temp=temp|a;
+ 120   1        tt=temp*0.0625;
+ 121   1        temp=tt*10+0.5;
+ 122   1        return temp;
+ 123   1      }
+ 124          
+ 125          void readrom()          //read the serial
+ 126          {
+ 127   1        uchar sn1,sn2;
+ 128   1        dsreset();
+ 129   1        delay(1);
+ 130   1        tmpwritebyte(0x33);
+ 131   1        sn1=tmpread();
+ 132   1        sn2=tmpread();
+ 133   1      }
+ 134          
+ 135          
+ 136          void delay10ms()            //delay
+ 137            {
+ 138   1          uchar a,b;
+ 139   1          for(a=10;a>0;a--)
+ 140   1            for(b=60;b>0;b--);
+ 141   1         }
+ 142          //
+ 143          void putbyte(uchar c)
+ 144          {
+ 145   1      	SBUF=c;
+ 146   1      	while(!TI);
+ 147   1      	TI=0;
+ 148   1      }
+ 149          
+ 150          void putstring(uchar *puts,uchar n)
+ 151          {	
+ 152   1      	int j;
+ 153   1      	for(j=0;j<n;j++)
+ 154   1      		putbyte(puts[j]);
+ 155   1      	memset(puts,0x00,10);
+ 156   1      }
+ 157          //
+ 158          void display(uint temp)			//显示程序
+ 159          {
+ 160   1         uchar A1,A2,A2t,A3;
+ 161   1         float ser;
+ 162   1         float ser1[]={23.0,25.1,65.6,13.7,42.3};
+ 163   1         int i;
+ 164   1         ser=(float)temp/10;
+ 165   1         sprintf(buff,"%f\n",ser);
+ 166   1         putstring(buff,strlen(buff));
+ 167   1        // SBUF=ser;
+ 168   1      /*	
+ 169   1        for(i=0;i<5;i++){
+ 170   1         sprintf(buff,"%f\n",ser1[i]);
+ 171   1         SBUF=',';
+ 172   1         	while(!TI);
+ 173   1      	TI=0;
+ 174   1         delay(1000);
+ 175   1         putstring(buff,strlen(buff));
+ 176   1         }
+ 177   1         */
+ 178   1         //
+ 179   1         SBUF=',';
+C51 COMPILER V6.12  TEST                                                                   04/26/2014 12:03:11 PAGE 4   
+
+ 180   1         	while(!TI);
+ 181   1      	TI=0;
+ 182   1         //
+ 183   1         A1=temp/100;
+ 184   1         A2t=temp%100;
+ 185   1         A2=A2t/10;
+ 186   1         A3=A2t%10;
+ 187   1         dula=0;
+ 188   1         P0=table[A1];		//显示百位
+ 189   1         dula=1;
+ 190   1         dula=0;
+ 191   1      
+ 192   1         wela=0;
+ 193   1         P0=0x7e;
+ 194   1         wela=1;
+ 195   1         wela=0;
+ 196   1         delay(1);
+ 197   1      
+ 198   1         dula=0;
+ 199   1         P0=table1[A2];		//显示十位
+ 200   1         dula=1;
+ 201   1         dula=0;
+ 202   1      
+ 203   1         wela=0;
+ 204   1         P0=0x7d;
+ 205   1         wela=1;
+ 206   1         wela=0;
+ 207   1         delay(1);
+ 208   1      
+ 209   1         P0=table[A3];		//显示个位
+ 210   1         dula=1;
+ 211   1         dula=0;
+ 212   1      
+ 213   1         P0=0x7b;
+ 214   1         wela=1;
+ 215   1         wela=0;
+ 216   1         delay(1);
+ 217   1      }
+*** WARNING C280 IN LINE 163 OF .\TEST.C: 'i': unreferenced local variable
+ 218          
+ 219          
+ 220          void main()
+ 221          {
+ 222   1       uchar a;
+ 223   1       Init_Com();
+ 224   1        do
+ 225   1        {
+ 226   2          tmpchange();
+ 227   2          delay(3000);
+ 228   2      	  for(a=10;a>0;a--)
+ 229   2      	  {   
+ 230   3      	    display(tmp());
+ 231   3      	  }
+ 232   2        }
+ 233   1        while(1);
+ 234   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    673    ----
+   CONSTANT SIZE    =     50    ----
+   XDATA SIZE       =   ----    ----
+C51 COMPILER V6.12  TEST                                                                   04/26/2014 12:03:11 PAGE 5   
+
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     13      36
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       2
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

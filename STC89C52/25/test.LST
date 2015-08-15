@@ -1,0 +1,99 @@
+C51 COMPILER V6.12  TEST                                                                   10/15/2013 12:11:55 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #define uchar unsigned char
+   3          sbit duan=P2^6;
+   4          sbit wei=P2^7;
+   5          sbit lcden=P3^4;
+   6          sbit lcdrs=P3^5;
+   7          
+   8          void delay(int n);
+   9          void writeCom(uchar com);
+  10          void writeData(uchar value);
+  11          void init();
+  12          uchar  code table[]="I LOVE CHNINA!";
+  13          uchar  code table1[]="I LOVE HUNAN!";
+  14          uchar count;
+  15          void main()
+  16          {
+  17   1      	init();
+  18   1      	//writeData('1');
+  19   1      	//writeData('A');
+  20   1      	for(count=0;count<14;count++)
+  21   1      	{
+  22   2      		writeData(table[count]);	
+  23   2      		delay(20);
+  24   2      	}
+  25   1      	writeCom(0x80+0x50+4);
+  26   1      	for(count=0;count<14;count++)
+  27   1      	{
+  28   2      		writeData(table1[count]);	
+  29   2      		delay(20);
+  30   2      	}
+  31   1      	for(count=0;count<16;count++)
+  32   1      	{
+  33   2      		writeCom(0x18);//整屏移动指令
+  34   2      		delay(200);
+  35   2      	}	
+  36   1      	while(1);
+  37   1      
+  38   1      }
+  39          void init()
+  40          {
+  41   1      	duan=0;
+  42   1      	wei=0;
+  43   1      	lcden=0;
+  44   1      	count=0;
+  45   1      	writeCom(0x38);
+  46   1      	writeCom(0x0f);
+  47   1      	writeCom(0x06);
+  48   1      	writeCom(0x01);//清屏
+  49   1      	writeCom(0x80+0x10);
+  50   1      }
+  51          void delay(int n)
+  52          {
+  53   1      	int x,y;
+  54   1      	for(x=n;x>0;x--)
+  55   1      		for(y=110;y>0;y--);
+C51 COMPILER V6.12  TEST                                                                   10/15/2013 12:11:55 PAGE 2   
+
+  56   1      }
+  57          void writeCom(uchar com)
+  58          {
+  59   1      	lcdrs=0;
+  60   1      	P0=com;
+  61   1      	delay(1);
+  62   1      	lcden=1;
+  63   1      	delay(5);
+  64   1      	lcden=0;
+  65   1      }
+  66          void writeData(uchar value)
+  67          {
+  68   1      	lcdrs=1;
+  69   1      	P0=value;
+  70   1      	delay(1);
+  71   1      	lcden=1;
+  72   1      	delay(5);
+  73   1      	lcden=0;
+  74   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    189    ----
+   CONSTANT SIZE    =     29    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

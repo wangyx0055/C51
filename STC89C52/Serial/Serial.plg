@@ -1,0 +1,352 @@
+Build target 'Target 1'
+compiling test.c...
+C(10): error C231: \KEIL\C51\INC\REG52.H: 'P0': redefinition
+C(11): error C231: \KEIL\C51\INC\REG52.H: 'P1': redefinition
+C(12): error C231: \KEIL\C51\INC\REG52.H: 'P2': redefinition
+C(13): error C231: \KEIL\C51\INC\REG52.H: 'P3': redefinition
+C(14): error C231: \KEIL\C51\INC\REG52.H: 'PSW': redefinition
+C(15): error C231: \KEIL\C51\INC\REG52.H: 'ACC': redefinition
+C(16): error C231: \KEIL\C51\INC\REG52.H: 'B': redefinition
+C(17): error C231: \KEIL\C51\INC\REG52.H: 'SP': redefinition
+C(18): error C231: \KEIL\C51\INC\REG52.H: 'DPL': redefinition
+C(19): error C231: \KEIL\C51\INC\REG52.H: 'DPH': redefinition
+C(20): error C231: \KEIL\C51\INC\REG52.H: 'PCON': redefinition
+C(21): error C231: \KEIL\C51\INC\REG52.H: 'TCON': redefinition
+C(22): error C231: \KEIL\C51\INC\REG52.H: 'TMOD': redefinition
+C(23): error C231: \KEIL\C51\INC\REG52.H: 'TL0': redefinition
+C(24): error C231: \KEIL\C51\INC\REG52.H: 'TL1': redefinition
+C(25): error C231: \KEIL\C51\INC\REG52.H: 'TH0': redefinition
+C(26): error C231: \KEIL\C51\INC\REG52.H: 'TH1': redefinition
+C(27): error C231: \KEIL\C51\INC\REG52.H: 'IE': redefinition
+C(28): error C231: \KEIL\C51\INC\REG52.H: 'IP': redefinition
+C(29): error C231: \KEIL\C51\INC\REG52.H: 'SCON': redefinition
+C(30): error C231: \KEIL\C51\INC\REG52.H: 'SBUF': redefinition
+C(33): error C231: \KEIL\C51\INC\REG52.H: 'T2CON': redefinition
+C(34): error C231: \KEIL\C51\INC\REG52.H: 'RCAP2L': redefinition
+C(35): error C231: \KEIL\C51\INC\REG52.H: 'RCAP2H': redefinition
+C(36): error C231: \KEIL\C51\INC\REG52.H: 'TL2': redefinition
+C(37): error C231: \KEIL\C51\INC\REG52.H: 'TH2': redefinition
+C(42): error C231: \KEIL\C51\INC\REG52.H: 'CY': redefinition
+C(43): error C231: \KEIL\C51\INC\REG52.H: 'AC': redefinition
+C(44): error C231: \KEIL\C51\INC\REG52.H: 'F0': redefinition
+C(45): error C231: \KEIL\C51\INC\REG52.H: 'RS1': redefinition
+C(46): error C231: \KEIL\C51\INC\REG52.H: 'RS0': redefinition
+C(47): error C231: \KEIL\C51\INC\REG52.H: 'OV': redefinition
+C(48): error C231: \KEIL\C51\INC\REG52.H: 'P': redefinition
+C(51): error C231: \KEIL\C51\INC\REG52.H: 'TF1': redefinition
+C(52): error C231: \KEIL\C51\INC\REG52.H: 'TR1': redefinition
+C(53): error C231: \KEIL\C51\INC\REG52.H: 'TF0': redefinition
+C(54): error C231: \KEIL\C51\INC\REG52.H: 'TR0': redefinition
+C(55): error C231: \KEIL\C51\INC\REG52.H: 'IE1': redefinition
+C(56): error C231: \KEIL\C51\INC\REG52.H: 'IT1': redefinition
+C(57): error C231: \KEIL\C51\INC\REG52.H: 'IE0': redefinition
+C(58): error C231: \KEIL\C51\INC\REG52.H: 'IT0': redefinition
+C(61): error C231: \KEIL\C51\INC\REG52.H: 'EA': redefinition
+C(62): error C231: \KEIL\C51\INC\REG52.H: 'ET2': redefinition
+C(63): error C231: \KEIL\C51\INC\REG52.H: 'ES': redefinition
+C(64): error C231: \KEIL\C51\INC\REG52.H: 'ET1': redefinition
+C(65): error C231: \KEIL\C51\INC\REG52.H: 'EX1': redefinition
+C(66): error C231: \KEIL\C51\INC\REG52.H: 'ET0': redefinition
+C(67): error C231: \KEIL\C51\INC\REG52.H: 'EX0': redefinition
+C(70): error C231: \KEIL\C51\INC\REG52.H: 'PT2': redefinition
+C(71): error C231: \KEIL\C51\INC\REG52.H: 'PS': redefinition
+C(72): error C231: \KEIL\C51\INC\REG52.H: 'PT1': redefinition
+C(73): error C231: \KEIL\C51\INC\REG52.H: 'PX1': redefinition
+C(74): error C231: \KEIL\C51\INC\REG52.H: 'PT0': redefinition
+C(75): error C231: \KEIL\C51\INC\REG52.H: 'PX0': redefinition
+C(78): error C231: \KEIL\C51\INC\REG52.H: 'RD': redefinition
+C(79): error C231: \KEIL\C51\INC\REG52.H: 'WR': redefinition
+C(80): error C231: \KEIL\C51\INC\REG52.H: 'T1': redefinition
+C(81): error C231: \KEIL\C51\INC\REG52.H: 'T0': redefinition
+C(82): error C231: \KEIL\C51\INC\REG52.H: 'INT1': redefinition
+C(83): error C231: \KEIL\C51\INC\REG52.H: 'INT0': redefinition
+C(84): error C231: \KEIL\C51\INC\REG52.H: 'TXD': redefinition
+C(85): error C231: \KEIL\C51\INC\REG52.H: 'RXD': redefinition
+C(88): error C231: \KEIL\C51\INC\REG52.H: 'SM0': redefinition
+C(89): error C231: \KEIL\C51\INC\REG52.H: 'SM1': redefinition
+C(90): error C231: \KEIL\C51\INC\REG52.H: 'SM2': redefinition
+C(91): error C231: \KEIL\C51\INC\REG52.H: 'REN': redefinition
+C(92): error C231: \KEIL\C51\INC\REG52.H: 'TB8': redefinition
+C(93): error C231: \KEIL\C51\INC\REG52.H: 'RB8': redefinition
+C(94): error C231: \KEIL\C51\INC\REG52.H: 'TI': redefinition
+C(95): error C231: \KEIL\C51\INC\REG52.H: 'RI': redefinition
+C(98): error C231: \KEIL\C51\INC\REG52.H: 'T2EX': redefinition
+C(99): error C231: \KEIL\C51\INC\REG52.H: 'T2': redefinition
+C(102): error C231: \KEIL\C51\INC\REG52.H: 'TF2': redefinition
+C(103): error C231: \KEIL\C51\INC\REG52.H: 'EXF2': redefinition
+C(104): error C231: \KEIL\C51\INC\REG52.H: 'RCLK': redefinition
+C(105): error C231: \KEIL\C51\INC\REG52.H: 'TCLK': redefinition
+C(106): error C231: \KEIL\C51\INC\REG52.H: 'EXEN2': redefinition
+C(107): error C231: \KEIL\C51\INC\REG52.H: 'TR2': redefinition
+C(108): error C231: \KEIL\C51\INC\REG52.H: 'C_T2': redefinition
+C(109): error C231: \KEIL\C51\INC\REG52.H: 'CP_RL2': redefinition
+SERIAL.H(36): error C141: syntax error near 'int'
+SERIAL.H(36): error C202: 'j': undefined identifier
+SERIAL.H(37): error C141: syntax error near 'int'
+SERIAL.H(37): error C202: 'n': undefined identifier
+SERIAL.H(38): error C202: 'n': undefined identifier
+SERIAL.H(40): error C202: 'j': undefined identifier
+SERIAL.H(41): error C202: 'j': undefined identifier
+SERIAL.H(56): error C213: left side of asn-op not an lvalue
+SERIAL.H(80): error C213: left side of asn-op not an lvalue
+.\TEST.C(5): error C129: missing ';' before 'char'
+Target not created
+Build target 'Target 1'
+compiling test.c...
+C(10): error C231: \KEIL\C51\INC\REG52.H: 'P0': redefinition
+C(11): error C231: \KEIL\C51\INC\REG52.H: 'P1': redefinition
+C(12): error C231: \KEIL\C51\INC\REG52.H: 'P2': redefinition
+C(13): error C231: \KEIL\C51\INC\REG52.H: 'P3': redefinition
+C(14): error C231: \KEIL\C51\INC\REG52.H: 'PSW': redefinition
+C(15): error C231: \KEIL\C51\INC\REG52.H: 'ACC': redefinition
+C(16): error C231: \KEIL\C51\INC\REG52.H: 'B': redefinition
+C(17): error C231: \KEIL\C51\INC\REG52.H: 'SP': redefinition
+C(18): error C231: \KEIL\C51\INC\REG52.H: 'DPL': redefinition
+C(19): error C231: \KEIL\C51\INC\REG52.H: 'DPH': redefinition
+C(20): error C231: \KEIL\C51\INC\REG52.H: 'PCON': redefinition
+C(21): error C231: \KEIL\C51\INC\REG52.H: 'TCON': redefinition
+C(22): error C231: \KEIL\C51\INC\REG52.H: 'TMOD': redefinition
+C(23): error C231: \KEIL\C51\INC\REG52.H: 'TL0': redefinition
+C(24): error C231: \KEIL\C51\INC\REG52.H: 'TL1': redefinition
+C(25): error C231: \KEIL\C51\INC\REG52.H: 'TH0': redefinition
+C(26): error C231: \KEIL\C51\INC\REG52.H: 'TH1': redefinition
+C(27): error C231: \KEIL\C51\INC\REG52.H: 'IE': redefinition
+C(28): error C231: \KEIL\C51\INC\REG52.H: 'IP': redefinition
+C(29): error C231: \KEIL\C51\INC\REG52.H: 'SCON': redefinition
+C(30): error C231: \KEIL\C51\INC\REG52.H: 'SBUF': redefinition
+C(33): error C231: \KEIL\C51\INC\REG52.H: 'T2CON': redefinition
+C(34): error C231: \KEIL\C51\INC\REG52.H: 'RCAP2L': redefinition
+C(35): error C231: \KEIL\C51\INC\REG52.H: 'RCAP2H': redefinition
+C(36): error C231: \KEIL\C51\INC\REG52.H: 'TL2': redefinition
+C(37): error C231: \KEIL\C51\INC\REG52.H: 'TH2': redefinition
+C(42): error C231: \KEIL\C51\INC\REG52.H: 'CY': redefinition
+C(43): error C231: \KEIL\C51\INC\REG52.H: 'AC': redefinition
+C(44): error C231: \KEIL\C51\INC\REG52.H: 'F0': redefinition
+C(45): error C231: \KEIL\C51\INC\REG52.H: 'RS1': redefinition
+C(46): error C231: \KEIL\C51\INC\REG52.H: 'RS0': redefinition
+C(47): error C231: \KEIL\C51\INC\REG52.H: 'OV': redefinition
+C(48): error C231: \KEIL\C51\INC\REG52.H: 'P': redefinition
+C(51): error C231: \KEIL\C51\INC\REG52.H: 'TF1': redefinition
+C(52): error C231: \KEIL\C51\INC\REG52.H: 'TR1': redefinition
+C(53): error C231: \KEIL\C51\INC\REG52.H: 'TF0': redefinition
+C(54): error C231: \KEIL\C51\INC\REG52.H: 'TR0': redefinition
+C(55): error C231: \KEIL\C51\INC\REG52.H: 'IE1': redefinition
+C(56): error C231: \KEIL\C51\INC\REG52.H: 'IT1': redefinition
+C(57): error C231: \KEIL\C51\INC\REG52.H: 'IE0': redefinition
+C(58): error C231: \KEIL\C51\INC\REG52.H: 'IT0': redefinition
+C(61): error C231: \KEIL\C51\INC\REG52.H: 'EA': redefinition
+C(62): error C231: \KEIL\C51\INC\REG52.H: 'ET2': redefinition
+C(63): error C231: \KEIL\C51\INC\REG52.H: 'ES': redefinition
+C(64): error C231: \KEIL\C51\INC\REG52.H: 'ET1': redefinition
+C(65): error C231: \KEIL\C51\INC\REG52.H: 'EX1': redefinition
+C(66): error C231: \KEIL\C51\INC\REG52.H: 'ET0': redefinition
+C(67): error C231: \KEIL\C51\INC\REG52.H: 'EX0': redefinition
+C(70): error C231: \KEIL\C51\INC\REG52.H: 'PT2': redefinition
+C(71): error C231: \KEIL\C51\INC\REG52.H: 'PS': redefinition
+C(72): error C231: \KEIL\C51\INC\REG52.H: 'PT1': redefinition
+C(73): error C231: \KEIL\C51\INC\REG52.H: 'PX1': redefinition
+C(74): error C231: \KEIL\C51\INC\REG52.H: 'PT0': redefinition
+C(75): error C231: \KEIL\C51\INC\REG52.H: 'PX0': redefinition
+C(78): error C231: \KEIL\C51\INC\REG52.H: 'RD': redefinition
+C(79): error C231: \KEIL\C51\INC\REG52.H: 'WR': redefinition
+C(80): error C231: \KEIL\C51\INC\REG52.H: 'T1': redefinition
+C(81): error C231: \KEIL\C51\INC\REG52.H: 'T0': redefinition
+C(82): error C231: \KEIL\C51\INC\REG52.H: 'INT1': redefinition
+C(83): error C231: \KEIL\C51\INC\REG52.H: 'INT0': redefinition
+C(84): error C231: \KEIL\C51\INC\REG52.H: 'TXD': redefinition
+C(85): error C231: \KEIL\C51\INC\REG52.H: 'RXD': redefinition
+C(88): error C231: \KEIL\C51\INC\REG52.H: 'SM0': redefinition
+C(89): error C231: \KEIL\C51\INC\REG52.H: 'SM1': redefinition
+C(90): error C231: \KEIL\C51\INC\REG52.H: 'SM2': redefinition
+C(91): error C231: \KEIL\C51\INC\REG52.H: 'REN': redefinition
+C(92): error C231: \KEIL\C51\INC\REG52.H: 'TB8': redefinition
+C(93): error C231: \KEIL\C51\INC\REG52.H: 'RB8': redefinition
+C(94): error C231: \KEIL\C51\INC\REG52.H: 'TI': redefinition
+C(95): error C231: \KEIL\C51\INC\REG52.H: 'RI': redefinition
+C(98): error C231: \KEIL\C51\INC\REG52.H: 'T2EX': redefinition
+C(99): error C231: \KEIL\C51\INC\REG52.H: 'T2': redefinition
+C(102): error C231: \KEIL\C51\INC\REG52.H: 'TF2': redefinition
+C(103): error C231: \KEIL\C51\INC\REG52.H: 'EXF2': redefinition
+C(104): error C231: \KEIL\C51\INC\REG52.H: 'RCLK': redefinition
+C(105): error C231: \KEIL\C51\INC\REG52.H: 'TCLK': redefinition
+C(106): error C231: \KEIL\C51\INC\REG52.H: 'EXEN2': redefinition
+C(107): error C231: \KEIL\C51\INC\REG52.H: 'TR2': redefinition
+C(108): error C231: \KEIL\C51\INC\REG52.H: 'C_T2': redefinition
+C(109): error C231: \KEIL\C51\INC\REG52.H: 'CP_RL2': redefinition
+SERIAL.H(56): error C213: left side of asn-op not an lvalue
+SERIAL.H(80): error C213: left side of asn-op not an lvalue
+.\TEST.C(5): error C129: missing ';' before 'char'
+Target not created
+Build target 'Target 1'
+compiling test.c...
+C(10): error C231: \KEIL\C51\INC\REG52.H: 'P0': redefinition
+C(11): error C231: \KEIL\C51\INC\REG52.H: 'P1': redefinition
+C(12): error C231: \KEIL\C51\INC\REG52.H: 'P2': redefinition
+C(13): error C231: \KEIL\C51\INC\REG52.H: 'P3': redefinition
+C(14): error C231: \KEIL\C51\INC\REG52.H: 'PSW': redefinition
+C(15): error C231: \KEIL\C51\INC\REG52.H: 'ACC': redefinition
+C(16): error C231: \KEIL\C51\INC\REG52.H: 'B': redefinition
+C(17): error C231: \KEIL\C51\INC\REG52.H: 'SP': redefinition
+C(18): error C231: \KEIL\C51\INC\REG52.H: 'DPL': redefinition
+C(19): error C231: \KEIL\C51\INC\REG52.H: 'DPH': redefinition
+C(20): error C231: \KEIL\C51\INC\REG52.H: 'PCON': redefinition
+C(21): error C231: \KEIL\C51\INC\REG52.H: 'TCON': redefinition
+C(22): error C231: \KEIL\C51\INC\REG52.H: 'TMOD': redefinition
+C(23): error C231: \KEIL\C51\INC\REG52.H: 'TL0': redefinition
+C(24): error C231: \KEIL\C51\INC\REG52.H: 'TL1': redefinition
+C(25): error C231: \KEIL\C51\INC\REG52.H: 'TH0': redefinition
+C(26): error C231: \KEIL\C51\INC\REG52.H: 'TH1': redefinition
+C(27): error C231: \KEIL\C51\INC\REG52.H: 'IE': redefinition
+C(28): error C231: \KEIL\C51\INC\REG52.H: 'IP': redefinition
+C(29): error C231: \KEIL\C51\INC\REG52.H: 'SCON': redefinition
+C(30): error C231: \KEIL\C51\INC\REG52.H: 'SBUF': redefinition
+C(33): error C231: \KEIL\C51\INC\REG52.H: 'T2CON': redefinition
+C(34): error C231: \KEIL\C51\INC\REG52.H: 'RCAP2L': redefinition
+C(35): error C231: \KEIL\C51\INC\REG52.H: 'RCAP2H': redefinition
+C(36): error C231: \KEIL\C51\INC\REG52.H: 'TL2': redefinition
+C(37): error C231: \KEIL\C51\INC\REG52.H: 'TH2': redefinition
+C(42): error C231: \KEIL\C51\INC\REG52.H: 'CY': redefinition
+C(43): error C231: \KEIL\C51\INC\REG52.H: 'AC': redefinition
+C(44): error C231: \KEIL\C51\INC\REG52.H: 'F0': redefinition
+C(45): error C231: \KEIL\C51\INC\REG52.H: 'RS1': redefinition
+C(46): error C231: \KEIL\C51\INC\REG52.H: 'RS0': redefinition
+C(47): error C231: \KEIL\C51\INC\REG52.H: 'OV': redefinition
+C(48): error C231: \KEIL\C51\INC\REG52.H: 'P': redefinition
+C(51): error C231: \KEIL\C51\INC\REG52.H: 'TF1': redefinition
+C(52): error C231: \KEIL\C51\INC\REG52.H: 'TR1': redefinition
+C(53): error C231: \KEIL\C51\INC\REG52.H: 'TF0': redefinition
+C(54): error C231: \KEIL\C51\INC\REG52.H: 'TR0': redefinition
+C(55): error C231: \KEIL\C51\INC\REG52.H: 'IE1': redefinition
+C(56): error C231: \KEIL\C51\INC\REG52.H: 'IT1': redefinition
+C(57): error C231: \KEIL\C51\INC\REG52.H: 'IE0': redefinition
+C(58): error C231: \KEIL\C51\INC\REG52.H: 'IT0': redefinition
+C(61): error C231: \KEIL\C51\INC\REG52.H: 'EA': redefinition
+C(62): error C231: \KEIL\C51\INC\REG52.H: 'ET2': redefinition
+C(63): error C231: \KEIL\C51\INC\REG52.H: 'ES': redefinition
+C(64): error C231: \KEIL\C51\INC\REG52.H: 'ET1': redefinition
+C(65): error C231: \KEIL\C51\INC\REG52.H: 'EX1': redefinition
+C(66): error C231: \KEIL\C51\INC\REG52.H: 'ET0': redefinition
+C(67): error C231: \KEIL\C51\INC\REG52.H: 'EX0': redefinition
+C(70): error C231: \KEIL\C51\INC\REG52.H: 'PT2': redefinition
+C(71): error C231: \KEIL\C51\INC\REG52.H: 'PS': redefinition
+C(72): error C231: \KEIL\C51\INC\REG52.H: 'PT1': redefinition
+C(73): error C231: \KEIL\C51\INC\REG52.H: 'PX1': redefinition
+C(74): error C231: \KEIL\C51\INC\REG52.H: 'PT0': redefinition
+C(75): error C231: \KEIL\C51\INC\REG52.H: 'PX0': redefinition
+C(78): error C231: \KEIL\C51\INC\REG52.H: 'RD': redefinition
+C(79): error C231: \KEIL\C51\INC\REG52.H: 'WR': redefinition
+C(80): error C231: \KEIL\C51\INC\REG52.H: 'T1': redefinition
+C(81): error C231: \KEIL\C51\INC\REG52.H: 'T0': redefinition
+C(82): error C231: \KEIL\C51\INC\REG52.H: 'INT1': redefinition
+C(83): error C231: \KEIL\C51\INC\REG52.H: 'INT0': redefinition
+C(84): error C231: \KEIL\C51\INC\REG52.H: 'TXD': redefinition
+C(85): error C231: \KEIL\C51\INC\REG52.H: 'RXD': redefinition
+C(88): error C231: \KEIL\C51\INC\REG52.H: 'SM0': redefinition
+C(89): error C231: \KEIL\C51\INC\REG52.H: 'SM1': redefinition
+C(90): error C231: \KEIL\C51\INC\REG52.H: 'SM2': redefinition
+C(91): error C231: \KEIL\C51\INC\REG52.H: 'REN': redefinition
+C(92): error C231: \KEIL\C51\INC\REG52.H: 'TB8': redefinition
+C(93): error C231: \KEIL\C51\INC\REG52.H: 'RB8': redefinition
+C(94): error C231: \KEIL\C51\INC\REG52.H: 'TI': redefinition
+C(95): error C231: \KEIL\C51\INC\REG52.H: 'RI': redefinition
+C(98): error C231: \KEIL\C51\INC\REG52.H: 'T2EX': redefinition
+C(99): error C231: \KEIL\C51\INC\REG52.H: 'T2': redefinition
+C(102): error C231: \KEIL\C51\INC\REG52.H: 'TF2': redefinition
+C(103): error C231: \KEIL\C51\INC\REG52.H: 'EXF2': redefinition
+C(104): error C231: \KEIL\C51\INC\REG52.H: 'RCLK': redefinition
+C(105): error C231: \KEIL\C51\INC\REG52.H: 'TCLK': redefinition
+C(106): error C231: \KEIL\C51\INC\REG52.H: 'EXEN2': redefinition
+C(107): error C231: \KEIL\C51\INC\REG52.H: 'TR2': redefinition
+C(108): error C231: \KEIL\C51\INC\REG52.H: 'C_T2': redefinition
+C(109): error C231: \KEIL\C51\INC\REG52.H: 'CP_RL2': redefinition
+SERIAL.H(55): error C213: left side of asn-op not an lvalue
+SERIAL.H(79): error C213: left side of asn-op not an lvalue
+.\TEST.C(5): error C231: 'buff': redefinition
+.\TEST.C(16): error C213: left side of asn-op not an lvalue
+.\TEST.C(17): error C213: left side of asn-op not an lvalue
+Target not created
+Build target 'Target 1'
+compiling test.c...
+.\TEST.C(4): error C231: 'buff': redefinition
+.\TEST.C(15): error C213: left side of asn-op not an lvalue
+.\TEST.C(16): error C213: left side of asn-op not an lvalue
+Target not created
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling test.c...
+linking...
+creating hex file from "Serial"...
+"Serial" - 0 Error(s), 0 Warning(s).

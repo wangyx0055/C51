@@ -1,0 +1,312 @@
+BL51 BANKED LINKER/LOCATER V4.13                                                        05/31/2014  16:33:44  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V4.13, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE DHT11.obj TO DHT11 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  DHT11.obj (DHT11)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  DHT11 (DHT11)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0011H     UNIT         ?DT?DHT11
+            DATA    0019H     0004H     UNIT         ?DT?_DISPLAY?DHT11
+            DATA    001DH     0001H     UNIT         _DATA_GROUP_
+            IDATA   001EH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0098H     UNIT         ?PR?RH?DHT11
+            CODE    009BH     0043H     UNIT         ?PR?COM?DHT11
+            CODE    00DEH     002CH     UNIT         ?PR?_DISPLAY?DHT11
+            CODE    010AH     0015H     UNIT         ?PR?_DELAY?DHT11
+            CODE    011FH     000EH     UNIT         ?CO?DHT11
+            CODE    012DH     000DH     UNIT         ?PR?DELAY_10US?DHT11
+            CODE    013AH     000CH     UNIT         ?C_C51STARTUP
+            CODE    0146H     0005H     UNIT         ?PR?MAIN?DHT11
+
+
+
+OVERLAY MAP OF MODULE:   DHT11 (DHT11)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?DHT11
+
+?PR?MAIN?DHT11                 -----    -----
+  +--> ?PR?RH?DHT11
+
+?PR?RH?DHT11                   -----    -----
+  +--> ?PR?_DELAY?DHT11
+  +--> ?PR?DELAY_10US?DHT11
+  +--> ?PR?COM?DHT11
+
+?PR?DELAY_10US?DHT11           001DH    0001H
+
+?PR?COM?DHT11                  -----    -----
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/31/2014  16:33:44  PAGE 2
+
+
+  +--> ?PR?DELAY_10US?DHT11
+
+
+
+SYMBOL TABLE OF MODULE:  DHT11 (DHT11)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        DHT11
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        T0
+  B:00D0H.6       PUBLIC        AC
+  B:00B0H.5       PUBLIC        T1
+  B:0090H.0       PUBLIC        T2
+  B:00A8H.7       PUBLIC        EA
+  D:0008H         PUBLIC        U8T_data_H
+  D:0009H         PUBLIC        U8T_data_L
+  C:011FH         PUBLIC        table
+  D:00A8H         PUBLIC        IE
+  B:00A0H.2       PUBLIC        P2_0
+  B:00C8H.6       PUBLIC        EXF2
+  B:00B0H.7       PUBLIC        RD
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  C:0003H         PUBLIC        RH
+  B:0098H.0       PUBLIC        RI
+  B:00B0H.2       PUBLIC        INT0
+  B:00D0H.7       PUBLIC        CY
+  C:012DH         PUBLIC        Delay_10us
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.3       PUBLIC        INT1
+  D:000AH         PUBLIC        U8T_data_H_temp
+  B:00B8H.4       PUBLIC        PS
+  D:000BH         PUBLIC        U8T_data_L_temp
+  B:0090H.1       PUBLIC        T2EX
+  B:00D0H.2       PUBLIC        OV
+  C:0146H         PUBLIC        main
+  D:000CH         PUBLIC        U8FLAG
+  B:00C8H.1       PUBLIC        C_T2
+  B:00B0H.6       PUBLIC        WR
+  D:000DH         PUBLIC        U8checkdata
+  B:00C8H.5       PUBLIC        RCLK
+  B:00C8H.4       PUBLIC        TCLK
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:0088H.1       PUBLIC        IE0
+  B:0088H.3       PUBLIC        IE1
+  B:00C8H.0       PUBLIC        CP_RL2
+  D:000EH         PUBLIC        U8checkdata_temp
+  D:000FH         PUBLIC        shidu_shi
+  D:0010H         PUBLIC        U8temp
+  B:00A8H.1       PUBLIC        ET0
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/31/2014  16:33:44  PAGE 3
+
+
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.5       PUBLIC        TF0
+  B:00A8H.5       PUBLIC        ET2
+  B:0088H.7       PUBLIC        TF1
+  D:0011H         PUBLIC        wendu_shi
+  B:00C8H.7       PUBLIC        TF2
+  B:0098H.2       PUBLIC        RB8
+  D:0012H         PUBLIC        U8RH_data_H
+  D:0013H         PUBLIC        shidu_ge
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  B:0098H.3       PUBLIC        TB8
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  B:00D0H.0       PUBLIC        P
+  B:0098H.7       PUBLIC        SM0
+  C:0111H         PUBLIC        _Delay
+  D:0014H         PUBLIC        U8RH_data_L
+  B:0098H.6       PUBLIC        SM1
+  B:0098H.5       PUBLIC        SM2
+  D:0015H         PUBLIC        wendu_ge
+  B:00B8H.1       PUBLIC        PT0
+  B:00B8H.3       PUBLIC        PT1
+  B:00D0H.3       PUBLIC        RS0
+  B:00B8H.5       PUBLIC        PT2
+  B:0088H.4       PUBLIC        TR0
+  B:00D0H.4       PUBLIC        RS1
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  B:00B8H.0       PUBLIC        PX0
+  B:00B8H.2       PUBLIC        PX1
+  C:00DEH         PUBLIC        _display
+  C:009BH         PUBLIC        COM
+  B:00C8H.3       PUBLIC        EXEN2
+  B:0098H.4       PUBLIC        REN
+  D:0016H         PUBLIC        U8RH_data_H_temp
+  D:00C8H         PUBLIC        T2CON
+  D:0017H         PUBLIC        U8RH_data_L_temp
+  D:0018H         PUBLIC        U8comdata
+  B:00B0H.0       PUBLIC        RXD
+  B:00B0H.1       PUBLIC        TXD
+  B:00D0H.5       PUBLIC        F0
+  D:00D0H         PUBLIC        PSW
+  C:010AH         SYMBOL        L?0031
+  -------         PROC          L?0030
+  -------         ENDPROC       L?0030
+  C:010AH         SYMBOL        L?0031
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        z
+  -------         DO            z
+  D:0007H         SYMBOL        x
+  D:0006H         SYMBOL        y
+  -------         ENDDO         y
+  C:0111H         LINE#         16
+  C:0111H         LINE#         17
+  C:0111H         LINE#         19
+  C:0117H         LINE#         20
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/31/2014  16:33:44  PAGE 4
+
+
+  C:011EH         LINE#         21
+  -------         ENDPROC       _DELAY
+  -------         PROC          DELAY_10US
+  -------         DO            DELAY_10US
+  D:001DH         SYMBOL        i
+  -------         ENDDO         i
+  C:012DH         LINE#         23
+  C:012DH         LINE#         24
+  C:012DH         LINE#         26
+  C:012FH         LINE#         27
+  C:0131H         LINE#         28
+  C:0133H         LINE#         29
+  C:0135H         LINE#         30
+  C:0137H         LINE#         31
+  C:0139H         LINE#         32
+  -------         ENDPROC       DELAY_10US
+  -------         PROC          COM
+  -------         DO            COM
+  D:0007H         SYMBOL        i
+  -------         ENDDO         i
+  C:009BH         LINE#         34
+  C:009BH         LINE#         35
+  C:009BH         LINE#         37
+  C:009DH         LINE#         38
+  C:009DH         LINE#         40
+  C:00A0H         LINE#         41
+  C:00AAH         LINE#         42
+  C:00ADH         LINE#         43
+  C:00B0H         LINE#         44
+  C:00B3H         LINE#         45
+  C:00B6H         LINE#         46
+  C:00BCH         LINE#         47
+  C:00BFH         LINE#         48
+  C:00C9H         LINE#         49
+  C:00CFH         LINE#         50
+  C:00D5H         LINE#         51
+  C:00D9H         LINE#         52
+  C:00DDH         LINE#         53
+  -------         ENDPROC       COM
+  -------         PROC          _DISPLAY
+  D:0007H         SYMBOL        shidu_shi
+  D:0005H         SYMBOL        shidu_ge
+  D:0003H         SYMBOL        wendu_shi
+  D:001CH         SYMBOL        wendu_ge
+  C:00DEH         LINE#         54
+  C:00DEH         LINE#         55
+  C:00DEH         LINE#         56
+  C:00E1H         LINE#         57
+  C:00E4H         LINE#         58
+  C:00E8H         LINE#         59
+  C:00EBH         LINE#         60
+  C:00EEH         LINE#         61
+  C:00F1H         LINE#         62
+  C:00F2H         LINE#         63
+  C:00F5H         LINE#         64
+  C:00F8H         LINE#         65
+  C:00FBH         LINE#         66
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/31/2014  16:33:44  PAGE 5
+
+
+  C:00FCH         LINE#         67
+  C:00FFH         LINE#         68
+  C:0102H         LINE#         69
+  C:0105H         LINE#         70
+  C:0107H         LINE#         71
+  -------         ENDPROC       _DISPLAY
+  -------         PROC          RH
+  C:0003H         LINE#         73
+  C:0003H         LINE#         74
+  C:0003H         LINE#         75
+  C:0005H         LINE#         76
+  C:000CH         LINE#         77
+  C:000EH         LINE#         78
+  C:0011H         LINE#         79
+  C:0014H         LINE#         80
+  C:0017H         LINE#         81
+  C:001AH         LINE#         82
+  C:001CH         LINE#         83
+  C:001FH         LINE#         84
+  C:001FH         LINE#         85
+  C:0022H         LINE#         86
+  C:002CH         LINE#         87
+  C:002FH         LINE#         88
+  C:0039H         LINE#         89
+  C:003CH         LINE#         90
+  C:003FH         LINE#         91
+  C:0042H         LINE#         92
+  C:0045H         LINE#         93
+  C:0048H         LINE#         94
+  C:004BH         LINE#         95
+  C:004EH         LINE#         96
+  C:0051H         LINE#         97
+  C:0054H         LINE#         98
+  C:0057H         LINE#         99
+  C:005AH         LINE#         100
+  C:005CH         LINE#         101
+  C:0066H         LINE#         102
+  C:0069H         LINE#         103
+  C:0069H         LINE#         104
+  C:006CH         LINE#         105
+  C:006FH         LINE#         106
+  C:0072H         LINE#         107
+  C:0075H         LINE#         108
+  C:0078H         LINE#         109
+  C:0078H         LINE#         110
+  C:0080H         LINE#         111
+  C:0089H         LINE#         112
+  C:0091H         LINE#         113
+  C:009AH         LINE#         114
+  C:009AH         LINE#         116
+  -------         ENDPROC       RH
+  -------         PROC          MAIN
+  C:0146H         LINE#         117
+  C:0146H         LINE#         118
+  C:0146H         LINE#         119
+  C:0146H         LINE#         120
+  C:0146H         LINE#         121
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/31/2014  16:33:44  PAGE 6
+
+
+  C:0149H         LINE#         122
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        DHT11
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISPLAY?DHT11
+
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

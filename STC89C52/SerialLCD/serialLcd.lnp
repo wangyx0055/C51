@@ -1,0 +1,3 @@
+"seriallcd.obj" 
+TO "serialLcd" 
+RAMSIZE(256) 

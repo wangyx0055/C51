@@ -1,0 +1,87 @@
+C51 COMPILER V6.12  TEST                                                                   09/27/2013 19:22:38 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          
+   3          void delay1();
+   4          sbit  wei=P2^6;
+   5          sbit  duan=P2^7;
+   6          sbit beep=P2^3;
+   7          int count,num;
+   8          unsigned char table[]={0x3f  , 0x06 , 0x5b , 0x4f , 0x66 , 0x6d ,
+   9          					   0x7d , 0x07 , 0x7f  , 0x6f , 0x77 , 0x7c ,
+  10          					   0x39 , 0x5e , 0x79 , 0x71};
+  11          
+  12          void main()
+  13          {
+  14   1      	EA=1;
+  15   1      	ET0=1;
+  16   1      	TMOD=0x01;
+  17   1      	TH0=(65535-50000)>>8;
+  18   1      	TL0=(65535-50000)%256;
+  19   1      	TR0=1;
+  20   1      
+  21   1      	count=0;
+  22   1      	duan=1;
+  23   1      	P0=0xfa;//段选低电平有效
+  24   1      	duan=0;
+  25   1      	
+  26   1      	wei=1;
+  27   1      	P0=0x3f;//段选低电平有效
+  28   1      	wei=0;
+  29   1      
+  30   1      	while(1)
+  31   1      	{
+  32   2      		if(num==40)
+  33   2      		{
+  34   3      			num=0;
+  35   3      			wei=1;
+  36   3      			P0=table[count++];
+  37   3      			wei=0;
+  38   3      			//
+  39   3      			if(count==16)
+  40   3      				beep=0;
+  41   3      			else
+  42   3      				beep=1;
+  43   3      			//
+  44   3      			count=count%16;		
+  45   3      			delay1();
+  46   3      		}
+  47   2      	}
+  48   1      }
+  49          
+  50          void delay1()
+  51          {
+  52   1      	int i,j;
+  53   1      	for(i=250;i>0;i--)
+  54   1      		for(j=230;j>0;j--);
+  55   1      }
+C51 COMPILER V6.12  TEST                                                                   09/27/2013 19:22:38 PAGE 2   
+
+  56          
+  57          void show1()interrupt 1
+  58          {
+  59   1      	TH0=(65535-50000)>>8;
+  60   1      	TL0=(65535-50000)%256;
+  61   1      	num++;
+  62   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    145    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     20    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

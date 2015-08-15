@@ -1,0 +1,267 @@
+BL51 BANKED LINKER/LOCATER V4.13                                                        04/24/2014  16:05:35  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V4.13, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE song.obj TO song RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL WITH FLOATING POINT ARITHMETIC
+
+
+INPUT MODULES INCLUDED:
+  song.obj (SONG)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPMUL)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?CASTF)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPGETOPN)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?LNEG)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?LLDCODE)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  song (SONG)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000AH     UNIT         ?DT?SONG
+            IDATA   0012H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0004H     UNIT         ?PR?TIMER1?SONG
+                    0007H     0004H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     000BH     UNIT         ?C_INITSEG
+                    0019H     0002H                  *** GAP ***
+            CODE    001BH     0003H     ABSOLUTE     
+            CODE    001EH     03EAH     UNIT         ?CO?SONG
+            CODE    0408H     01A5H     UNIT         ?C?LIB_CODE
+            CODE    05ADH     0096H     UNIT         ?PR?MAIN?SONG
+            CODE    0643H     008CH     UNIT         ?C_C51STARTUP
+            CODE    06CFH     0013H     UNIT         ?PR?TIMER0?SONG
+            CODE    06E2H     0012H     UNIT         ?PR?_DELAY?SONG
+            CODE    06F4H     0010H     UNIT         ?PR?INIT?SONG
+            CODE    0704H     0010H     UNIT         ?PR?_SOUND_DELAY?SONG
+
+
+
+OVERLAY MAP OF MODULE:   song (SONG)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?SONG
+  +--> ?C_INITSEG
+
+BL51 BANKED LINKER/LOCATER V4.13                                                      04/24/2014  16:05:35  PAGE 2
+
+
+?PR?MAIN?SONG
+  +--> ?PR?INIT?SONG
+  +--> ?CO?SONG
+  +--> ?PR?_SOUND_DELAY?SONG
+  +--> ?PR?_DELAY?SONG
+
+
+
+SYMBOL TABLE OF MODULE:  song (SONG)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        SONG
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0704H         PUBLIC        _sound_delay
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        T0
+  B:00D0H.6       PUBLIC        AC
+  D:0008H         PUBLIC        counter
+  B:00B0H.5       PUBLIC        T1
+  B:0090H.0       PUBLIC        T2
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  B:00C8H.6       PUBLIC        EXF2
+  B:00B0H.7       PUBLIC        RD
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  D:000AH         PUBLIC        flag
+  B:00B0H.2       PUBLIC        INT0
+  B:00D0H.7       PUBLIC        CY
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.3       PUBLIC        INT1
+  B:00B8H.4       PUBLIC        PS
+  B:0090H.1       PUBLIC        T2EX
+  B:00D0H.2       PUBLIC        OV
+  C:05ADH         PUBLIC        main
+  D:000BH         PUBLIC        sound_pace
+  B:00C8H.1       PUBLIC        C_T2
+  B:00B0H.6       PUBLIC        WR
+  B:00A0H.3       PUBLIC        sound
+  B:00C8H.5       PUBLIC        RCLK
+  B:00C8H.4       PUBLIC        TCLK
+  D:000DH         PUBLIC        sound_signalhigh
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:06F4H         PUBLIC        init
+  D:000EH         PUBLIC        temp
+  C:001EH         PUBLIC        tune
+  B:0088H.1       PUBLIC        IE0
+  B:0088H.3       PUBLIC        IE1
+  B:00C8H.0       PUBLIC        CP_RL2
+  B:00A8H.1       PUBLIC        ET0
+BL51 BANKED LINKER/LOCATER V4.13                                                      04/24/2014  16:05:35  PAGE 3
+
+
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.5       PUBLIC        TF0
+  B:00A8H.5       PUBLIC        ET2
+  B:0088H.7       PUBLIC        TF1
+  B:00C8H.7       PUBLIC        TF2
+  B:0098H.2       PUBLIC        RB8
+  D:008CH         PUBLIC        TH0
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  D:008DH         PUBLIC        TH1
+  B:0098H.3       PUBLIC        TB8
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  B:00D0H.0       PUBLIC        P
+  B:0098H.7       PUBLIC        SM0
+  D:008AH         PUBLIC        TL0
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+  B:0098H.5       PUBLIC        SM2
+  C:06CFH         PUBLIC        timer0
+  B:00B8H.1       PUBLIC        PT0
+  C:0003H         PUBLIC        timer1
+  B:00B8H.3       PUBLIC        PT1
+  B:00D0H.3       PUBLIC        RS0
+  B:00B8H.5       PUBLIC        PT2
+  B:0088H.4       PUBLIC        TR0
+  B:00D0H.4       PUBLIC        RS1
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  B:00B8H.0       PUBLIC        PX0
+  B:00B8H.2       PUBLIC        PX1
+  D:0010H         PUBLIC        sound_signallow
+  B:00C8H.3       PUBLIC        EXEN2
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  D:0011H         PUBLIC        k
+  C:016CH         PUBLIC        duration
+  B:00B0H.0       PUBLIC        RXD
+  B:00B0H.1       PUBLIC        TXD
+  C:06E2H         PUBLIC        _delay
+  B:00D0H.5       PUBLIC        F0
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          INIT
+  C:06F4H         LINE#         141
+  C:06F4H         LINE#         142
+  C:06F4H         LINE#         143
+  C:06F7H         LINE#         144
+  C:06FAH         LINE#         145
+  C:06FDH         LINE#         146
+  C:06FFH         LINE#         147
+  C:0701H         LINE#         148
+  C:0703H         LINE#         149
+  -------         ENDPROC       INIT
+  -------         PROC          TIMER0
+  C:06CFH         LINE#         151
+  C:06D1H         LINE#         153
+  C:06D9H         LINE#         154
+BL51 BANKED LINKER/LOCATER V4.13                                                      04/24/2014  16:05:35  PAGE 4
+
+
+  C:06DCH         LINE#         155
+  C:06DFH         LINE#         156
+  -------         ENDPROC       TIMER0
+  -------         PROC          TIMER1
+  C:0003H         LINE#         158
+  C:0003H         LINE#         160
+  C:0006H         LINE#         161
+  -------         ENDPROC       TIMER1
+  -------         PROC          _DELAY
+  D:0007H         SYMBOL        n
+  -------         DO            n
+  D:0006H         SYMBOL        i
+  -------         ENDDO         i
+  C:06E2H         LINE#         163
+  C:06E2H         LINE#         164
+  C:06E2H         LINE#         166
+  C:06E8H         LINE#         167
+  C:06F3H         LINE#         168
+  -------         ENDPROC       _DELAY
+  -------         PROC          _SOUND_DELAY
+  D:0007H         SYMBOL        sound_signalhigh
+  D:0005H         SYMBOL        sound_signallow
+  C:0704H         LINE#         170
+  C:0704H         LINE#         171
+  C:0704H         LINE#         172
+  C:0706H         LINE#         173
+  C:0708H         LINE#         174
+  C:070AH         LINE#         175
+  C:070EH         LINE#         176
+  C:0711H         LINE#         177
+  C:0713H         LINE#         178
+  -------         ENDPROC       _SOUND_DELAY
+  -------         PROC          MAIN
+  C:05ADH         LINE#         187
+  C:05ADH         LINE#         188
+  C:05ADH         LINE#         189
+  C:05B0H         LINE#         190
+  C:05B0H         LINE#         191
+  C:05B0H         LINE#         192
+  C:05B3H         LINE#         193
+  C:05CDH         LINE#         194
+  C:05CDH         LINE#         197
+  C:05D3H         LINE#         198
+  C:05D3H         LINE#         199
+  C:05D5H         LINE#         200
+  C:05D5H         LINE#         201
+  C:05EFH         LINE#         202
+  C:05F2H         LINE#         204
+  C:0616H         LINE#         205
+  C:0618H         LINE#         206
+  C:061AH         LINE#         208
+  C:0626H         LINE#         209
+  C:0626H         LINE#         210
+  C:0628H         LINE#         211
+  C:062FH         LINE#         213
+  C:0631H         LINE#         214
+  C:0636H         LINE#         215
+BL51 BANKED LINKER/LOCATER V4.13                                                      04/24/2014  16:05:35  PAGE 5
+
+
+  C:0638H         LINE#         216
+  C:063BH         LINE#         217
+  C:0640H         LINE#         218
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        SONG
+
+  -------         MODULE        ?C?FPMUL
+  C:0408H         PUBLIC        ?C?FPMUL
+  -------         ENDMOD        ?C?FPMUL
+
+  -------         MODULE        ?C?CASTF
+  C:050EH         PUBLIC        ?C?CASTF
+  -------         ENDMOD        ?C?CASTF
+
+  -------         MODULE        ?C?LNEG
+  C:058FH         PUBLIC        ?C?LNEG
+  -------         ENDMOD        ?C?LNEG
+
+  -------         MODULE        ?C?LLDCODE
+  C:059DH         PUBLIC        ?C?LLDCODE
+  -------         ENDMOD        ?C?LLDCODE
+
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,37 @@
+C51 COMPILER V6.12  TEST                                                                   05/31/2014 21:07:19 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\test.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\test.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          #include "Serial.h"
+   3          #include "DHT11.h"
+   4          
+   5          void main()
+   6          {
+   7   1      	SerialInit();
+   8   1      	while(1)
+   9   1      	{ 
+  10   2      	    RH();
+  11   2      		SerialPutString(buff);
+  12   2      	}
+  13   1      
+  14   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    843    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     20    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     61      24
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
